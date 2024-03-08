@@ -1,12 +1,15 @@
+import random
+
+
 # Declaração do objeto Personagem
 class Personagem(object):
     # Construtor de inicialização dos atributos do Personagem
-    def __init__(self, pontos_vida=100, pontos_ataque=20, perc_tesouro=0, posicao=1, itens=None):
-        self.pontos_vida = pontos_vida                     # Pontos de vida do Personagem
-        self.pontos_ataque = pontos_ataque                 # Pontos de ataque do Personagem
-        self.perc_tesouro = perc_tesouro                   # Porcentagem do tesouro carregado pelo Personagem
-        self.posicao = posicao                             # Posição do Personagem no mapa (grafo)
-        self.itens = itens if itens is not None else []    # Lista de itens carregados pelo Personagem
+    def __init__(self):
+        self.pontos_vida = 100   # Pontos de vida do Personagem
+        self.pontos_ataque = 20  # Pontos de ataque do Personagem
+        self.perc_tesouro = 0    # Porcentagem do tesouro carregado pelo Personagem
+        self.regiao = 0          # Posição do Personagem no mapa (grafo)
+        self.itens = None        # Lista de itens carregados pelo Personagem
 
     # String representando as informações sobre o Personagem
     def __str__(self):
@@ -24,7 +27,7 @@ class Personagem(object):
         if self.pontos_vida == 100:
             print(f"Você já tem o máximo de pontos de vida.\n")
         else:
-            self.pontos_vida = self.pontos_vida + pontos
+            self.pontos_vida += pontos
 
             if self.pontos_vida > 100:
                 self.pontos_vida = 100
@@ -33,21 +36,25 @@ class Personagem(object):
 
     # Método para remover pontos de vida
     def remover_pontos_vida(self, pontos):
-        self.pontos_vida = self.pontos_vida - pontos
+        self.pontos_vida -= pontos
 
         # Se os pontos de vida do Personagem chegarem a zero
         if self.pontos_vida <= 0:
             print(f"Você morreu!\n")
 
+    # Método para retornar se o Personagem está vivo (pontos_vida > 0)
+    def esta_vivo(self):
+        return self.pontos_vida > 0
+
     # MÉTODOS PARA OS PONTOS DE ATAQUE DO PERSONAGEM
 
     # Método para adicionar pontos de ataque
     def adicionar_pontos_ataque(self, pontos):
-        self.pontos_ataque = self.pontos_ataque + pontos
+        self.pontos_ataque += pontos
 
     # Método para remover pontos de ataque
     def remover_pontos_ataque(self, pontos):
-        self. pontos_ataque = self.pontos_ataque - pontos
+        self. pontos_ataque -= pontos
 
         # Se os pontos de ataque do Personagem forem reduzidos a menor valor que o mínimo
         if self.pontos_ataque < 20:
@@ -74,9 +81,19 @@ class Personagem(object):
 
     # Método para remover a porcentagem do tesouro
     def remover_perc_tesouro(self, valor):
-        self.perc_tesouro = self.perc_tesouro - valor
+        self.perc_tesouro -= valor
 
         # Se o percentual do tesouro chegou a menos que 0
         if self.perc_tesouro <= 0:
             self.perc_tesouro = 0
             print(f"Você perdeu todo o tesouro que tinha resgatado.\n")
+
+    # MÉTODOS PARA MOVIMENTAÇÃO DO PERSONAGEM
+
+    # Método para o ataque do Personagem
+    def atacar(self, criatura):
+        dano = random.randint(1, self.pontos_ataque)
+        criatura.pontos_vida -= dano
+        print(f"Você atacou! Houve {dano} de dano.\n")
+        print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.\n")
+
