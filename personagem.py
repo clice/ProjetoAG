@@ -1,10 +1,11 @@
 # Declaração do objeto Personagem
 class Personagem:
     # Construtor de inicialização dos atributos do Personagem
-    def __init__(self, pontos_vida=100, pontos_ataque=20, perc_tesouro=0, itens=None):
+    def __init__(self, pontos_vida=100, pontos_ataque=20, perc_tesouro=0, posicao=1, itens=None):
         self.pontos_vida = pontos_vida                     # Pontos de vida do Personagem
         self.pontos_ataque = pontos_ataque                 # Pontos de ataque do Personagem
-        self.perc_tesouro = perc_tesouro                   # Porcentagem do tesouro carregado pelo personagem
+        self.perc_tesouro = perc_tesouro                   # Porcentagem do tesouro carregado pelo Personagem
+        self.posicao = posicao                             # Posição do Personagem no mapa (grafo)
         self.itens = itens if itens is not None else []    # Lista de itens carregados pelo Personagem
 
     # String representando as informações sobre o Personagem
@@ -13,6 +14,7 @@ class Personagem:
               f"Pontos de vida: {self.pontos_vida}\n"
               f"Pontos de ataque: {self.pontos_ataque}\n"
               f"Porcentagem do tesouro: {self.perc_tesouro}\n"
+              f"Posição no mapa: {self.posicao}\n"
               f"Itens: {self.itens}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DO PERSONAGEM
@@ -33,6 +35,7 @@ class Personagem:
     def remover_pontos_vida(self, pontos):
         self.pontos_vida = self.pontos_vida - pontos
 
+        # Se os pontos de vida do Personagem chegarem a zero
         if self.pontos_vida <= 0:
             print(f"Você morreu!\n")
 
