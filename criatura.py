@@ -1,6 +1,22 @@
+import random
+
+
 # Declaração do objeto Criatura
+def sortear_criatura():
+    # Dicionário das Criaturas da ilha
+    criaturas = {
+        "Crocodilo Gigante": {"pontos_vida": 50, "pontos_ataque": 10},
+        "Onça Pintada": {"pontos_vida": 50, "pontos_ataque": 10},
+        "Formiga Quimera": {"pontos_vida": 50, "pontos_ataque": 10}
+    }
+
+    nome_criatura = random.choice(list(criaturas.keys()))
+    stats = criaturas[nome_criatura]
+    return nome_criatura, stats
+
+
 class Criatura:
-    # Construtor
+    # Construtor de inicialização dos atributos da Criatura
     def __init__(self, tipo, pontos_vida, pontos_ataque, posicao):
         self.tipo = tipo  # Nome do tipo da Criatura
         self.pontos_vida = pontos_vida  # Pontos de vida da Criatura
@@ -22,3 +38,7 @@ class Criatura:
         # Se os pontos de vida da Criatura chegarem a zero
         if self.pontos_vida <= 0:
             print(f"{self.tipo} morreu!\n")
+
+    # OUTROS MÉTODOS
+
+    # Método para sortear o tipo da Criatura
