@@ -4,16 +4,16 @@ class Personagem:
     def __init__(self, pontos_vida=100, pontos_ataque=20, perc_tesouro=0, itens=None):
         self.pontos_vida = pontos_vida                     # Pontos de vida do Personagem
         self.pontos_ataque = pontos_ataque                 # Pontos de ataque do Personagem
-        self.perc_tesouro = perc_tesouro                     # Porcentagem do tesouro carregado pelo personagem
+        self.perc_tesouro = perc_tesouro                   # Porcentagem do tesouro carregado pelo personagem
         self.itens = itens if itens is not None else []    # Lista de itens carregados pelo Personagem
 
     # String representando as informações sobre o Personagem
     def __str__(self):
-        return (f"Explorador: "
-                f"Pontos de vida = {self.pontos_vida}, "
-                f"Pontos de ataque = {self.pontos_ataque}, "
-                f"Porcentagem do tesouro = {self.perc_tesouro},"
-                f"Itens = {self.itens}")
+        print(f"Explorador\n"
+              f"Pontos de vida: {self.pontos_vida}\n"
+              f"Pontos de ataque: {self.pontos_ataque}\n"
+              f"Porcentagem do tesouro: {self.perc_tesouro}\n"
+              f"Itens: {self.itens}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DO PERSONAGEM
 
@@ -29,7 +29,7 @@ class Personagem:
 
             print(f"Você tem {self.pontos_vida} pontos de vida.\n")
 
-    # Métofo para remover pontos de vida
+    # Método para remover pontos de vida
     def remover_pontos_vida(self, pontos):
         self.pontos_vida = self.pontos_vida - pontos
 
