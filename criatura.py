@@ -12,9 +12,9 @@ class Criatura(object):
 
     # String representado as informações sobre a Criatura
     def __str__(self):
-        print(f"Criatura\n"
-              f"Pontos de vida: {self.pontos_vida}\n"
-              f"Pontos de ataque: {self.pontos_ataque}\n")
+        print(f"Criatura")
+        print(f"Pontos de vida: {self.pontos_vida}")
+        print(f"Pontos de ataque: {self.pontos_ataque}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DA CRIATURA
 
@@ -36,8 +36,16 @@ class Criatura(object):
     def atacar(self, personagem):
         dano = random.randint(1, self.pontos_ataque)
         personagem.pontos_vida -= dano
-        print(f"{self.tipo} atacou! Houve {dano} de dano.\n")
+        print(f"{self.tipo} atacou! Houve {dano} de dano.")
         print(f"Você agora tem {personagem.pontos_vida} pontos de vida.\n")
+
+    # Método para a luta entre a Criatura e o Personagem
+    def lutar(self, personagem):
+        for _ in range(3):
+            if self.esta_viva() and personagem.esta_vivo():
+                self.lutar(personagem)
+            if personagem.esta_vivo() and self.esta_viva():
+                personagem.atacar(self)
 
 
 # OUTROS MÉTODOS

@@ -13,12 +13,12 @@ class Personagem(object):
 
     # String representando as informações sobre o Personagem
     def __str__(self):
-        print(f"Explorador\n"
-              f"Pontos de vida: {self.pontos_vida}\n"
-              f"Pontos de ataque: {self.pontos_ataque}\n"
-              f"Porcentagem do tesouro: {self.perc_tesouro}\n"
-              f"Posição no mapa: {self.posicao}\n"
-              f"Itens: {self.itens}\n")
+        print(f"Explorador")
+        print(f"Pontos de vida: {self.pontos_vida}")
+        print(f"Pontos de ataque: {self.pontos_ataque}")
+        print(f"Porcentagem do tesouro: {self.perc_tesouro}")
+        print(f"Posição no mapa: {self.posicao}")
+        print(f"Itens: {self.itens}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DO PERSONAGEM
 
@@ -94,6 +94,13 @@ class Personagem(object):
     def atacar(self, criatura):
         dano = random.randint(1, self.pontos_ataque)
         criatura.pontos_vida -= dano
-        print(f"Você atacou! Houve {dano} de dano.\n")
+        print(f"Você atacou! Houve {dano} de dano.")
         print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.\n")
 
+    # Método para a luta entre o Personagem e a Criatura
+    def lutar(self, criatura):
+        for _ in range(3):
+            if self.esta_vivo() and criatura.esta_viva():
+                self.lutar(criatura)
+            if criatura.esta_viva() and self.esta_vivo():
+                criatura.atacar(self)
