@@ -1,6 +1,6 @@
-from mapa import Mapa
+from ilha import Ilha
 
-# Gerar Mapa do jogo aleatoriamente
-mapa = Mapa()
-mapa.gerar_mapa_aleatorio()
-mapa.desenhar_mapa()
+# Gerar Ilha do jogo aleatoriamente
+ilha = Ilha()
+ilha.gerar_ilha_aleatoria()
+ilha.desenhar_ilha()

@@ -15,7 +15,7 @@ def sortear_criatura():
     return nome_criatura, stats
 
 
-class Criatura:
+class Criatura(object):
     # Construtor de inicialização dos atributos da Criatura
     def __init__(self, tipo, pontos_vida, pontos_ataque, posicao):
         self.tipo = tipo  # Nome do tipo da Criatura

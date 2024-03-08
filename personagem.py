@@ -1,5 +1,5 @@
 # Declaração do objeto Personagem
-class Personagem:
+class Personagem(object):
     # Construtor de inicialização dos atributos do Personagem
     def __init__(self, pontos_vida=100, pontos_ataque=20, perc_tesouro=0, posicao=1, itens=None):
         self.pontos_vida = pontos_vida                     # Pontos de vida do Personagem
