@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 
 # Declaração do objeto Ilha (Grafo)
 class Ilha(object):
-    # Construtor de inicialização dos atributos do Ilha
+    # Construtor de inicialização dos atributos da Ilha
     def __init__(self):
         self.grafo = nx.Graph()           # Inicializa um grafo vazio
 
-    # MÉTOTOS PARA OS VÉRTICES DO ILHA
+    # MÉTOTOS PARA OS VÉRTICES DA ILHA
 
-    # Método para adicionar um vértice ao Ilha
+    # Método para adicionar um vértice da Ilha
     def adicionar_vertice(self, vertice):
         self.grafo.add_node(vertice)
 
@@ -19,7 +19,7 @@ class Ilha(object):
     def adicionar_vertices(self, vertices):
         self.grafo.add_nodes_from(vertices)
 
-    # MÉTODOS PARA AS ARESTAS DOS VÉRTICES DO ILHA
+    # MÉTODOS PARA AS ARESTAS DOS VÉRTICES DA ILHA
 
     # Método para adicionar uma aresta entre os vértices
     def adicionar_aresta(self, vertice1, vertice2):
@@ -29,14 +29,14 @@ class Ilha(object):
     def adicionar_arestas(self, arestas):
         self.grafo.add_edges_from(arestas)
 
-    # Método para desenhar o Ilha
+    # Método para desenhar a Ilha
     def desenhar_ilha(self):
         nx.draw(self.grafo, with_labels=True, node_size=300, node_color='skyblue', font_size=10)
         plt.show()
 
-    # MÉTODOS PARA GERAÇÃO DO ILHA
+    # MÉTODOS PARA GERAÇÃO DA ILHA
 
-    # Método para gerar um Ilha com valores aleatórios de vértices
+    # Método para gerar uma Ilha com valores aleatórios de vértices
     def gerar_ilha_aleatoria(self):
         num_vertices = random.randint(10, 20)  # Quantidade aleatória de vértices
 
