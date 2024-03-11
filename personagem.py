@@ -9,7 +9,7 @@ class Personagem(object):
         self.pontos_ataque = 20  # Pontos de ataque do Personagem
         self.perc_tesouro = 0    # Porcentagem do tesouro carregado pelo Personagem
         self.regiao = 0          # Posição do Personagem no mapa (grafo)
-        self.itens = None        # Lista de itens carregados pelo Personagem
+        self.armas = None        # Lista de Armas carregadas pelo Personagem
 
     # String representando as informações sobre o Personagem
     def __str__(self):
@@ -62,21 +62,27 @@ class Personagem(object):
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO PERSONAGEM
 
-    # Método para adicionar item a lista
-    def adicionar_item(self, item):
-        self.itens.append(item)
+    # Método para adicionar Arma a lista
+    def adicionar_arma(self, arma):
+        self.armas.append(arma)
 
-    # Método para remover item da lista
-    def remover_item(self, item):
-        if item in self.itens:
-            self.itens.remove(item)
+    # Método para remover Arma da lista
+    def remover_arma(self, arma):
+        if arma in self.armas:
+            self.armas.remove(arma)
         else:
-            print(f"{item} não foi encontrado.\n")
+            print(f"{arma.tipo} não foi encontrada.\n")
 
     # MÉTODOS PARA A PORCENTAGEM DO TESOURO CARREGADA PELO PERSONAGEM
 
     # Método para adicionar a porcentagem do tesouro
-    def adicionar_perc_tesouro(self, percentual):
+    def adicionar_perc_tesouro(self):
+        percentual = self.pontos_vida
+
+        for arma in self.armas:
+            # Calcular o percentual correto para o Personagem carregar o tesouro
+            percentual -= arma.pontos_ataque
+
         self.perc_tesouro = percentual
 
     # Método para remover a porcentagem do tesouro
