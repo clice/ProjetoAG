@@ -57,6 +57,50 @@ def sortear_arma():
             "pontos_ataque": 15
         }
     )
+    
+    return random.choice(armas)
+
+
+# Método para sortear uma Planta Venenosa
+def sortear_planta_venenosa():
+    # Dicionário das Plantas Venenosas
+    plantas_venenosas = (
+        {
+            "tipo": "",
+            "pontos": 5
+        },
+        {
+            "tipo": "",
+            "pontos": 10
+        },
+        {
+            "tipo": "Visgo do Diabo",
+            "pontos": 15
+        }
+    )
+
+    return random.choice(plantas_venenosas)
+
+
+# Método para sortear uma Planta Medicinal
+def sortear_planta_medicional():
+    # Dicionário das Plantas Medicinais
+    plantas_medicinais = (
+        {
+            "tipo": "",
+            "pontos": 5
+        },
+        {
+            "tipo": "",
+            "pontos": 10
+        },
+        {
+            "tipo": "",
+            "pontos": 15
+        }
+    )
+
+    return random.choice(plantas_medicinais)
 
 
 criatura = sortear_criatura()
