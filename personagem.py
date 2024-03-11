@@ -99,8 +99,22 @@ class Personagem(object):
 
     # Método para a luta entre o Personagem e a Criatura
     def lutar_criatura(self, criatura):
-        for _ in range(3):
-            if self.esta_vivo() and criatura.esta_viva():
-                self.atacar_criatura(criatura)
-            if criatura.esta_viva() and self.esta_vivo():
-                criatura.atacar_personagem(self)
+        resposta = True
+
+        while resposta:
+            resposta = input(f"Deseja lutar com {criatura.tipo} (S/N)? ")
+
+            if resposta == "S" or resposta == "s":
+                for _ in range(3):
+                    if self.esta_vivo() and criatura.esta_viva():
+                        self.atacar_criatura(criatura)
+                    if criatura.esta_viva() and self.esta_vivo():
+                        criatura.atacar_personagem(self)
+                resposta = False
+
+            elif resposta == "N" or resposta == "n":
+                print(f"Você fugiu! ")
+                resposta = False
+
+            else:
+                print(f"Opção inválida!")

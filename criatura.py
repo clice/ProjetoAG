@@ -13,7 +13,7 @@ class Criatura(object):
 
     # String representado as informações sobre a Criatura
     def __str__(self):
-        print(f"Criatura")
+        print(f"Criatura: {self.tipo}")
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Descrição: {self.descricao}\n")
@@ -49,35 +49,8 @@ class Criatura(object):
             if personagem.esta_vivo() and self.esta_viva():
                 personagem.atacar_criatura(self)
 
-
-# OUTROS MÉTODOS
-
-# Método para sortear o tipo da Criatura
-def sortear_criatura():
-    # Dicionário das Criaturas da Ilha
-    criaturas = (
-        {
-            "nome": "Crocodilo Gigante",
-            "pontos_vida": 50,
-            "pontos_ataque": 10,
-            "descricao": "Crocodilo gigante de 8 metros de comprimento, possuindo "
-                         "pele dura, além de bastante força e mordida poderosa"
-        },
-        {
-            "nome": "Formiga Quimera",
-            "pontos_vida": 50,
-            "pontos_ataque": 10,
-            "descricao": "Formigas quimera, que podem desossar um boi em poucos minutos, "
-                         "apesar de frágeis individualmente"
-        },
-        {
-            "nome": "Onça Pintada",
-            "pontos_vida": 50,
-            "pontos_ataque": 10,
-            "descricao": "Orça pintada mítica, que consegue se camuflar quase que "
-                         "perfeitamente, e possui o tamanho de um touro, com garras "
-                         "e dentes poderosos"
-        }
-    )
-
-    return random.choice(criaturas)
+    # # Método para a luta entre as Criaturas
+    # def lutar_criatura(self, criatura2):
+    #     for _ in range(3):
+    #         if self.esta_viva() and criatura2.esta_viva():
+    #             self.ata
