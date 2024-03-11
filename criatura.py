@@ -9,7 +9,7 @@ class Criatura(object):
         self.pontos_vida = pontos_vida      # Pontos de vida da Criatura
         self.pontos_ataque = pontos_ataque  # Pontos de ataque da Criatura
         self.descricao = descricao          # Descrição da Criatura
-        self.regiao = regiao                # Região da Criatura no mapa (grafo)
+        self.regiao = regiao                # Região (vértice) da Criatura no mapa (grafo)
 
     # String representado as informações sobre a Criatura
     def __str__(self):

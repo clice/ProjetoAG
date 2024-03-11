@@ -11,7 +11,7 @@ from criatura import Criatura
 
 # Método para sortear uma Criatura
 def sortear_criatura():
-    # Dicionário das Criaturas na Ilha
+    # Lista das Criaturas na Ilha
     criaturas = (
         {
             "tipo": "Crocodilo Gigante",
@@ -42,7 +42,7 @@ def sortear_criatura():
 
 # Método para sortear uma Arma
 def sortear_arma():
-    # Dicionário das Armas na Ilha
+    # Lista das Armas na Ilha
     armas = (
         {
             "tipo": "Faca",
@@ -63,14 +63,14 @@ def sortear_arma():
 
 # Método para sortear uma Planta Venenosa
 def sortear_planta_venenosa():
-    # Dicionário das Plantas Venenosas
+    # Lista das Plantas Venenosas
     plantas_venenosas = (
         {
-            "tipo": "",
+            "tipo": "Planta Venenosa 1",
             "pontos": 5
         },
         {
-            "tipo": "",
+            "tipo": "Planta Venenosa 2",
             "pontos": 10
         },
         {
@@ -83,24 +83,41 @@ def sortear_planta_venenosa():
 
 
 # Método para sortear uma Planta Medicinal
-def sortear_planta_medicional():
-    # Dicionário das Plantas Medicinais
+def sortear_planta_medicinal():
+    # Lista das Plantas Medicinais
     plantas_medicinais = (
         {
-            "tipo": "",
+            "tipo": "Planta Medicinal 1",
             "pontos": 5
         },
         {
-            "tipo": "",
+            "tipo": "Planta Medicinal 2",
             "pontos": 10
         },
         {
-            "tipo": "",
+            "tipo": "Planta Medicinal 3",
             "pontos": 15
         }
     )
 
     return random.choice(plantas_medicinais)
+
+
+# Método para sortear os perigos na Região
+def sortear_perigos(self):
+    # Lista dos Perigos da Ilha
+    perigos = (
+        'Passagens escorregadias à beira do abismo',
+        'Animais selvagens perigosos ou venenosos',
+        'Poço de areia movediça e de piche',
+        'Plantas venenosas com frutos chamativos e aparentemente suculentos'
+    )
+
+    return random.choice(perigos)
+
+# Métofo para sortear um
+def sortear_regiao():
+    regioes = ('Praia', 'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta')
 
 
 criatura = sortear_criatura()

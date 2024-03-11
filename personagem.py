@@ -18,7 +18,7 @@ class Personagem(object):
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Porcentagem do tesouro: {self.perc_tesouro}")
         print(f"Região no mapa: {self.regiao}")
-        print(f"Itens: {self.itens}\n")
+        print(f"Itens: {self.armas}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DO PERSONAGEM
 

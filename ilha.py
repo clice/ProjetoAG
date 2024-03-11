@@ -7,7 +7,10 @@ import matplotlib.pyplot as plt
 class Ilha(object):
     # Construtor de inicialização dos atributos da Ilha
     def __init__(self):
-        self.grafo = nx.Graph()           # Inicializa um grafo vazio
+        self.regioes = None      # 
+        self.qtd_regioes = 0     #
+        self.qtd_arestas = 0     #
+        self.grafo = nx.Graph()  # Inicializa um grafo vazio
 
     # MÉTOTOS PARA OS VÉRTICES DA ILHA
 
