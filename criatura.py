@@ -2,7 +2,7 @@ import random
 
 
 # Declaração do objeto Criatura
-class Criatura(object):
+class Criatura:
     # Construtor de inicialização dos atributos da Criatura
     def __init__(self, tipo, pontos_vida, pontos_ataque, descricao, regiao):
         self.tipo = tipo                    # Nome do tipo da Criatura
@@ -34,20 +34,20 @@ class Criatura(object):
 
     # MÉTODOS PARA MOVIMENTAÇÃO DA CRIATURA
 
-    # Método para o ataque da Criatura contra o Personagem
-    def atacar_personagem(self, personagem):
+    # Método para o ataque da Criatura contra o Explorador
+    def atacar_explorador(self, explorador):
         dano = random.randint(1, self.pontos_ataque)
-        personagem.pontos_vida -= dano
+        explorador.pontos_vida -= dano
         print(f"{self.tipo} atacou! Houve {dano} de dano.")
-        print(f"Você agora tem {personagem.pontos_vida} pontos de vida.\n")
+        print(f"Você agora tem {explorador.pontos_vida} pontos de vida.\n")
 
-    # Método para a luta entre a Criatura e o Personagem
-    def lutar_personagem(self, personagem):
+    # Método para a luta entre a Criatura e o Explorador
+    def lutar_explorador(self, explorador):
         for _ in range(3):
-            if self.esta_viva() and personagem.esta_vivo():
-                self.atacar_personagem(personagem)
-            if personagem.esta_vivo() and self.esta_viva():
-                personagem.atacar_criatura(self)
+            if self.esta_viva() and explorador.esta_vivo():
+                self.atacar_explorador(explorador)
+            if explorador.esta_vivo() and self.esta_viva():
+                explorador.atacar_criatura(self)
 
     # # Método para a luta entre as Criaturas
     # def lutar_criatura(self, criatura2):

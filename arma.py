@@ -1,5 +1,5 @@
 # Declaração do objeto Arma
-class Arma(object):
+class Arma:
     # Construtor de inicialização dos atributos da Arma
     def __init__(self, tipo, pontos_ataque, regiao):
         self.tipo = tipo                    # Nome do tipo da Arma

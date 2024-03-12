@@ -115,9 +115,11 @@ def sortear_perigos(self):
 
     return random.choice(perigos)
 
+
 # Métofo para sortear um
 def sortear_regiao():
     regioes = ('Praia', 'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta')
+    return random.choice(regioes)
 
 
 criatura = sortear_criatura()
