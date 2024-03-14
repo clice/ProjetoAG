@@ -8,20 +8,33 @@ from regiao import Regiao
 class Ilha:
     # Construtor de inicialização dos atributos da Ilha
     def __init__(self):
+        self.ilha = nx.Graph()                          # Inicializa um grafo vazio
         self.regioes = None                             #
         self.qtd_regioes = random.randint(5, 10)  # Número de Regiões na Ilha (vértices no grafo)
         self.qtd_arestas = 0                            #
-        self.ilha = nx.Graph()                          # Inicializa um grafo vazio
+        self.criaturas = []                           # Lista de Criaturas na Ilha
 
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
     def gerar_ilha(self):
         # Adiciona Regiões a Ilha (vértices ao grafo)
         for i in range(self.qtd_regioes):
-            self.ilha.add_node(i)
+            if i == 0:
+                self.ilha.add_node("Praia")
+            elif i == self.qtd_regioes - 1:
+                self.ilha.add_node("Tesouro")
+            else:
+                self.ilha.add_node(i)
 
         # Garante que o grafo gerado é conectado adicionando arestas aleatórias entre os vértices
         for i in range(self.qtd_regioes - 1):
-            self.ilha.add_edge(i, i + 1)
+            if i == 0:
+                self.ilha.add_edge("Praia", i + 1)
+            elif i == self.qtd_regioes - 2:
+
+                self.ilha.add_edge(i, "Tesouro")
+            else:
+                self.ilha.add_edge(i, i + 1)
+
             self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
         # Adiciona mais arestas aleatórias para tornar o grafo mais conectado
@@ -35,9 +48,28 @@ class Ilha:
 
                 # Se a Região adjacente for diferente da Região atual, adicionar como Região adjacente a atual
                 if adjacente != regiao:
-                    self.ilha.add_edge(regiao, adjacente)
+                    if adjacente == 0:
+                        self.ilha.add_edge(regiao, "Praia")
+                    elif adjacente == self.qtd_regioes - 1:
+                        self.ilha.add_edge(regiao, "Tesouro")
+                    else:
+                        self.ilha.add_edge(regiao, adjacente)
 
     # Método para desenhar a Ilha
-    def desenhar_ilha(self):
-        nx.draw(self.ilha, with_labels=True)
+    def desenhar_ilha(self, regiao_atual):
+        # Posição das Regiões (vértices) Position nodes using the spring layout algorithm
+        pos = nx.spring_layout(self.ilha)
+
+        # Desenhar o grafo com: Regiões padrão cor "sky blue", arestas em preto e fonte negrito
+        nx.draw(self.ilha, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold', node_size=500)
+
+        # Destacar a Região atual que o Explorador está com a cor "red"
+        nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao_atual], node_color='red', node_size=500)
+
+        # Destacar
+
+        # Salvar imagem do mapa
+        # plt.savefig('mapa.png')
+
+        # Display the graph
         plt.show()

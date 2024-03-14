@@ -1,11 +1,6 @@
 import random
 from criatura import Criatura
 
-# # Gerar Ilha do jogo aleatoriamente
-# ilha = Ilha()
-# ilha.gerar_ilha_aleatoria()
-# ilha.desenhar_ilha()
-
 
 # OUTROS MÉTODOS
 
@@ -118,11 +113,11 @@ def sortear_perigos(self):
 
 # Métofo para sortear um
 def sortear_regiao():
-    regioes = ('Praia', 'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta')
+    regioes = ('Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta')
     return random.choice(regioes)
 
 
-criatura = sortear_criatura()
-criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'], criatura['descricao'], 0)
-resposta = input(f"Deseja lutar com {criatura.tipo} (S/N)? ")
-print(resposta)
+# criatura = sortear_criatura()
+# criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'], criatura['descricao'], 0)
+# resposta = input(f"Deseja lutar com {criatura.tipo} (S/N)? ")
+# print(resposta)

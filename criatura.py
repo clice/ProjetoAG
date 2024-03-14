@@ -16,7 +16,8 @@ class Criatura:
         print(f"Criatura: {self.tipo}")
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
-        print(f"Descrição: {self.descricao}\n")
+        print(f"Descrição: {self.descricao}")
+        print(f"Região: {self.regiao}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DA CRIATURA
 
