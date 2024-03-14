@@ -1,7 +1,7 @@
 import random
 import networkx as nx
 import matplotlib.pyplot as plt
-from regiao import Regiao
+from objetos.regiao import Regiao
 
 
 # Declaração do objeto Ilha (Grafo)
@@ -12,7 +12,9 @@ class Ilha:
         self.regioes = None                             #
         self.qtd_regioes = random.randint(5, 10)  # Número de Regiões na Ilha (vértices no grafo)
         self.qtd_arestas = 0                            #
-        self.criaturas = []                           # Lista de Criaturas na Ilha
+        self.criaturas = []                             # Lista de Criaturas na Ilha
+        self.armas = []                                 # Lista de Armas na Ilha
+        self.perigos = []                               # Lista de Perigos na Ilha
 
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
     def gerar_ilha(self):

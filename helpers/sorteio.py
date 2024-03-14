@@ -1,5 +1,4 @@
 import random
-from criatura import Criatura
 
 
 # OUTROS MÉTODOS
@@ -41,7 +40,8 @@ def sortear_arma():
     armas = (
         {
             "tipo": "Faca",
-            "pontos_ataque": 5
+            "pontos_ataque": 5,
+
         },
         {
             "tipo": "Espada",

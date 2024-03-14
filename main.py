@@ -1,6 +1,7 @@
-from outros import *
-from ilha import Ilha
-from explorador import Explorador
+from helpers.sorteio import *
+from objetos.ilha import Ilha
+from objetos.arma import Arma
+from objetos.explorador import Explorador
 
 
 # Função para inicializar o jogo
@@ -30,11 +31,19 @@ def inicializar_elementos():
     for i in range(qtd_elementos):
         regiao = random.randint(1, ilha.qtd_regioes - 1)
 
-        # Sortear Criatura para adicionar a Ilha
-        criatura = sortear_criatura()
-        criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'],
-                            criatura['descricao'], regiao)
-        ilha.criaturas.append(criatura)
+        # # Sortear Criatura para adicionar a Ilha
+        # criatura = sortear_criatura()
+        # criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'],
+        #                     criatura['descricao'], regiao)
+        # ilha.criaturas.append(criatura)
+
+        # Sortear Arma para adicionar a Ilha
+        arma = sortear_arma()
+        arma = Arma(arma['tipo'], arma['pontos_ataque'], regiao)
+        ilha.armas.append(arma)
+
+    for arma in ilha.armas:
+        print(arma.__str__())
 
     print("Você chegou a ilha. Essas são as informações iniciais:")
 
