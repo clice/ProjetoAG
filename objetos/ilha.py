@@ -50,12 +50,15 @@ class Ilha:
 
                 # Se a Região adjacente for diferente da Região atual, adicionar como Região adjacente a atual
                 if adjacente != regiao:
-                    if adjacente == 0:
-                        self.ilha.add_edge(regiao, "Praia")
-                    elif adjacente == self.qtd_regioes - 1:
-                        self.ilha.add_edge(regiao, "Tesouro")
-                    else:
-                        self.ilha.add_edge(regiao, adjacente)
+                    if not self.ilha.has_edge(regiao, adjacente):
+                        self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+
+                        if adjacente == 0:
+                            self.ilha.add_edge(regiao, "Praia")
+                        elif adjacente == self.qtd_regioes - 1:
+                            self.ilha.add_edge(regiao, "Tesouro")
+                        else:
+                            self.ilha.add_edge(regiao, adjacente)
 
     # Método para desenhar a Ilha
     def desenhar_ilha(self, regiao_atual):
@@ -63,10 +66,10 @@ class Ilha:
         pos = nx.spring_layout(self.ilha)
 
         # Desenhar o grafo com: Regiões padrão cor "sky blue", arestas em preto e fonte negrito
-        nx.draw(self.ilha, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold', node_size=500)
+        nx.draw(self.ilha, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold', node_size=3000)
 
         # Destacar a Região atual que o Explorador está com a cor "red"
-        nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao_atual], node_color='red', node_size=500)
+        nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao_atual], node_color='red', node_size=3000)
 
         # Destacar
 

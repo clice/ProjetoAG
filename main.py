@@ -1,15 +1,16 @@
 from helpers.sorteio import *
 from objetos.ilha import Ilha
 from objetos.arma import Arma
+from objetos.criatura import Criatura
 from objetos.explorador import Explorador
 
 
 # Função para inicializar o jogo
 def inicializar_jogo():
-    # print("Bem-vindo(a) Explorador(a)! Você está chegando a ilha. Lembre-se que lá há muitos perigos.")
-    # print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
-    # print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
-    # print("Boa sorte!\n")
+    print("Bem-vindo(a) Explorador(a)! Você está chegando a ilha. Lembre-se que lá há muitos perigos.")
+    print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
+    print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
+    print("Boa sorte!\n")
 
     while True:
         inicializar_elementos()
@@ -20,8 +21,8 @@ def inicializar_jogo():
 def inicializar_elementos():
     # Inicializar o grafo da Ilha
     ilha = Ilha()
-    # ilha.gerar_ilha()
-    # ilha.desenhar_ilha("Praia")
+    ilha.gerar_ilha()
+    ilha.desenhar_ilha("Praia")
 
     # Gerar porcentagem de elementos na Ilha
     porcentagem = random.randint(20, 30)
@@ -31,19 +32,22 @@ def inicializar_elementos():
     for i in range(qtd_elementos):
         regiao = random.randint(1, ilha.qtd_regioes - 1)
 
-        # # Sortear Criatura para adicionar a Ilha
-        # criatura = sortear_criatura()
-        # criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'],
-        #                     criatura['descricao'], regiao)
-        # ilha.criaturas.append(criatura)
+        # Sortear Criatura para adicionar a Ilha
+        criatura = sortear_criatura()
+        criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'],
+                            criatura['descricao'], regiao)
+        ilha.criaturas.append(criatura)
 
         # Sortear Arma para adicionar a Ilha
         arma = sortear_arma()
         arma = Arma(arma['tipo'], arma['pontos_ataque'], regiao)
         ilha.armas.append(arma)
 
+    for criatura in ilha.criaturas:
+        criatura.__str__()
+
     for arma in ilha.armas:
-        print(arma.__str__())
+        arma.__str__()
 
     print("Você chegou a ilha. Essas são as informações iniciais:")
 

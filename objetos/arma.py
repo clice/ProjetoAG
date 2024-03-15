@@ -11,7 +11,8 @@ class Arma:
     def __str__(self):
         print(f"Planta: {self.tipo}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
-        print(f"Usos restantes: {self.qtd_uso}\n")
+        print(f"Usos restantes: {self.qtd_uso}")
+        print(f"Regiao: {self.regiao}\n")
 
     # Método para remover a quantidade de uso da Arma
     def remover_qtd_uso(self):
