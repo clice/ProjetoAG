@@ -69,6 +69,10 @@ class Explorador:
     def adicionar_arma(self, arma):
         self.armas.append(arma)
 
+        # Remover percentual do tesouro carregado por conta da arma
+        if self.perc_tesouro > 0:
+            self.perc_tesouro -= arma.pontos_ataque
+
     # Método para remover Arma da lista
     def remover_arma(self, arma):
         if arma in self.armas:

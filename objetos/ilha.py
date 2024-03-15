@@ -15,6 +15,12 @@ class Ilha:
         self.criaturas = []                             # Lista de Criaturas na Ilha
         self.armas = []                                 # Lista de Armas na Ilha
         self.perigos = []                               # Lista de Perigos na Ilha
+        self.checkpoints = []                           # Lista de Regiões que são checkpoints
+
+    # Método para definir os checkpoints
+    def definir_checkpoints(self):
+        # Escolher três números únicos entre as Regiões (vértices)
+        self.checkpoints = random.sample(range(1, self.qtd_regioes), 3)
 
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
     def gerar_ilha(self):

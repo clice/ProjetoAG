@@ -1,8 +1,6 @@
 import random
 
 
-# OUTROS MÉTODOS
-
 # Método para sortear uma Criatura
 def sortear_criatura():
     # Lista das Criaturas na Ilha
@@ -34,42 +32,28 @@ def sortear_criatura():
     return random.choice(criaturas)
 
 
-# Método para sortear uma Arma
-def sortear_arma():
-    # Lista das Armas na Ilha
-    armas = (
-        {
-            "tipo": "Faca",
-            "pontos_ataque": 5,
-
-        },
-        {
-            "tipo": "Espada",
-            "pontos_ataque": 10
-        },
-        {
-            "tipo": "Pistola",
-            "pontos_ataque": 15
-        }
-    )
-    
-    return random.choice(armas)
-
-
-# Método para sortear uma Planta Venenosa
-def sortear_planta_venenosa():
+# Método para sortear um Perigo
+def sortear_perigos():
     # Lista das Plantas Venenosas
     plantas_venenosas = (
         {
-            "tipo": "Planta Venenosa 1",
+            "tipo": "Fonte de gás venenoso",
             "pontos": 5
         },
         {
-            "tipo": "Planta Venenosa 2",
+            "tipo": "Poço de piche",
             "pontos": 10
         },
         {
-            "tipo": "Visgo do Diabo",
+            "tipo": "Areia movediça",
+            "pontos": 15
+        },
+        {
+            "tipo": "Rochas deslizantes",
+            "pontos": 15
+        },
+        {
+            "tipo": "Planta venenosa",
             "pontos": 15
         }
     )
@@ -96,6 +80,28 @@ def sortear_planta_medicinal():
     )
 
     return random.choice(plantas_medicinais)
+
+
+# Método para sortear uma Arma
+def sortear_arma():
+    # Lista das Armas na Ilha
+    armas = (
+        {
+            "tipo": "Faca",
+            "pontos_ataque": 5,
+
+        },
+        {
+            "tipo": "Espada",
+            "pontos_ataque": 10
+        },
+        {
+            "tipo": "Pistola",
+            "pontos_ataque": 15
+        }
+    )
+    
+    return random.choice(armas)
 
 
 # Método para sortear os perigos na Região

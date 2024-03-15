@@ -8,8 +8,6 @@ class Regiao(object):
         self.tipo = tipo         # Determina o tipo de Região
         self.criaturas = None    # Lista de criaturas na Região
         self.qtd_criaturas = 0   # Quantidade de Criaturas na Região
-        # self.perigos = None      # Lista de perigos na Região
-        # self.armas = None        # Lista de armas na Região
         self.itens = None        # Lista de itens de cura na Região
 
     # MÉTODO PARA OS VÉRTICES ADJACENTES DA REGIÃO
