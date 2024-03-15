@@ -123,6 +123,7 @@ class Explorador:
                         self.atacar_criatura(criatura)
                     if criatura.esta_viva() and self.esta_vivo():
                         criatura.atacar_explorador(self)
+
                 resposta = False
 
             elif resposta == "N" or resposta == "n":

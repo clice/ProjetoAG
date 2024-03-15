@@ -17,10 +17,7 @@ class Ilha:
         self.perigos = []                               # Lista de Perigos na Ilha
         self.checkpoints = []                           # Lista de Regiões que são checkpoints
 
-    # Método para definir os checkpoints
-    def definir_checkpoints(self):
-        # Escolher três números únicos entre as Regiões (vértices)
-        self.checkpoints = random.sample(range(1, self.qtd_regioes), 3)
+    # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
 
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
     def gerar_ilha(self):
@@ -84,3 +81,17 @@ class Ilha:
 
         # Display the graph
         plt.show()
+
+    # OUTROS MÉTODOS
+
+    # Método para gerar a quantidade de elementos
+    def sortear_qtd_elementos(self):
+        return round(self.qtd_regioes * (random.randint(20, 30) / 100))
+
+    # Método para adicionar os checkpoints
+    def adicionar_checkpoints(self):
+        self.checkpoints = random.sample(range(1, self.qtd_regioes), self.sortear_qtd_elementos())
+
+    # Método para remover um checkpoint depois de usado
+    def remover_checkpoint(self, checkpoint):
+        self.checkpoints.remove(checkpoint)

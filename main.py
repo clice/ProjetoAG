@@ -24,12 +24,8 @@ def inicializar_elementos():
     ilha.gerar_ilha()
     ilha.desenhar_ilha("Praia")
 
-    # Gerar porcentagem de elementos na Ilha
-    porcentagem = random.randint(20, 30)
-    qtd_elementos = round(ilha.qtd_regioes * (porcentagem / 100))
-
     # Gerar elementos na Ilha
-    for i in range(qtd_elementos):
+    for i in range(ilha.sortear_qtd_elementos()):
         regiao = random.randint(1, ilha.qtd_regioes - 1)
 
         # Sortear Criatura para adicionar a Ilha

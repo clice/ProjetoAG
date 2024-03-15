@@ -104,19 +104,6 @@ def sortear_arma():
     return random.choice(armas)
 
 
-# Método para sortear os perigos na Região
-def sortear_perigos(self):
-    # Lista dos Perigos da Ilha
-    perigos = (
-        'Passagens escorregadias à beira do abismo',
-        'Animais selvagens perigosos ou venenosos',
-        'Poço de areia movediça e de piche',
-        'Plantas venenosas com frutos chamativos e aparentemente suculentos'
-    )
-
-    return random.choice(perigos)
-
-
 # Métofo para sortear um
 def sortear_regiao():
     regioes = ('Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta')
