@@ -12,10 +12,10 @@ class Ilha:
         self.regioes = None                             #
         self.qtd_regioes = random.randint(5, 10)  # Número de Regiões na Ilha (vértices no grafo)
         self.qtd_arestas = 0                            #
-        self.criaturas = []                             # Lista de Criaturas na Ilha
-        self.armas = []                                 # Lista de Armas na Ilha
-        self.perigos = []                               # Lista de Perigos na Ilha
         self.checkpoints = []                           # Lista de Regiões que são checkpoints
+        self.criaturas = []                             # Lista de Criaturas na Ilha
+        self.perigos = []                               # Lista de Perigos na Ilha
+        self.armas = []                                 # Lista de Armas na Ilha
 
     # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
 
@@ -65,16 +65,20 @@ class Ilha:
 
     # Método para desenhar a Ilha
     def desenhar_ilha(self, regiao_atual):
+        node_size = 3000  # Definir tamanho dos vértices para imprimir
+
         # Posição das Regiões (vértices) Position nodes using the spring layout algorithm
         pos = nx.spring_layout(self.ilha)
 
         # Desenhar o grafo com: Regiões padrão cor "sky blue", arestas em preto e fonte negrito
-        nx.draw(self.ilha, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold', node_size=3000)
+        nx.draw(self.ilha, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold',
+                node_size=node_size)
 
         # Destacar a Região atual que o Explorador está com a cor "red"
-        nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao_atual], node_color='red', node_size=3000)
+        nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao_atual], node_color='red', node_size=node_size)
 
-        # Destacar
+        # Destacar a Região Checkpoint com a cor "yellow"
+        nx.draw_networkx_nodes(self.ilha, pos, nodelist=["Checkpoint"], node_color='yellow', node_size=node_size)
 
         # Salvar imagem do mapa
         # plt.savefig('mapa.png')
@@ -90,7 +94,10 @@ class Ilha:
 
     # Método para adicionar os checkpoints
     def adicionar_checkpoints(self):
-        self.checkpoints = random.sample(range(1, self.qtd_regioes), self.sortear_qtd_elementos())
+        if self.sortear_qtd_elementos() <= 3:
+            self.checkpoints = random.sample(range(1, self.qtd_regioes), self.sortear_qtd_elementos())
+        else:  # Definindo o máximo de Checkpoints igual a 3
+            self.checkpoints = random.sample(range(1, self.qtd_regioes), 3)
 
     # Método para remover um checkpoint depois de usado
     def remover_checkpoint(self, checkpoint):

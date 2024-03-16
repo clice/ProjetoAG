@@ -10,6 +10,7 @@ class Explorador:
         self.perc_tesouro = 0    # Porcentagem do tesouro carregado pelo Explorador
         self.regiao = 0          # Posição do Explorador no mapa (grafo)
         self.armas = None        # Lista de Armas carregadas pelo Explorador
+        self.backup = {}         # Backup do Explorador quando encontrar um checkpoint
 
     # String representando as informações sobre o Explorador
     def __str__(self):
@@ -132,3 +133,23 @@ class Explorador:
 
             else:
                 print(f"Opção inválida!")
+
+    # MÉTODOS PARA CONFERÊNCIA DO BACKUP
+
+    # Método para fazer o backup das informações do Explorador quando encontrar um checkpoint
+    def realizar_backup(self):
+        self.backup = {
+            'pontos_vida': self.pontos_vida,
+            'pontos_ataque': self.pontos_ataque,
+            'perc_tesouro': self.perc_tesouro,
+            'regiao': self.regiao,
+            'armas': self.armas
+        }
+
+    # Método para atualizar os dados do Explorador com os dados do backup
+    def atualizar_dados(self):
+        self.pontos_vida = self.backup['pontos_vida']
+        self.pontos_ataque = self.backup['pontos_ataque']
+        self.perc_tesouro = self.backup['perc_tesouro']
+        self.regiao = self.backup['regiao']
+        self.armas = self.backup['armas']

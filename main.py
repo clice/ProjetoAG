@@ -25,6 +25,19 @@ def inicializar_elementos():
     ilha.desenhar_ilha("Praia")
 
     # Gerar elementos na Ilha
+    gerar_elementos(ilha)
+
+    print("Você chegou a ilha. Essas são as informações iniciais:")
+
+    # Inicializar o Explorador
+    explorador = Explorador()
+
+    # Imprimir informações do Explorador
+    explorador.__str__()
+
+
+# Método para gerar os elementos da ilha
+def gerar_elementos(ilha):
     for i in range(ilha.sortear_qtd_elementos()):
         regiao = random.randint(1, ilha.qtd_regioes - 1)
 
@@ -34,24 +47,14 @@ def inicializar_elementos():
                             criatura['descricao'], regiao)
         ilha.criaturas.append(criatura)
 
+        # Sortear Perigos para adicionar a Ilha
+        perigos = sortear_perigos()
+        ilha.perigos.append(perigos)
+
         # Sortear Arma para adicionar a Ilha
         arma = sortear_arma()
         arma = Arma(arma['tipo'], arma['pontos_ataque'], regiao)
         ilha.armas.append(arma)
-
-    for criatura in ilha.criaturas:
-        criatura.__str__()
-
-    for arma in ilha.armas:
-        arma.__str__()
-
-    print("Você chegou a ilha. Essas são as informações iniciais:")
-
-    # Inicializar o Explorador
-    explorador = Explorador()
-
-    # Imprimir informações do Explorador
-    explorador.__str__()
 
 
 # Iniciar o jogo
