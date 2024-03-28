@@ -23,7 +23,7 @@ class Ilha:
     def gerar_ilha(self):
         # Adiciona Regiões a Ilha (vértices ao grafo)
         Lista_regiao = []
-        regioes_disponiveis = {'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta', 'Deserto', 'Caverna', 'Planície', 'Selva', 'Praia'}
+        regioes_disponiveis = {'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta', 'Deserto', 'Caverna', 'Planície', 'Selva'}
 
         while len(Lista_regiao) < self.qtd_regioes:
             regiao = random.choice(list(regioes_disponiveis))
