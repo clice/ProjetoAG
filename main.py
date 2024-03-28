@@ -35,6 +35,7 @@ def inicializar_elementos():
     # Imprimir informações do Explorador
     explorador.__str__()
 
+    explorador.movimentação()
 
 # Método para gerar os elementos da ilha
 def gerar_elementos(ilha):

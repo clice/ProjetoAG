@@ -1,14 +1,16 @@
 import random
 import networkx as nx
 import matplotlib.pyplot as plt
-#from objetos.regiao import Regiao
+from objetos.regiao import Regiao
+
+
 
 # Declaração do objeto Ilha (Grafo)
 class Ilha:
     # Construtor de inicialização dos atributos da Ilha
     def __init__(self):
         self.ilha = nx.Graph()                          # Inicializa um grafo vazio
-       # self.regioes = None                             #
+        self.regioes = []                               #Lista de Regiões do grafo gerado 
         self.qtd_regioes = random.randint(5, 10)  # Número de Regiões na Ilha (vértices no grafo)
         self.qtd_arestas = 0                            #
         self.checkpoints = []                           # Lista de Regiões que são checkpoints
@@ -23,20 +25,23 @@ class Ilha:
     def gerar_ilha(self):
         # Adiciona Regiões a Ilha (vértices ao grafo)
         Lista_regiao = []
-        regioes_disponiveis = {'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta', 'Deserto', 'Caverna', 'Planície', 'Selva'}
-
-        while len(Lista_regiao) < self.qtd_regioes:
-            regiao = random.choice(list(regioes_disponiveis))
-            Lista_regiao.append(regiao)
-            regioes_disponiveis.remove(regiao)
-            
-            
+        regioes_disponiveis = {'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta', 'Deserto', 'Caverna', 'Planície', 'Selva','Praia'}
         for i in range(self.qtd_regioes):
             if i == 0:
+                nova_regiao=Regiao(indice=i,tipo="Praia")
+                Lista_regiao.append("Praia")
                 self.ilha.add_node("Praia")
+                self.regioes.append(nova_regiao) #cria um objeto região
             elif i == self.qtd_regioes - 1:
+                nova_regiao=Regiao(indice=i,tipo="Tesouro")
+                Lista_regiao.append("Tesouro")
                 self.ilha.add_node("Tesouro")
+                self.regioes.append(Regiao(indice=i,tipo="Tesouro"))
             else:
+                regiao_aleatoria = random.choice(list(regioes_disponiveis))
+                nova_regiao=Regiao(indice=i,tipo=regiao_aleatoria)
+                Lista_regiao.append(regiao_aleatoria)
+                self.regioes.append(Regiao(indice=i,tipo=regiao_aleatoria))
                 self.ilha.add_node(Lista_regiao[i])
 
         # Garante que o grafo gerado é conectado adicionando arestas aleatórias entre os vértices
@@ -74,8 +79,9 @@ class Ilha:
                         else:
                             self.ilha.add_edge(regiao, adjacente)
 
-    # Método para desenhar a Ilha
-    def desenhar_ilha(self, regiao_atual):
+    # Método para desenhar a Ilha e método para plotar a movimentação 
+    def desenhar_ilha(self, regiao_atual): # Alterar nome para ficar mais facil de entender 
+        
         node_size = 5000  # Definir tamanho dos vértices para imprimir
 
         # Posição das Regiões (vértices) Position nodes using the spring layout algorithm
@@ -113,3 +119,27 @@ class Ilha:
     # Método para remover um checkpoint depois de usado
     def remover_checkpoint(self, checkpoint):
         self.checkpoints.remove(checkpoint)
+        
+        
+    # Método para gerar os adjacentes nas regiões 
+    def add_adjacentes(self):
+        for i in range(self.qtd_regioes):
+            grau=self.ilha.degree(self.regioes[i])
+            for j in range(grau):
+                Regiao[i].adicionar_adjacente(list(Ilha.neighbors(j)))
+                
+    def retorna_região(self,indice):
+        
+        return(self.regioes[indice])        
+
+    # #Método para verificar os vertices disponiveis para movimentação
+    # def caminhos_disponiveis(self,regiao_atual):
+    #     for regiao_atual in range(self.regioes):
+            
+        
+            
+            
+            
+            
+            
+        

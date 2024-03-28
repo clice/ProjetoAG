@@ -1,14 +1,18 @@
 import random
 from objetos.ilha import Ilha
+from objetos.regiao import Regiao
+
+
 
 # Declaração do objeto Explorador
 class Explorador:
     # Construtor de inicialização dos atributos do Explorador
-    def __init__(self):
+    def __init__(self,regiao_inicial):
         self.pontos_vida = 100   # Pontos de vida do Explorador
         self.pontos_ataque = 20  # Pontos de ataque do Explorador
         self.perc_tesouro = 0    # Porcentagem do tesouro carregado pelo Explorador
-        self.regiao = 0          # Posição do Explorador no mapa (grafo)
+        self.regiao =Ilha.retorna_região(0)  # Posição do Explorador no mapa (grafo)
+        self.indice=0            #indice do local que o explorador está
         self.armas = None        # Lista de Armas carregadas pelo Explorador
         self.backup = {}         # Backup do Explorador quando encontrar um checkpoint
 
@@ -153,5 +157,22 @@ class Explorador:
         self.perc_tesouro = self.backup['perc_tesouro']
         self.regiao = self.backup['regiao']
         self.armas = self.backup['armas']
-        
     
+    def movimentação(self):
+        resposta=True
+        
+        while resposta:
+            resposta = input(f"Deseja avançar para um lugar aleatorio? (S/N)? ")
+            
+            if resposta == "S" or resposta == "s":
+                regiao_atual=Regiao(self.indice,self.regiao)
+                indice_proxima_regiao=random.randint(0,regiao_atual.qtd_adjacentes)
+                self.regiao=regiao_atual.adjacentes[0]
+                Ilha.desenhar_ilha(self.regiao)
+                
+                
+ 
+        
+           
+    
+        
