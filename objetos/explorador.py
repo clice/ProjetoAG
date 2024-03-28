@@ -1,5 +1,5 @@
 import random
-
+from objetos.ilha import Ilha
 
 # Declaração do objeto Explorador
 class Explorador:
@@ -153,3 +153,5 @@ class Explorador:
         self.perc_tesouro = self.backup['perc_tesouro']
         self.regiao = self.backup['regiao']
         self.armas = self.backup['armas']
+        
+    
