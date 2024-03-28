@@ -106,7 +106,16 @@ def sortear_arma():
 
 # Métofo para sortear um
 def sortear_regiao():
-    regioes = ('Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta')
+    regioes = {
+        0: 'Praia',
+        1: 'Montanha',
+        2: 'Lago',
+        3: 'Paredão de Rocha',
+        4: 'Riacho',
+        5: 'Floresta',
+        6: 'Tesouro'
+    }
+
     return random.choice(regioes)
 
 

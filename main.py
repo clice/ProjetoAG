@@ -1,3 +1,4 @@
+from colorama import init
 from helpers.sorteio import *
 from objetos.ilha import Ilha
 from objetos.arma import Arma
@@ -13,32 +14,44 @@ def inicializar_jogo():
     print("Boa sorte!\n")
 
     while True:
-        inicializar_elementos()
+        # Gerar elementos na Ilha
+        ilha = gerar_elementos()
+
+        print("Você chegou a ilha!\n")
+        print("Essas são as informações iniciais:")
+
+        # Inicializar o Explorador
+        explorador = Explorador()
+
+        # Imprimir informações do Explorador
+        explorador.__str__()
+        
+        explorador.movimentacao()
+
+        for criatura in ilha.criaturas:
+            criatura.__str__()
+            explorador.lutar_criatura(criatura)
+
+        # criatura1 = sortear_criatura()
+        # criatura1 = Criatura(criatura1['tipo'], criatura1['pontos_vida'], criatura1['pontos_ataque'],
+        #                     criatura1['descricao'], 0)
+        #
+        # criatura2 = sortear_criatura()
+        # criatura2 = Criatura(criatura2['tipo'], criatura2['pontos_vida'], criatura2['pontos_ataque'],
+        #                     criatura2['descricao'], 0)
+        #
+        # criatura1.lutar_criatura(criatura2)
+
         break
 
 
-# Método para inicializar os elementos na Ilha
-def inicializar_elementos():
+# Método para gerar os elementos da ilha
+def gerar_elementos():
     # Inicializar o grafo da Ilha
     ilha = Ilha()
     ilha.gerar_ilha()
-    ilha.desenhar_ilha("Praia")
+    # ilha.desenhar_ilha("Praia")
 
-    # Gerar elementos na Ilha
-    gerar_elementos(ilha)
-
-    print("Você chegou a ilha. Essas são as informações iniciais:")
-
-    # Inicializar o Explorador
-    explorador = Explorador()
-
-    # Imprimir informações do Explorador
-    explorador.__str__()
-
-    explorador.movimentação()
-
-# Método para gerar os elementos da ilha
-def gerar_elementos(ilha):
     for i in range(ilha.sortear_qtd_elementos()):
         regiao = random.randint(1, ilha.qtd_regioes - 1)
 
@@ -57,33 +70,12 @@ def gerar_elementos(ilha):
         arma = Arma(arma['tipo'], arma['pontos_ataque'], regiao)
         ilha.armas.append(arma)
 
+    return ilha
+
 
 # Iniciar o jogo
 if __name__ == "__main__":
-    inicializar_jogo()
+    # Inicializar colorama
+    init()
 
-# import random
-#
-# def guess_the_number():
-#     print("Welcome to Guess the Number!")
-#     print("I'm thinking of a number between 1 and 100.")
-#     secret_number = random.randint(1, 100)
-#     attempts = 0
-#
-#     while True:
-#         try:
-#             guess = int(input("Enter your guess: "))
-#             attempts += 1
-#
-#             if guess < secret_number:
-#                 print("Too low! Try again.")
-#             elif guess > secret_number:
-#                 print("Too high! Try again.")
-#             else:
-#                 print(f"Congratulations! You guessed the number in {attempts} attempts!")
-#                 break
-#         except ValueError:
-#             print("Invalid input. Please enter a number.")
-#
-# if __name__ == "__main__":
-#     guess_the_number()
+    inicializar_jogo()

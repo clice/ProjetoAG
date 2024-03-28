@@ -1,8 +1,8 @@
 import random
 import networkx as nx
 import matplotlib.pyplot as plt
-from objetos.regiao import Regiao
 
+from objetos.regiao import Regiao
 
 
 # Declaração do objeto Ilha (Grafo)
@@ -10,8 +10,8 @@ class Ilha:
     # Construtor de inicialização dos atributos da Ilha
     def __init__(self):
         self.ilha = nx.Graph()                          # Inicializa um grafo vazio
-        self.regioes = []                               #Lista de Regiões do grafo gerado 
-        self.qtd_regioes = random.randint(5, 10)  # Número de Regiões na Ilha (vértices no grafo)
+        self.regioes = []                               # Lista de Regiões do grafo gerado 
+        self.qtd_regioes = random.randint(5, 10)        # Número de Regiões na Ilha (vértices no grafo)
         self.qtd_arestas = 0                            #
         self.checkpoints = []                           # Lista de Regiões que são checkpoints
         self.criaturas = []                             # Lista de Criaturas na Ilha
@@ -26,6 +26,7 @@ class Ilha:
         # Adiciona Regiões a Ilha (vértices ao grafo)
         Lista_regiao = []
         regioes_disponiveis = {'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta', 'Deserto', 'Caverna', 'Planície', 'Selva','Praia'}
+        
         for i in range(self.qtd_regioes):
             if i == 0:
                 nova_regiao=Regiao(indice=i,tipo="Praia")
@@ -59,12 +60,12 @@ class Ilha:
         # Adiciona mais arestas aleatórias para tornar o grafo mais conectado
         for i in range(self.qtd_regioes):
             # Limite de metade da quantidade de Regiões (arendondando)
-            #qtd_arestas = random.randint(0, self.qtd_regioes // 2)
-            regiao=Lista_regiao[i]
+            # qtd_arestas = random.randint(0, self.qtd_regioes // 2)
+            regiao = Lista_regiao[i]
             qtd_arestas = 1
             # Laço percorrendo a quantidade de arestas geradas aleatoriamente
             for j in range(qtd_arestas):
-                #adjacente = random.randint(0, self.qtd_regioes - 1)
+                # adjacente = random.randint(0, self.qtd_regioes - 1)
                 adjacente = Lista_regiao[j]
 
                 # Se a Região adjacente for diferente da Região atual, adicionar como Região adjacente a atual
@@ -84,7 +85,7 @@ class Ilha:
         
         node_size = 5000  # Definir tamanho dos vértices para imprimir
 
-        # Posição das Regiões (vértices) Position nodes using the spring layout algorithm
+        # Posição das Regiões (vértices)
         pos = nx.spring_layout(self.ilha)
 
         # Desenhar o grafo com: Regiões padrão cor "sky blue", arestas em preto e fonte negrito
@@ -100,7 +101,7 @@ class Ilha:
         # Salvar imagem do mapa
         # plt.savefig('mapa.png')
 
-        # Display the graph
+        # Exibir grafo
         plt.show()
 
     # OUTROS MÉTODOS
@@ -120,7 +121,6 @@ class Ilha:
     def remover_checkpoint(self, checkpoint):
         self.checkpoints.remove(checkpoint)
         
-        
     # Método para gerar os adjacentes nas regiões 
     def add_adjacentes(self):
         for i in range(self.qtd_regioes):
@@ -128,8 +128,7 @@ class Ilha:
             for j in range(grau):
                 Regiao[i].adicionar_adjacente(list(Ilha.neighbors(j)))
                 
-    def retorna_região(self,indice):
-        
+    def retornar_região(self, indice):        
         return(self.regioes[indice])        
 
     # #Método para verificar os vertices disponiveis para movimentação

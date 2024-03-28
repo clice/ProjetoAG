@@ -4,13 +4,13 @@ class Regiao(object):
     def __init__(self, indice, tipo):
         self.indice = indice     # Determina o índice da Região (vértice)
         self.qtd_adjacentes = 0  # Quantidade de vértices adjacantes a Região
-        self.adjacentes = []   # Lista de vértices adjacentes a Região
+        self.adjacentes = []     # Lista de vértices adjacentes a Região
         self.tipo = tipo         # Determina o tipo de Região
         self.criaturas = None    # Lista de criaturas na Região
         self.qtd_criaturas = 0   # Quantidade de Criaturas na Região
         self.itens = None        # Lista de itens de cura na Região
 
-    # MÉTODO PARA OS VÉRTICES ADJACENTES DA REGIÃO
+    # MÉTODOS PARA OS VÉRTICES ADJACENTES DA REGIÃO
 
     # Método para adicionar um vértice adjacente a Região
     def adicionar_adjacente(self, adjacente):
@@ -32,6 +32,5 @@ class Regiao(object):
     def ha_criaturas(self):
         return self.qtd_criaturas > 1
 
-     def retorna_Adjacente(self,indice):
-         
-         return(self.adjacentes[indice])
+    def retornar_adjacente(self, indice):
+        return(self.adjacentes[indice])
