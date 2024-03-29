@@ -58,7 +58,7 @@ class Explorador:
 
     # Método para remover pontos de ataque
     def remover_pontos_ataque(self, pontos):
-        self. pontos_ataque -= pontos
+        self.pontos_ataque -= pontos
 
         # Se os pontos de ataque do Explorador forem reduzidos a menor valor que o mínimo
         if self.pontos_ataque < 20:
@@ -70,9 +70,9 @@ class Explorador:
     def adicionar_perc_tesouro(self):
         percentual = self.pontos_vida
 
-        for arma in self.armas:
+        for item in self.itens:
             # Calcular o percentual correto para o Explorador carregar o tesouro
-            percentual -= arma.pontos_ataque
+            percentual -= item.pontos_ataque
 
         self.perc_tesouro = percentual
 
@@ -90,41 +90,6 @@ class Explorador:
     # Método para atualizar a Região que o Explorador está
     def atualizar_regiao(self, nova_regiao):
         self.regiao = nova_regiao
-
-    # MÉTODOS PARA MOVIMENTAÇÃO DO EXPLORADOR
-
-    # Método para realizar a movimentação do Explorador de uma Região a outra
-    def mover_explorador(self, ilha):
-        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
-
-        # Restaurar cores
-        print(Style.RESET_ALL)
-
-        while True:
-            resposta = input("Deseja avançar para um lugar aleatorio? (S/Outro)? ")
-            print()
-
-            # Verificar resposta do Explorador
-            if resposta.upper() != "S":
-                break
-
-            # Buscar regiões adjacentes a região atual
-            regioes_adjacentes = list(ilha.encontrar_regioes_adjacantes(self.regiao.tipo))
-
-            # Escolher aleatoriamente uma Região para o Explorador ir
-            tipo_regiao = random.choice(regioes_adjacentes)
-
-            # Encontrar as informações da Região escolhida
-            nova_regiao = ilha.encontrar_regiao(tipo_regiao)
-
-            self.atualizar_regiao(nova_regiao)
-
-            print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
-
-            # Restaurar cores
-            print(Style.RESET_ALL)
-
-            nova_regiao.checar_regiao()
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 
@@ -174,7 +139,7 @@ class Explorador:
     # Método para a luta entre o Explorador e a Criatura
     def lutar_criatura(self, criatura):
         while True:
-            resposta = input(f"Deseja lutar com {criatura.tipo} (S/Outro)? ")
+            resposta = input(f"Deseja lutar com {criatura.nome} (S/Outro)? ")
 
             # Verificar resposta do Explorador
             if resposta.upper() != "S":
@@ -190,17 +155,17 @@ class Explorador:
                 if self.esta_vivo() and criatura.esta_viva():
                     dano = self.atacar_criatura(criatura)
                     print(Fore.GREEN + f"Você atacou! Houve {dano} de dano.")
-                    print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
+                    print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
 
                 # Teste para saber se a Criatura morreu com o ataque
                 if not criatura.esta_viva():
-                    print(Fore.YELLOW + f"\n{criatura.tipo} morreu!")
+                    print(Fore.YELLOW + f"\n{criatura.nome} morreu!")
                     break
 
                 # Segundo a Criatura ataca o Explorador
                 if criatura.esta_viva() and self.esta_vivo():
                     dano = criatura.atacar_explorador(self)
-                    print(Fore.RED + f"{criatura.tipo} atacou! Houve {dano} de dano.")
+                    print(Fore.RED + f"{criatura.nome} atacou! Houve {dano} de dano.")
                     print(f"Você agora tem {self.pontos_vida} pontos de vida.")
 
                 # Teste para saber se o Explorador morreu com o ataque
@@ -208,8 +173,7 @@ class Explorador:
                     print(Fore.YELLOW + f"Você morreu!")
                     break
 
-                # Restaurar cores
-                print(Style.RESET_ALL)
+                print(Style.RESET_ALL)  # Restaurar cores
 
                 # Se os pontos de vida do Explorador chegarem a zero
                 if not self.esta_vivo() or not criatura.esta_viva():
@@ -218,7 +182,7 @@ class Explorador:
                 # Se as três rodadas ainda não terminaram nem o Explorador ou Criatura morreram
                 elif rodada <= 2:
                     # Perguntar novamente para continuar a luta
-                    resposta = input(f"Deseja continuar lutando com {criatura.tipo}? (S/Outro)? ")
+                    resposta = input(f"Deseja continuar lutando com {criatura.nome}? (S/Outro)? ")
 
                     # Verificar resposta do Explorador
                     if resposta.upper() != "S":
@@ -229,6 +193,5 @@ class Explorador:
 
             # Se os pontos de vida do Explorador chegarem a zero
             if not self.esta_vivo() or not criatura.esta_viva():
-                # Restaurar cores
-                print(Style.RESET_ALL)
+                print(Style.RESET_ALL)  # Restaurar cores
                 break

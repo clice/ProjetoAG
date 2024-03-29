@@ -14,7 +14,7 @@ class Item:
         print(f"Tipo: {self.tipo}")
         print(f"Pontos: {self.pontos}")
         print(f"Usos: {self.qtd_uso}")
-        print(f"Regiao: {self.regiao}\n")
+        # print(f"Regiao: {self.regiao}\n")
 
     # Método para remover a quantidade de uso da Arma
     def remover_qtd_uso(self):

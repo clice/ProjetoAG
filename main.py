@@ -1,4 +1,4 @@
-from colorama import init
+from colorama import Fore, Style, init
 from helpers.sorteio import *
 from objetos.ilha import Ilha
 from objetos.item import Item
@@ -20,9 +20,9 @@ def inicializar_jogo():
         print("Você está chegando a ilha!\n")
 
         print("Essas são as informações iniciais:")
-        explorador = Explorador()      # Inicializar o Explorador
-        explorador.__str__()           # Imprimir informações do Explorador
-        explorador.mover_explorador(ilha)  # Realizar a movimentação do Explorador
+        explorador = Explorador()           # Inicializar o Explorador
+        explorador.__str__()                # Imprimir informações do Explorador
+        mover_explorador(explorador, ilha)  # Realizar a movimentação do Explorador
 
         # for criatura in ilha.criaturas:
         #     criatura.__str__()
@@ -84,6 +84,36 @@ def gerar_elementos():
         regiao.elementos.append(arma)    # Adiciona a Arma a Região
 
     return ilha
+
+
+# Método para realizar a movimentação do Explorador de uma Região a outra da Ilha
+def mover_explorador(explorador, ilha):
+    print(Fore.MAGENTA + f"Localização atual: {explorador.regiao.tipo}.")
+    print(Style.RESET_ALL)  # Restaurar cores
+
+    while True:
+        resposta = input("Deseja avançar para um lugar aleatorio (S/Outro)? ")
+        print()
+
+        # Verificar resposta do Explorador
+        if resposta.upper() != "S":
+            break
+
+        # Buscar regiões adjacentes a região atual
+        regioes_adjacentes = list(ilha.encontrar_regioes_adjacantes(explorador.regiao.tipo))
+
+        # Escolher aleatoriamente uma Região para o Explorador ir
+        tipo_regiao = random.choice(regioes_adjacentes)
+
+        # Encontrar as informações da Região escolhida
+        nova_regiao = ilha.encontrar_regiao(tipo_regiao)
+
+        explorador.atualizar_regiao(nova_regiao)
+
+        print(Fore.MAGENTA + f"Localização atual: {explorador.regiao.tipo}.")
+        print(Style.RESET_ALL)  # Restaurar cores
+
+        nova_regiao.checar_regiao(explorador)
 
 
 # Iniciar o jogo
