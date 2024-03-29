@@ -30,6 +30,13 @@ class Regiao(object):
             # Restaurar cores
             print(Style.RESET_ALL)
         else:
+            if self.itens:
+                for item in self.itens:
+                    item.__str__()
+
+            if self.criaturas:
+                for criatura in self.criaturas:
+                    criatura.__str__()
             print("Continue procurando...\n")
 
     # MÉTODOS PARA AS CRIATURAS DA REGIÃO

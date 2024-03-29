@@ -59,27 +59,27 @@ def sortear_perigo():
     plantas_venenosas = (
         {
             "nome": "Fonte de gás venenoso",
-            "tipo": "planta_venenosa",
+            "tipo": "perigo",
             "pontos": 5
         },
         {
             "nome": "Poço de piche",
-            "tipo": "planta_venenosa",
+            "tipo": "perigo",
             "pontos": 10
         },
         {
             "nome": "Areia movediça",
-            "tipo": "planta_venenosa",
+            "tipo": "perigo",
             "pontos": 15
         },
         {
             "nome": "Rochas deslizantes",
-            "tipo": "planta_venenosa",
+            "tipo": "perigo",
             "pontos": 15
         },
         {
             "nome": "Planta venenosa",
-            "tipo": "planta_venenosa",
+            "tipo": "perigo",
             "pontos": 15
         }
     )

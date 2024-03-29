@@ -15,7 +15,7 @@ class Criatura:
 
     # String representado as informações sobre a Criatura
     def __str__(self):
-        print(f"Criatura: {self.tipo}")
+        print(f"Criatura: {self.nome}")
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Descrição: {self.descricao}")

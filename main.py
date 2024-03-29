@@ -49,8 +49,10 @@ def gerar_elementos():
     ilha.desenhar_ilha('Praia')
 
     regioes = ilha.regioes[1:-1]  # Remover primeiro e último elementos da lista de Regiões
+    qtd_elementos = sortear_qtd_elementos(ilha.qtd_regioes)  # Quantidade de elementos para adicionar as Regiões
 
-    for i in range(sortear_qtd_elementos(ilha.qtd_regioes)):
+    # Adicionar as Criaturas as Regiões sorteadas
+    for _ in range(qtd_elementos):
         regiao = random.choice(regioes)         # Sortear uma das Regiões da Ilha
 
         # Sortear Criatura para adicionar a Região
@@ -61,10 +63,18 @@ def gerar_elementos():
         )
         regiao.criaturas.append(criatura)  # Adiciona a Criatura a Região
 
+    # Adicionar os Perigos as Regiões sorteadas
+    for _ in range(qtd_elementos):
+        regiao = random.choice(regioes)  # Sortear uma das Regiões da Ilha
+
         # Sortear Perigo para adicionar a Região
         perigo = sortear_perigo()
         perigo = Item(perigo['nome'], perigo['tipo'], perigo['pontos'], 1, regiao.tipo)
         regiao.itens.append(perigo)  # Adiciona o Perigo a Região
+
+    # Adicionar as Plantas Medicinais as Regiões sorteadas
+    for _ in range(qtd_elementos):
+        regiao = random.choice(regioes)  # Sortear uma das Regiões da Ilha
 
         # Sortear Planta Medicianal para adicionar a Região
         planta_medicinal = sortear_planta_medicinal()
@@ -73,6 +83,10 @@ def gerar_elementos():
             planta_medicinal['pontos'], 1, regiao.tipo
         )
         regiao.itens.append(planta_medicinal)  # Adiciona a Planta Medicinal a Região
+
+    # Adicionar as Armas as Regiões sorteadas
+    for _ in range(qtd_elementos):
+        regiao = random.choice(regioes)  # Sortear uma das Regiões da Ilha
 
         # Sortear Arma para adicionar a Região
         arma = sortear_arma()
