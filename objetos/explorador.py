@@ -13,7 +13,7 @@ class Explorador:
         self.pontos_ataque = 20                # Pontos de ataque do Explorador
         self.perc_tesouro = 0                  # Porcentagem do tesouro carregado pelo Explorador
         self.indice = 0                        # Índice do local que o Explorador está
-        self.regiao = Ilha.retornar_regiao(0)  # Posição do Explorador no mapa (grafo)
+        # self.regiao = Ilha.retornar_regiao(0)  # Posição do Explorador no mapa (grafo)
         self.armas = None                      # Lista de Armas carregadas pelo Explorador
         self.backup = {}                       # Backup do Explorador quando encontrar um checkpoint
 
@@ -22,7 +22,7 @@ class Explorador:
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Porcentagem do tesouro: {self.perc_tesouro}")
-        print(f"Região no mapa: {self.regiao}")
+        # print(f"Região no mapa: {self.regiao}")
 
         if self.armas is None:
             print(f"Armas: Nenhuma arma coletada\n")
@@ -205,4 +205,3 @@ class Explorador:
                 # Restaurar cores
                 print(Style.RESET_ALL)
                 break
-

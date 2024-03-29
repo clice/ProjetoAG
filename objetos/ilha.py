@@ -1,7 +1,7 @@
-import random
 import networkx as nx
 import matplotlib.pyplot as plt
 
+from helpers.sorteio import *
 from objetos.regiao import Regiao
 
 
@@ -17,71 +17,73 @@ class Ilha:
         self.criaturas = []                             # Lista de Criaturas na Ilha
         self.perigos = []                               # Lista de Perigos na Ilha
         self.armas = []                                 # Lista de Armas na Ilha
-        
 
     # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
         
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
     def gerar_ilha(self):
+        regioes_usadas = []  # Lista de Regiões para não repetir no mapa
+        aux_qtd_regioes = self.qtd_regioes - 2  # Reduzindo a `Praia` e o `Tesouro`
+
         # Adiciona Regiões a Ilha (vértices ao grafo)
-        Lista_regiao = []
-        regioes_disponiveis = {'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta', 'Deserto', 'Caverna', 'Planície', 'Selva','Praia'}
-        
         for i in range(self.qtd_regioes):
             if i == 0:
-                nova_regiao=Regiao(indice=i,tipo="Praia")
-                Lista_regiao.append("Praia")
-                self.ilha.add_node("Praia")
-                self.regioes.append(nova_regiao) #cria um objeto região
+                # Caso seja o primeito vértice, será sempre a Praia
+                nova_regiao = Regiao(i, 'Praia')  # Criando o objeto Região
+                self.ilha.add_node('Praia')            # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)       # Adiciona o objeto Região as regiões da Ilha
             elif i == self.qtd_regioes - 1:
-                nova_regiao=Regiao(indice=i,tipo="Tesouro")
-                Lista_regiao.append("Tesouro")
-                self.ilha.add_node("Tesouro")
-                self.regioes.append(Regiao(indice=i,tipo="Tesouro"))
+                # Caso seja o último vértice, será sempre o Tesouro
+                nova_regiao = Regiao(i, 'Tesouro')  # Criando o objeto Região
+                self.ilha.add_node('Tesouro')            # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)         # Adiciona o objeto Região as regiões da Ilha
             else:
-                regiao_aleatoria = random.choice(list(regioes_disponiveis))
-                nova_regiao=Regiao(indice=i,tipo=regiao_aleatoria)
-                Lista_regiao.append(regiao_aleatoria)
-                self.regioes.append(Regiao(indice=i,tipo=regiao_aleatoria))
-                self.ilha.add_node(Lista_regiao[i])
+                # Outros casos entre 1 e qtd_arestas - 1
+                regiao_aleatoria = sortear_regiao(regioes_usadas)  # Sortear a Região da ILha
+                nova_regiao = Regiao(i, regiao_aleatoria)          # Criando o objeto Região
+                regioes_usadas.append(regiao_aleatoria)            # Adiciona a lista de regiões já utilizadas
+                self.ilha.add_node(regiao_aleatoria)               # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)                   # Adiciona o objeto Região as regiões da Ilha
 
-        # Garante que o grafo gerado é conectado adicionando arestas aleatórias entre os vértices
+        # Atualizar a lista de regiões usadas com todas as regiões na ordem
+        regioes_usadas.insert(0, 'Praia')
+        regioes_usadas.append('Tesouro')
+
+        # Garante que o grafo gerado é conectado adicionando arestas entre os vértices em sequência (0 -> 1 -> ...)
         for i in range(self.qtd_regioes - 1):
-            if i == 0:
-                self.ilha.add_edge("Praia", Lista_regiao[i + 1])
-            elif i == self.qtd_regioes - 2:
-
-                self.ilha.add_edge(Lista_regiao[i],"Tesouro") 
-            else:
-                self.ilha.add_edge(Lista_regiao[i],Lista_regiao[i+1])
-
             self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
+            if i == 0:
+                # Primeiro vértice `Praia` conecta com o seguinte
+                self.ilha.add_edge('Praia', regioes_usadas[i + 1])  # Adiciona aresta
+            elif i == self.qtd_regioes - 2:
+                # Penúltimo vértice conecta com o último `Tesouro`
+                self.ilha.add_edge(regioes_usadas[i], 'Tesouro')  # Adiciona aresta
+            else:
+                # Vértices entre `Praia` e o `Tesouro`
+                self.ilha.add_edge(regioes_usadas[i], regioes_usadas[i + 1])  # Adiciona aresta
+
         # Adiciona mais arestas aleatórias para tornar o grafo mais conectado
-        for i in range(self.qtd_regioes):
-            # Limite de metade da quantidade de Regiões (arendondando)
-            # qtd_arestas = random.randint(0, self.qtd_regioes // 2)
-            regiao = Lista_regiao[i]
-            qtd_arestas = 1
-            # Laço percorrendo a quantidade de arestas geradas aleatoriamente
-            for j in range(qtd_arestas):
-                # adjacente = random.randint(0, self.qtd_regioes - 1)
-                adjacente = Lista_regiao[j]
+        for regiao in regioes_usadas:
+            adjacente = random.choice(regioes_usadas)  # Escolhendo uma Região aleatória
 
-                # Se a Região adjacente for diferente da Região atual, adicionar como Região adjacente a atual
-                if adjacente != regiao:
-                    if not self.ilha.has_edge(regiao, adjacente):
-                        self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+            # Se a Região adjacente for diferente da Região atual,
+            # adicionar como Região adjacente a atual
+            # assim evitando arestas para o mesmo vértice
+            if adjacente != regiao:
+                # Conferindo se já existe uma aresta entre os vértices para evitar duplicidade
+                if not self.ilha.has_edge(regiao, adjacente):
+                    self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
-                        if adjacente == 0:
-                            self.ilha.add_edge(regiao, "Praia")
-                        elif adjacente == self.qtd_regioes - 1:
-                            self.ilha.add_edge(regiao, "Tesouro")
-                        else:
-                            self.ilha.add_edge(regiao, adjacente)
+                    if adjacente == 0:
+                        self.ilha.add_edge(regiao, 'Praia')
+                    elif adjacente == self.qtd_regioes - 1:
+                        self.ilha.add_edge(regiao, 'Tesouro')
+                    else:
+                        self.ilha.add_edge(regiao, adjacente)
 
     # Método para desenhar a Ilha e método para plotar a movimentação 
-    def desenhar_ilha(self, regiao_atual): # Alterar nome para ficar mais facil de entender 
+    def desenhar_ilha(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
         
         node_size = 5000  # Definir tamanho dos vértices para imprimir
 
@@ -121,24 +123,16 @@ class Ilha:
     def remover_checkpoint(self, checkpoint):
         self.checkpoints.remove(checkpoint)
         
-    # Método para gerar os adjacentes nas regiões 
-    def add_adjacentes(self):
-        for i in range(self.qtd_regioes):
-            grau=self.ilha.degree(self.regioes[i])
-            for j in range(grau):
-                Regiao[i].adicionar_adjacente(list(Ilha.neighbors(j)))
-                
-    def retornar_região(self, indice):        
-        return(self.regioes[indice])        
+    # # Método para gerar os adjacentes nas regiões
+    # def add_adjacentes(self):
+    #     for i in range(self.qtd_regioes):
+    #         grau=self.ilha.degree(self.regioes[i])
+    #         for j in range(grau):
+    #             Regiao[i].adicionar_adjacente(list(Ilha.neighbors(j)))
+    #
+    # def retornar_regiao(self, indice):
+    #     return(self.regioes[indice])
 
     # #Método para verificar os vertices disponiveis para movimentação
     # def caminhos_disponiveis(self,regiao_atual):
     #     for regiao_atual in range(self.regioes):
-            
-        
-            
-            
-            
-            
-            
-        

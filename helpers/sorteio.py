@@ -105,21 +105,16 @@ def sortear_arma():
 
 
 # Métofo para sortear um
-def sortear_regiao():
-    regioes = {
-        0: 'Praia',
-        1: 'Montanha',
-        2: 'Lago',
-        3: 'Paredão de Rocha',
-        4: 'Riacho',
-        5: 'Floresta',
-        6: 'Tesouro'
-    }
+def sortear_regiao(regioes_usadas):
+    regioes = [
+        'Montanha', 'Lago', 'Paredão de Rocha', 'Riacho', 'Floresta',
+        'Deserto', 'Caverna', 'Planície', 'Selva'
+    ]
+
+    # Se a lista de regiões não estiver vazia
+    if regioes_usadas:
+        # Busca os itens de `regioes` que não estão na `lista_regioes` e
+        # adiciona a lista lista a variável `regioes`
+        regioes = [regiao for regiao in regioes if regiao not in regioes_usadas]
 
     return random.choice(regioes)
-
-
-# criatura = sortear_criatura()
-# criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'], criatura['descricao'], 0)
-# resposta = input(f"Deseja lutar com {criatura.tipo} (S/N)? ")
-# print(resposta)

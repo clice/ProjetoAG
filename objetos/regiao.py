@@ -3,23 +3,23 @@ class Regiao(object):
     # Construtor de inicialização dos atributos da Região
     def __init__(self, indice, tipo):
         self.indice = indice     # Determina o índice da Região (vértice)
-        self.qtd_adjacentes = 0  # Quantidade de vértices adjacantes a Região
-        self.adjacentes = []     # Lista de vértices adjacentes a Região
         self.tipo = tipo         # Determina o tipo de Região
+        self.qtd_adjacentes = 0  # Quantidade de vértices adjacantes a Região
+        # self.adjacentes = []     # Lista de vértices adjacentes a Região
         self.criaturas = None    # Lista de criaturas na Região
         self.qtd_criaturas = 0   # Quantidade de Criaturas na Região
         self.itens = None        # Lista de itens de cura na Região
 
-    # MÉTODOS PARA OS VÉRTICES ADJACENTES DA REGIÃO
-
-    # Método para adicionar um vértice adjacente a Região
-    def adicionar_adjacente(self, adjacente):
-        self.adjacentes.append(adjacente)
-        self.qtd_adjacentes += 1
-
-    # Método para retornar os vértices adjacentes a Região
-    def get_adjacentes(self):
-        return self.adjacentes.keys()
+    # # MÉTODOS PARA OS VÉRTICES ADJACENTES DA REGIÃO
+    #
+    # # Método para adicionar um vértice adjacente a Região
+    # def adicionar_adjacente(self, adjacente):
+    #     self.adjacentes.append(adjacente)
+    #     self.qtd_adjacentes += 1
+    #
+    # # Método para retornar os vértices adjacentes a Região
+    # def get_adjacentes(self):
+    #     return self.adjacentes.keys()
 
     # MÉTODO PARA AS CRIATURAS DA REGIÃO
 
