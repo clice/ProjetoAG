@@ -55,20 +55,20 @@ class Ilha:
             if i == 0:
                 # Caso seja o primeito vértice, será sempre a Praia
                 nova_regiao = Regiao(i, 'Praia')  # Criando o objeto Região
-                self.ilha.add_node('Praia')  # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)  # Adiciona o objeto Região as regiões da Ilha
+                self.ilha.add_node('Praia')            # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)       # Adiciona o objeto Região as regiões da Ilha
             elif i == self.qtd_regioes - 1:
                 # Caso seja o último vértice, será sempre o Tesouro
                 nova_regiao = Regiao(i, 'Tesouro')  # Criando o objeto Região
-                self.ilha.add_node('Tesouro')  # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)  # Adiciona o objeto Região as regiões da Ilha
+                self.ilha.add_node('Tesouro')            # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)         # Adiciona o objeto Região as regiões da Ilha
             else:
                 # Outros casos entre 1 e qtd_regioes - 1
                 regiao_aleatoria = sortear_regiao(regioes_usadas)  # Sortear a Região da ILha
-                nova_regiao = Regiao(i, regiao_aleatoria)  # Criando o objeto Região
-                regioes_usadas.append(regiao_aleatoria)  # Adiciona a lista de regiões já utilizadas
-                self.ilha.add_node(regiao_aleatoria)  # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)  # Adiciona o objeto Região as regiões da Ilha
+                nova_regiao = Regiao(i, regiao_aleatoria)          # Criando o objeto Região
+                regioes_usadas.append(regiao_aleatoria)            # Adiciona a lista de regiões já utilizadas
+                self.ilha.add_node(regiao_aleatoria)               # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)                   # Adiciona o objeto Região as regiões da Ilha
 
         # Adicionar os Checkpoints
         self.adicionar_checkpoints(regioes_usadas)

@@ -128,20 +128,20 @@ class Explorador:
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 
-    # Método para adicionar Arma a lista
-    def adicionar_arma(self, arma):
-        self.armas.append(arma)
+    # Método para adicionar Item a lista
+    def adicionar_item(self, item):
+        self.itens.append(item)
 
         # Remover percentual do tesouro carregado por conta da arma
         if self.perc_tesouro > 0:
-            self.perc_tesouro -= arma.pontos_ataque
+            self.perc_tesouro -= item.pontos_ataque
 
-    # Método para remover Arma da lista
-    def remover_arma(self, arma):
-        if arma in self.armas:
-            self.armas.remove(arma)
+    # Método para remover Item da lista
+    def remover_item(self, item):
+        if item in self.itens:
+            self.itens.remove(item)
         else:
-            print(f"{arma.tipo} não foi encontrada.\n")
+            print(f"{item.tipo} não foi encontrado(a).\n")
 
     # MÉTODOS PARA CONFERÊNCIA DO BACKUP
 
@@ -152,7 +152,7 @@ class Explorador:
             'pontos_ataque': self.pontos_ataque,
             'perc_tesouro': self.perc_tesouro,
             'regiao': self.regiao,
-            'armas': self.armas
+            'itens': self.itens
         }
 
     # Método para atualizar os dados do Explorador com os dados do backup
@@ -161,7 +161,7 @@ class Explorador:
         self.pontos_ataque = self.backup['pontos_ataque']
         self.perc_tesouro = self.backup['perc_tesouro']
         self.regiao = self.backup['regiao']
-        self.armas = self.backup['armas']
+        self.itens = self.backup['itens']
                 
     # MÉTODOS PARA LUTA ENTRE O EXPLORADOR E UMA CRIATURA
 
