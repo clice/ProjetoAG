@@ -20,8 +20,8 @@ def inicializar_jogo():
         print("Você chegou a ilha!\n")
         print("Essas são as informações iniciais:")
 
-        explorador = Explorador()  # Inicializar o Explorador
-        explorador.__str__()       # Imprimir informações do Explorador
+        explorador = Explorador()      # Inicializar o Explorador
+        explorador.__str__()           # Imprimir informações do Explorador
         explorador.movimentacao(ilha)  # Realizar a movimentação do Explorador
 
         # for criatura in ilha.criaturas:

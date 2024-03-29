@@ -1,9 +1,13 @@
+from colorama import Fore, Style
+
+
 # Declaração do objeto Região (Partes da Ilha = Vértices)
 class Regiao(object):
     # Construtor de inicialização dos atributos da Região
     def __init__(self, indice, tipo):
         self.indice = indice     # Determina o índice da Região (vértice)
         self.tipo = tipo         # Determina o tipo de Região
+        self.perc_tesouro = 0    # Determina o percentual do Tesouro que há na Região
         self.criaturas = []      # Lista de criaturas na Região
         self.qtd_criaturas = 0   # Quantidade de Criaturas na Região
         self.itens = []          # Lista de itens de cura na Região
@@ -16,7 +20,19 @@ class Regiao(object):
         print(f"Quantidade de criaturas: {self.qtd_criaturas}")
         print(f"Itens: {self.itens}")
 
-    # MÉTODO PARA AS CRIATURAS DA REGIÃO
+    # MÉTODOS PARA AS INFORMAÇÕES DA REGIÃO
+
+    # Método para checar qual a Região atual
+    def checar_regiao(self):
+        if self.tipo == 'Tesouro':
+            print(Fore.CYAN + f"Você chegou ao Tesouro!")
+
+            # Restaurar cores
+            print(Style.RESET_ALL)
+        else:
+            print("Continue procurando...\n")
+
+    # MÉTODOS PARA AS CRIATURAS DA REGIÃO
 
     # Método para adicionar criaturas na Região
     def adicionar_criatura(self, criatura):

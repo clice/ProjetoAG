@@ -1,7 +1,5 @@
 import random
 
-from objetos.ilha import Ilha
-from objetos.regiao import Regiao
 from colorama import Fore, Style
 
 
@@ -22,6 +20,7 @@ class Explorador:
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Porcentagem do tesouro: {self.perc_tesouro}")
+        print(f"Índice: {self.indice}")
         print(f"Região atual: {self.tipo_regiao}")
 
         if self.armas is None:
@@ -95,8 +94,10 @@ class Explorador:
 
     # Método para realizar a movimentação do Explorador de uma Região a outra
     def movimentacao(self, ilha):
+        print(f"Localização atual: {self.tipo_regiao}.")
+
         while True:
-            resposta = input(f"Deseja avançar para um lugar aleatorio? (S/Outro)? ")
+            resposta = input("Deseja avançar para um lugar aleatorio? (S/Outro)? ")
 
             # Verificar resposta do Explorador
             if resposta.upper() != "S":
@@ -105,25 +106,17 @@ class Explorador:
             # Buscar regiões adjacentes a região atual
             regioes_adjacentes = list(ilha.encontrar_regioes_adjacantes(self.tipo_regiao))
 
-            # print(regioes_adjacentes)
-
             # Escolher aleatoriamente uma Região para o Explorador ir
             tipo_regiao = random.choice(regioes_adjacentes)
 
-            # print(tipo_regiao)
-
+            # Encontrar as informações da Região escolhida
             nova_regiao = ilha.encontrar_regiao(tipo_regiao)
 
-            # nova_regiao.__str__()
+            self.atualizar_regiao(nova_regiao.indice, nova_regiao.tipo)
 
-            # Atualizar a Região do Explorador
-            # self.atualizar_regiao(nova_regiao.indice, nova_regiao.tipo)
+            print(f"Localização atual: {self.tipo_regiao}.")
 
-            # if resposta == "S" or resposta == "s":
-            #     regiao_atual=Regiao(self.indice,self.regiao)
-            #     indice_proxima_regiao=random.randint(0,regiao_atual.qtd_adjacentes)
-            #     self.regiao=regiao_atual.adjacentes[0]
-            #     Ilha.desenhar_ilha(self.regiao)
+            nova_regiao.checar_regiao()
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 
