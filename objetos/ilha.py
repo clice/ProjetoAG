@@ -18,12 +18,25 @@ class Ilha:
         self.perigos = []                               # Lista de Perigos na Ilha
         self.armas = []                                 # Lista de Armas na Ilha
 
+    # MÉTODOS PARA OS CHECKPOINTS
+
+    # Método para adicionar os checkpoints
+    def adicionar_checkpoints(self, regioes_usadas):
+        if self.sortear_qtd_elementos() < 3:
+            self.checkpoints = random.sample(regioes_usadas, self.sortear_qtd_elementos())
+        else:
+            # Definindo o máximo de Checkpoints igual a 3
+            self.checkpoints = random.sample(regioes_usadas, 3)
+
+    # Método para remover um checkpoint depois de usado
+    def remover_checkpoint(self, checkpoint):
+        self.checkpoints.remove(checkpoint)
+
     # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
         
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
     def gerar_ilha(self):
         regioes_usadas = []  # Lista de Regiões para não repetir no mapa
-        aux_qtd_regioes = self.qtd_regioes - 2  # Reduzindo a `Praia` e o `Tesouro`
 
         # Adiciona Regiões a Ilha (vértices ao grafo)
         for i in range(self.qtd_regioes):
@@ -45,9 +58,15 @@ class Ilha:
                 self.ilha.add_node(regiao_aleatoria)               # Adiciona vértice ao grafo
                 self.regioes.append(nova_regiao)                   # Adiciona o objeto Região as regiões da Ilha
 
+        # Adicionar os Checkpoints
+        self.adicionar_checkpoints(regioes_usadas)
+
         # Atualizar a lista de regiões usadas com todas as regiões na ordem
         regioes_usadas.insert(0, 'Praia')
         regioes_usadas.append('Tesouro')
+
+        print(regioes_usadas)
+        print(self.qtd_regioes)
 
         # Garante que o grafo gerado é conectado adicionando arestas entre os vértices em sequência (0 -> 1 -> ...)
         for i in range(self.qtd_regioes - 1):
@@ -84,7 +103,6 @@ class Ilha:
 
     # Método para desenhar a Ilha e método para plotar a movimentação 
     def desenhar_ilha(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
-        
         node_size = 5000  # Definir tamanho dos vértices para imprimir
 
         # Posição das Regiões (vértices)
@@ -98,7 +116,8 @@ class Ilha:
         nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao_atual], node_color='red', node_size=node_size)
 
         # Destacar a Região Checkpoint com a cor "yellow"
-        #nx.draw_networkx_nodes(self.ilha, pos, nodelist=["Checkpoint"], node_color='yellow', node_size=node_size)
+        for regiao in self.checkpoints:
+            nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao], node_color='yellow', node_size=node_size)
 
         # Salvar imagem do mapa
         # plt.savefig('mapa.png')
@@ -111,17 +130,6 @@ class Ilha:
     # Método para gerar a quantidade de elementos
     def sortear_qtd_elementos(self):
         return round(self.qtd_regioes * (random.randint(20, 30) / 100))
-
-    # Método para adicionar os checkpoints
-    def adicionar_checkpoints(self):
-        if self.sortear_qtd_elementos() <= 3:
-            self.checkpoints = random.sample(range(1, self.qtd_regioes), self.sortear_qtd_elementos())
-        else:  # Definindo o máximo de Checkpoints igual a 3
-            self.checkpoints = random.sample(range(1, self.qtd_regioes), 3)
-
-    # Método para remover um checkpoint depois de usado
-    def remover_checkpoint(self, checkpoint):
-        self.checkpoints.remove(checkpoint)
         
     # # Método para gerar os adjacentes nas regiões
     # def add_adjacentes(self):
