@@ -32,5 +32,5 @@ class Regiao(object):
     def ha_criaturas(self):
         return self.qtd_criaturas > 1
 
-    def retornar_adjacente(self, indice):
-        return(self.adjacentes[indice])
+    # def retornar_adjacente(self, indice):
+    #     return(self.adjacentes[indice])

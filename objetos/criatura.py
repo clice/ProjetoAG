@@ -6,8 +6,8 @@ from colorama import Fore
 # Declaração do objeto Criatura
 class Criatura:
     # Construtor de inicialização dos atributos da Criatura
-    def __init__(self, tipo, pontos_vida, pontos_ataque, descricao, regiao):
-        self.tipo = tipo                    # Nome do tipo da Criatura
+    def __init__(self, nome, pontos_vida, pontos_ataque, descricao, regiao):
+        self.nome = nome                    # Nome da Criatura
         self.pontos_vida = pontos_vida      # Pontos de vida da Criatura
         self.pontos_ataque = pontos_ataque  # Pontos de ataque da Criatura
         self.descricao = descricao          # Descrição da Criatura

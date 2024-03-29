@@ -8,22 +8,23 @@ from objetos.regiao import Regiao
 # Declaração do objeto Ilha (Grafo)
 class Ilha:
     # Construtor de inicialização dos atributos da Ilha
-    def __init__(self):
-        self.ilha = nx.Graph()                          # Inicializa um grafo vazio
-        self.regioes = []                               # Lista de Regiões do grafo gerado 
-        self.qtd_regioes = random.randint(5, 10)        # Número de Regiões na Ilha (vértices no grafo)
-        self.qtd_arestas = 0                            #
-        self.checkpoints = []                           # Lista de Regiões que são checkpoints
-        self.criaturas = []                             # Lista de Criaturas na Ilha
-        self.perigos = []                               # Lista de Perigos na Ilha
-        self.armas = []                                 # Lista de Armas na Ilha
+    def __init__(self, qtd_regioes):
+        self.ilha = nx.Graph()          # Inicializa um grafo vazio
+        self.regioes = []               # Lista de Regiões do grafo gerado
+        self.qtd_regioes = qtd_regioes  # Número de Regiões na Ilha (vértices no grafo)
+        # self.qtd_arestas = 0            #
+        self.checkpoints = []           # Lista de Regiões que são checkpoints
+        self.criaturas = []             # Lista de Criaturas na Ilha
+        self.itens = []                 # Lista de Itens na Ilha
 
     # MÉTODOS PARA OS CHECKPOINTS
 
     # Método para adicionar os checkpoints
     def adicionar_checkpoints(self, regioes_usadas):
-        if self.sortear_qtd_elementos() < 3:
-            self.checkpoints = random.sample(regioes_usadas, self.sortear_qtd_elementos())
+        qtd_elementos = self.sortear_qtd_elementos()
+
+        if qtd_elementos < 3:
+            self.checkpoints = random.sample(regioes_usadas, qtd_elementos)
         else:
             # Definindo o máximo de Checkpoints igual a 3
             self.checkpoints = random.sample(regioes_usadas, 3)
@@ -33,7 +34,7 @@ class Ilha:
         self.checkpoints.remove(checkpoint)
 
     # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
-        
+
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
     def gerar_ilha(self):
         regioes_usadas = []  # Lista de Regiões para não repetir no mapa
@@ -43,20 +44,20 @@ class Ilha:
             if i == 0:
                 # Caso seja o primeito vértice, será sempre a Praia
                 nova_regiao = Regiao(i, 'Praia')  # Criando o objeto Região
-                self.ilha.add_node('Praia')            # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)       # Adiciona o objeto Região as regiões da Ilha
+                self.ilha.add_node('Praia')  # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)  # Adiciona o objeto Região as regiões da Ilha
             elif i == self.qtd_regioes - 1:
                 # Caso seja o último vértice, será sempre o Tesouro
                 nova_regiao = Regiao(i, 'Tesouro')  # Criando o objeto Região
-                self.ilha.add_node('Tesouro')            # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)         # Adiciona o objeto Região as regiões da Ilha
+                self.ilha.add_node('Tesouro')  # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)  # Adiciona o objeto Região as regiões da Ilha
             else:
-                # Outros casos entre 1 e qtd_arestas - 1
+                # Outros casos entre 1 e qtd_regioes - 1
                 regiao_aleatoria = sortear_regiao(regioes_usadas)  # Sortear a Região da ILha
-                nova_regiao = Regiao(i, regiao_aleatoria)          # Criando o objeto Região
-                regioes_usadas.append(regiao_aleatoria)            # Adiciona a lista de regiões já utilizadas
-                self.ilha.add_node(regiao_aleatoria)               # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)                   # Adiciona o objeto Região as regiões da Ilha
+                nova_regiao = Regiao(i, regiao_aleatoria)  # Criando o objeto Região
+                regioes_usadas.append(regiao_aleatoria)  # Adiciona a lista de regiões já utilizadas
+                self.ilha.add_node(regiao_aleatoria)  # Adiciona vértice ao grafo
+                self.regioes.append(nova_regiao)  # Adiciona o objeto Região as regiões da Ilha
 
         # Adicionar os Checkpoints
         self.adicionar_checkpoints(regioes_usadas)
@@ -65,12 +66,9 @@ class Ilha:
         regioes_usadas.insert(0, 'Praia')
         regioes_usadas.append('Tesouro')
 
-        print(regioes_usadas)
-        print(self.qtd_regioes)
-
         # Garante que o grafo gerado é conectado adicionando arestas entre os vértices em sequência (0 -> 1 -> ...)
         for i in range(self.qtd_regioes - 1):
-            self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+            # self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
             if i == 0:
                 # Primeiro vértice `Praia` conecta com o seguinte
@@ -92,7 +90,7 @@ class Ilha:
             if adjacente != regiao:
                 # Conferindo se já existe uma aresta entre os vértices para evitar duplicidade
                 if not self.ilha.has_edge(regiao, adjacente):
-                    self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+                    # self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
                     if adjacente == 0:
                         self.ilha.add_edge(regiao, 'Praia')
@@ -101,7 +99,7 @@ class Ilha:
                     else:
                         self.ilha.add_edge(regiao, adjacente)
 
-    # Método para desenhar a Ilha e método para plotar a movimentação 
+    # Método para desenhar a Ilha e método para plotar a movimentação
     def desenhar_ilha(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
         node_size = 5000  # Definir tamanho dos vértices para imprimir
 
@@ -130,7 +128,7 @@ class Ilha:
     # Método para gerar a quantidade de elementos
     def sortear_qtd_elementos(self):
         return round(self.qtd_regioes * (random.randint(20, 30) / 100))
-        
+
     # # Método para gerar os adjacentes nas regiões
     # def add_adjacentes(self):
     #     for i in range(self.qtd_regioes):

@@ -1,7 +1,7 @@
 from colorama import init
 from helpers.sorteio import *
 from objetos.ilha import Ilha
-from objetos.arma import Arma
+from objetos.item import Item
 from objetos.criatura import Criatura
 from objetos.explorador import Explorador
 
@@ -48,27 +48,39 @@ def inicializar_jogo():
 # Método para gerar os elementos da ilha
 def gerar_elementos():
     # Inicializar o grafo da Ilha
-    ilha = Ilha()
+    ilha = Ilha(random.randint(5, 10))
     ilha.gerar_ilha()
     ilha.desenhar_ilha('Praia')
 
-    # for i in range(ilha.sortear_qtd_elementos()):
-    #     regiao = random.randint(1, ilha.qtd_regioes - 1)
-    #
-    #     # Sortear Criatura para adicionar a Ilha
-    #     criatura = sortear_criatura()
-    #     criatura = Criatura(criatura['tipo'], criatura['pontos_vida'], criatura['pontos_ataque'],
-    #                         criatura['descricao'], regiao)
-    #     ilha.criaturas.append(criatura)
-    #
-    #     # Sortear Perigos para adicionar a Ilha
-    #     perigos = sortear_perigos()
-    #     ilha.perigos.append(perigos)
-    #
-    #     # Sortear Arma para adicionar a Ilha
-    #     arma = sortear_arma()
-    #     arma = Arma(arma['tipo'], arma['pontos_ataque'], regiao)
-    #     ilha.armas.append(arma)
+    for i in range(ilha.sortear_qtd_elementos()):
+        regioes = ilha.regioes[1:-1]     # Remover primeiro e último elementos da lista de Regiões
+        regiao = random.choice(regioes)  # Sortear uma das Regiões da Ilha
+
+        # Sortear Criatura para adicionar a Ilha
+        criatura = sortear_criatura()
+        criatura = Criatura(
+            criatura['nome'], criatura['pontos_vida'], criatura['pontos_ataque'],
+            criatura['descricao'], regiao.tipo
+        )
+        ilha.criaturas.append(criatura)  # Adiciona a Criatura a lista
+
+        # Sortear Perigos para adicionar a Ilha
+        perigo = sortear_perigo()
+        perigo = Item(perigo['nome'], perigo['tipo'], perigo['pontos'], 1, regiao.tipo)
+        ilha.itens.append(perigo)  # Adiciona o Perigo a lista
+
+        # Sortear Plantas Medicianais para adicionar a Ilha
+        planta_medicinal = sortear_planta_medicinal()
+        planta_medicinal = Item(
+            planta_medicinal['nome'], planta_medicinal['tipo'],
+            planta_medicinal['pontos'], 1, regiao.tipo
+        )
+        ilha.itens.append(planta_medicinal)  # Adiciona a Planta Medicinal a lista
+
+        # Sortear Arma para adicionar a Ilha
+        arma = sortear_arma()
+        arma = Item(arma['nome'], arma['tipo'], arma['pontos'], 3, regiao.tipo)
+        ilha.itens.append(arma)
 
     return ilha
 
