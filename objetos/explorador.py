@@ -9,20 +9,20 @@ from colorama import Fore, Style
 class Explorador:
     # Construtor de inicialização dos atributos do Explorador
     def __init__(self):
-        self.pontos_vida = 100                 # Pontos de vida do Explorador
-        self.pontos_ataque = 20                # Pontos de ataque do Explorador
-        self.perc_tesouro = 0                  # Porcentagem do tesouro carregado pelo Explorador
-        self.indice = 0                        # Índice do local que o Explorador está
-        # self.regiao = Ilha.retornar_regiao(0)  # Posição do Explorador no mapa (grafo)
-        self.armas = None                      # Lista de Armas carregadas pelo Explorador
-        self.backup = {}                       # Backup do Explorador quando encontrar um checkpoint
+        self.pontos_vida = 100      # Pontos de vida do Explorador
+        self.pontos_ataque = 20     # Pontos de ataque do Explorador
+        self.perc_tesouro = 0       # Porcentagem do tesouro carregado pelo Explorador
+        self.indice = 0             # Índice do local que o Explorador está no mapa (grafo)
+        self.tipo_regiao = 'Praia'  # Nome do tipo de Região que o Explorador está no mapa (grafo)
+        self.armas = None           # Lista de Armas carregadas pelo Explorador
+        self.backup = {}            # Backup do Explorador quando encontrar um checkpoint
 
     # String representando as informações sobre o Explorador
     def __str__(self):
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Porcentagem do tesouro: {self.perc_tesouro}")
-        # print(f"Região no mapa: {self.regiao}")
+        print(f"Região atual: {self.tipo_regiao}")
 
         if self.armas is None:
             print(f"Armas: Nenhuma arma coletada\n")
@@ -65,23 +65,6 @@ class Explorador:
         if self.pontos_ataque < 20:
             self.pontos_ataque = 20
 
-    # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
-
-    # Método para adicionar Arma a lista
-    def adicionar_arma(self, arma):
-        self.armas.append(arma)
-
-        # Remover percentual do tesouro carregado por conta da arma
-        if self.perc_tesouro > 0:
-            self.perc_tesouro -= arma.pontos_ataque
-
-    # Método para remover Arma da lista
-    def remover_arma(self, arma):
-        if arma in self.armas:
-            self.armas.remove(arma)
-        else:
-            print(f"{arma.tipo} não foi encontrada.\n")
-
     # MÉTODOS PARA A PORCENTAGEM DO TESOURO CARREGADA PELO EXPLORADOR
 
     # Método para adicionar a porcentagem do tesouro
@@ -103,6 +86,62 @@ class Explorador:
             self.perc_tesouro = 0
             print(f"Você perdeu todo o tesouro que tinha resgatado.\n")
 
+    # MÉTODOS PARA MOVIMENTAÇÃO DO EXPLORADOR
+
+    # Método para atualizar a Região que o Explorador está
+    def atualizar_regiao(self, indice, tipo_regiao):
+        self.indice = indice
+        self.tipo_regiao = tipo_regiao
+
+    # Método para realizar a movimentação do Explorador de uma Região a outra
+    def movimentacao(self, ilha):
+        while True:
+            resposta = input(f"Deseja avançar para um lugar aleatorio? (S/Outro)? ")
+
+            # Verificar resposta do Explorador
+            if resposta.upper() != "S":
+                break
+
+            # Buscar regiões adjacentes a região atual
+            regioes_adjacentes = list(ilha.encontrar_regioes_adjacantes(self.tipo_regiao))
+
+            # print(regioes_adjacentes)
+
+            # Escolher aleatoriamente uma Região para o Explorador ir
+            tipo_regiao = random.choice(regioes_adjacentes)
+
+            # print(tipo_regiao)
+
+            nova_regiao = ilha.encontrar_regiao(tipo_regiao)
+
+            # nova_regiao.__str__()
+
+            # Atualizar a Região do Explorador
+            # self.atualizar_regiao(nova_regiao.indice, nova_regiao.tipo)
+
+            # if resposta == "S" or resposta == "s":
+            #     regiao_atual=Regiao(self.indice,self.regiao)
+            #     indice_proxima_regiao=random.randint(0,regiao_atual.qtd_adjacentes)
+            #     self.regiao=regiao_atual.adjacentes[0]
+            #     Ilha.desenhar_ilha(self.regiao)
+
+    # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
+
+    # Método para adicionar Arma a lista
+    def adicionar_arma(self, arma):
+        self.armas.append(arma)
+
+        # Remover percentual do tesouro carregado por conta da arma
+        if self.perc_tesouro > 0:
+            self.perc_tesouro -= arma.pontos_ataque
+
+    # Método para remover Arma da lista
+    def remover_arma(self, arma):
+        if arma in self.armas:
+            self.armas.remove(arma)
+        else:
+            print(f"{arma.tipo} não foi encontrada.\n")
+
     # MÉTODOS PARA CONFERÊNCIA DO BACKUP
 
     # Método para fazer o backup das informações do Explorador quando encontrar um checkpoint
@@ -122,20 +161,6 @@ class Explorador:
         self.perc_tesouro = self.backup['perc_tesouro']
         self.regiao = self.backup['regiao']
         self.armas = self.backup['armas']
-
-    # MÉTODOS PARA MOVIMENTAÇÃO DO EXPLORADOR
-    
-    def movimentacao(self):
-        resposta=True
-
-        while resposta:
-            resposta = input(f"Deseja avançar para um lugar aleatorio? (S/N)? ")
-
-            if resposta == "S" or resposta == "s":
-                regiao_atual=Regiao(self.indice,self.regiao)
-                indice_proxima_regiao=random.randint(0,regiao_atual.qtd_adjacentes)
-                self.regiao=regiao_atual.adjacentes[0]
-                Ilha.desenhar_ilha(self.regiao)
                 
     # MÉTODOS PARA LUTA ENTRE O EXPLORADOR E UMA CRIATURA
 
@@ -153,7 +178,8 @@ class Explorador:
             # Verificar resposta do Explorador
             if resposta.upper() != "S":
                 break
-            rodada = 1
+
+            rodada = 1  # Rodada inicial
 
             while rodada <= 3:
                 print(f"\nROUND {rodada}")

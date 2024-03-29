@@ -4,33 +4,25 @@ class Regiao(object):
     def __init__(self, indice, tipo):
         self.indice = indice     # Determina o índice da Região (vértice)
         self.tipo = tipo         # Determina o tipo de Região
-        self.qtd_adjacentes = 0  # Quantidade de vértices adjacantes a Região
-        # self.adjacentes = []     # Lista de vértices adjacentes a Região
-        self.criaturas = None    # Lista de criaturas na Região
+        self.criaturas = []      # Lista de criaturas na Região
         self.qtd_criaturas = 0   # Quantidade de Criaturas na Região
-        self.itens = None        # Lista de itens de cura na Região
+        self.itens = []          # Lista de itens de cura na Região
 
-    # # MÉTODOS PARA OS VÉRTICES ADJACENTES DA REGIÃO
-    #
-    # # Método para adicionar um vértice adjacente a Região
-    # def adicionar_adjacente(self, adjacente):
-    #     self.adjacentes.append(adjacente)
-    #     self.qtd_adjacentes += 1
-    #
-    # # Método para retornar os vértices adjacentes a Região
-    # def get_adjacentes(self):
-    #     return self.adjacentes.keys()
+    # String representando as informações sobre a Região
+    def __str__(self):
+        print(f"Índice: {self.indice}")
+        print(f"Tipo: {self.tipo}")
+        print(f"Criaturas: {self.criaturas}")
+        print(f"Quantidade de criaturas: {self.qtd_criaturas}")
+        print(f"Itens: {self.itens}")
 
     # MÉTODO PARA AS CRIATURAS DA REGIÃO
 
     # Método para adicionar criaturas na Região
-    def adicionar_criaturas(self, criatura):
+    def adicionar_criatura(self, criatura):
         self.criaturas.append(criatura)
         self.qtd_criaturas += 1
 
     # Método para retornar se há mais de uma Criatura na Região
     def ha_criaturas(self):
         return self.qtd_criaturas > 1
-
-    # def retornar_adjacente(self, indice):
-    #     return(self.adjacentes[indice])

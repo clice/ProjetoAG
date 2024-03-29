@@ -12,16 +12,27 @@ class Ilha:
         self.ilha = nx.Graph()          # Inicializa um grafo vazio
         self.regioes = []               # Lista de Regiões do grafo gerado
         self.qtd_regioes = qtd_regioes  # Número de Regiões na Ilha (vértices no grafo)
-        # self.qtd_arestas = 0            #
+        self.qtd_arestas = 0            # Quantidade de arestas para a movimentação total permitida
         self.checkpoints = []           # Lista de Regiões que são checkpoints
-        self.criaturas = []             # Lista de Criaturas na Ilha
-        self.itens = []                 # Lista de Itens na Ilha
+
+    # MÉTODOS PARA O GRAFO
+
+    # Método para buscar a região e retornar
+    def encontrar_regiao(self, tipo_regiao):
+        # Laço para percorrer todas as regiões da Ilha
+        for regiao in self.regioes:
+            if regiao.tipo == tipo_regiao:
+                return regiao
+
+    # Método para retornar as regiões adjacentes do grafo Ilha
+    def encontrar_regioes_adjacantes(self, regiao):
+        return list(self.ilha.neighbors(regiao))
 
     # MÉTODOS PARA OS CHECKPOINTS
 
     # Método para adicionar os checkpoints
     def adicionar_checkpoints(self, regioes_usadas):
-        qtd_elementos = self.sortear_qtd_elementos()
+        qtd_elementos = sortear_qtd_elementos(self.qtd_regioes)
 
         if qtd_elementos < 3:
             self.checkpoints = random.sample(regioes_usadas, qtd_elementos)
@@ -68,7 +79,7 @@ class Ilha:
 
         # Garante que o grafo gerado é conectado adicionando arestas entre os vértices em sequência (0 -> 1 -> ...)
         for i in range(self.qtd_regioes - 1):
-            # self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+            self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
             if i == 0:
                 # Primeiro vértice `Praia` conecta com o seguinte
@@ -90,7 +101,7 @@ class Ilha:
             if adjacente != regiao:
                 # Conferindo se já existe uma aresta entre os vértices para evitar duplicidade
                 if not self.ilha.has_edge(regiao, adjacente):
-                    # self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+                    self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
                     if adjacente == 0:
                         self.ilha.add_edge(regiao, 'Praia')
@@ -101,10 +112,9 @@ class Ilha:
 
     # Método para desenhar a Ilha e método para plotar a movimentação
     def desenhar_ilha(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
-        node_size = 5000  # Definir tamanho dos vértices para imprimir
-
-        # Posição das Regiões (vértices)
-        pos = nx.spring_layout(self.ilha)
+        plt.ion()                          # Ativar modo interativo
+        node_size = 5000                   # Definir tamanho dos vértices para imprimir
+        pos = nx.spring_layout(self.ilha)  # Posição das Regiões (vértices)
 
         # Desenhar o grafo com: Regiões padrão cor "sky blue", arestas em preto e fonte negrito
         nx.draw(self.ilha, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold',
@@ -117,28 +127,12 @@ class Ilha:
         for regiao in self.checkpoints:
             nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao], node_color='yellow', node_size=node_size)
 
+        plt.pause(1)  # Pausa de 1 segundo para permitir plotar a exibição
+        plt.clf()     # Limpar a exibição anterior
+        plt.ioff()    # Desativar o modo interativo
+
         # Salvar imagem do mapa
         # plt.savefig('mapa.png')
 
         # Exibir grafo
         plt.show()
-
-    # OUTROS MÉTODOS
-
-    # Método para gerar a quantidade de elementos
-    def sortear_qtd_elementos(self):
-        return round(self.qtd_regioes * (random.randint(20, 30) / 100))
-
-    # # Método para gerar os adjacentes nas regiões
-    # def add_adjacentes(self):
-    #     for i in range(self.qtd_regioes):
-    #         grau=self.ilha.degree(self.regioes[i])
-    #         for j in range(grau):
-    #             Regiao[i].adicionar_adjacente(list(Ilha.neighbors(j)))
-    #
-    # def retornar_regiao(self, indice):
-    #     return(self.regioes[indice])
-
-    # #Método para verificar os vertices disponiveis para movimentação
-    # def caminhos_disponiveis(self,regiao_atual):
-    #     for regiao_atual in range(self.regioes):
