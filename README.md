@@ -15,16 +15,19 @@ Com o Python já instalado assim como o pip é necessário instalar algumas bibl
 
 O PyCharm Community é uma IDE gratuita utilizada para desenvolvimento usando Python. É possível utilizar e instalar as bibliotecas necessárias para execução do projeto dentro da IDE. Com a IDE instalada, dentro da pasta do projeto, o seguinte comando deve ser executado:
 
-### 1.1. Instalar as Bibliotecas Necessárias 
-```bash 
-pip3 install networkx matplotlib
-```
+### 1.1. Configurar Virtual Environment
 
+Na barra superior vá em `File > Settings`, busque por `Project: ProjetoAG > Python Interpreter`. Então selecione `Add Interpreter > Add Local Interpreter`, e então opte por `Virtualenv Environment`, por fim clique em `OK`. Agora é possível instalar as bibliotecas localmente no projeto.
+
+### 1.2. Instalar as Bibliotecas Necessárias 
+```bash 
+pip3 install networkx matplotlib colorama
+```
 ## 2. VS Code
 
 No VS Code é necessário instalar a extensão Python Extension Pack para executar o Python Matplotlib. Essa extensão é encontrada na aba de extensão do editor. Após essa instalação o seguinte comando deve ser executado:
 
 ### 2.1. Instalar as Bibliotecas Necessárias 
 ```bash 
-pip3 install networkx matplotlib
+pip3 install networkx matplotlib colorama
 ```
