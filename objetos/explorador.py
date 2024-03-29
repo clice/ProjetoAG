@@ -1,32 +1,32 @@
 import random
 
 from colorama import Fore, Style
+from objetos.regiao import Regiao
 
 
 # Declaração do objeto Explorador
 class Explorador:
     # Construtor de inicialização dos atributos do Explorador
     def __init__(self):
-        self.pontos_vida = 100      # Pontos de vida do Explorador
-        self.pontos_ataque = 20     # Pontos de ataque do Explorador
-        self.perc_tesouro = 0       # Porcentagem do tesouro carregado pelo Explorador
-        self.indice = 0             # Índice do local que o Explorador está no mapa (grafo)
-        self.tipo_regiao = 'Praia'  # Nome do tipo de Região que o Explorador está no mapa (grafo)
-        self.armas = None           # Lista de Armas carregadas pelo Explorador
-        self.backup = {}            # Backup do Explorador quando encontrar um checkpoint
+        self.pontos_vida = 100                       # Pontos de vida do Explorador
+        self.pontos_ataque = 20                      # Pontos de ataque do Explorador
+        self.perc_tesouro = 0                        # Porcentagem do tesouro carregado pelo Explorador
+        self.regiao = Regiao(0, 'Praia')  # Região que o Explorador se encontra atualmente
+        self.itens = []                              # Lista de Itens carregadas pelo Explorador
+        self.backup = {}                             # Backup do Explorador quando encontrar um checkpoint
 
     # String representando as informações sobre o Explorador
     def __str__(self):
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Porcentagem do tesouro: {self.perc_tesouro}")
-        print(f"Índice: {self.indice}")
-        print(f"Região atual: {self.tipo_regiao}")
 
-        if self.armas is None:
-            print(f"Armas: Nenhuma arma coletada\n")
+        if not self.itens:
+            print(f"Itens: Nenhum item coletado\n")
         else:
-            print(f"Armas: {self.armas}\n")
+            print(f"Itens:")
+            for item in self.itens:
+                print(item)
 
     # MÉTODOS PARA OS PONTOS DE VIDA DO EXPLORADOR
 
@@ -85,26 +85,31 @@ class Explorador:
             self.perc_tesouro = 0
             print(f"Você perdeu todo o tesouro que tinha resgatado.\n")
 
-    # MÉTODOS PARA MOVIMENTAÇÃO DO EXPLORADOR
+    # MÉTODOS PARA A REGIÃO DO EXPLORADOR
 
     # Método para atualizar a Região que o Explorador está
-    def atualizar_regiao(self, indice, tipo_regiao):
-        self.indice = indice
-        self.tipo_regiao = tipo_regiao
+    def atualizar_regiao(self, nova_regiao):
+        self.regiao = nova_regiao
+
+    # MÉTODOS PARA MOVIMENTAÇÃO DO EXPLORADOR
 
     # Método para realizar a movimentação do Explorador de uma Região a outra
-    def movimentacao(self, ilha):
-        print(f"Localização atual: {self.tipo_regiao}.")
+    def mover_explorador(self, ilha):
+        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
+
+        # Restaurar cores
+        print(Style.RESET_ALL)
 
         while True:
             resposta = input("Deseja avançar para um lugar aleatorio? (S/Outro)? ")
+            print()
 
             # Verificar resposta do Explorador
             if resposta.upper() != "S":
                 break
 
             # Buscar regiões adjacentes a região atual
-            regioes_adjacentes = list(ilha.encontrar_regioes_adjacantes(self.tipo_regiao))
+            regioes_adjacentes = list(ilha.encontrar_regioes_adjacantes(self.regiao.tipo))
 
             # Escolher aleatoriamente uma Região para o Explorador ir
             tipo_regiao = random.choice(regioes_adjacentes)
@@ -112,9 +117,12 @@ class Explorador:
             # Encontrar as informações da Região escolhida
             nova_regiao = ilha.encontrar_regiao(tipo_regiao)
 
-            self.atualizar_regiao(nova_regiao.indice, nova_regiao.tipo)
+            self.atualizar_regiao(nova_regiao)
 
-            print(f"Localização atual: {self.tipo_regiao}.")
+            print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
+
+            # Restaurar cores
+            print(Style.RESET_ALL)
 
             nova_regiao.checar_regiao()
 

@@ -28,6 +28,7 @@ def sortear_criatura():
     criaturas = (
         {
             "nome": "Crocodilo Gigante",
+            "tipo": "criatura",
             "pontos_vida": 50,
             "pontos_ataque": 10,
             "descricao": "Tem 8 metros de comprimento, possui pele dura, "
@@ -35,6 +36,7 @@ def sortear_criatura():
         },
         {
             "nome": "Formiga Quimera",
+            "tipo": "criatura",
             "pontos_vida": 50,
             "pontos_ataque": 10,
             "descricao": "Podem desossar um boi em poucos minutos "
@@ -42,6 +44,7 @@ def sortear_criatura():
         },
         {
             "nome": "Onça Pintada",
+            "tipo": "criatura",
             "pontos_vida": 50,
             "pontos_ataque": 10,
             "descricao": "Consegue se camuflar quase que perfeitamente, "
