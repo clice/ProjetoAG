@@ -45,7 +45,7 @@ class Criatura:
     # Método para o ataque de uma Criatura contra outra
     def atacar_criatura(self, criatura):
         dano = random.randint(1, self.pontos_ataque)
-        criatura.pontos_vida -= dano
+        criatura.remover_pontos_vida(self.pontos_ataque)
         return dano
 
     # Método para a luta entre as Criaturas

@@ -40,6 +40,7 @@ class Explorador:
         else:
             self.pontos_vida += pontos
 
+            # Pontos de vida não podem passar de 100
             if self.pontos_vida > 100:
                 self.pontos_vida = 100
 
@@ -48,6 +49,10 @@ class Explorador:
     # Método para remover pontos de vida
     def remover_pontos_vida(self, pontos):
         self.pontos_vida -= pontos
+        
+        # Caso chegue a pontos de vida negativos
+        if self.pontos_vida < 0:
+            self.reviver_explorador()
 
     # Método para retornar se o Explorador está vivo (pontos_vida > 0)
     def esta_vivo(self):
@@ -132,22 +137,23 @@ class Explorador:
         
     # Método para reviver o Explorador caso ainda haja movimentos disponíveis
     def reviver_explorador(self):
-        if self.qtd_movimentos > 0:
-            self.atualizar_explorador()
+        print(Fore.YELLOW + f"VOCÊ MORREU!")
+        
+        self.atualizar_explorador()
             
-            print(f"VOCÊ AINDA ESTÁ VIVO!")
-            self.__str__()
+        print(Fore.YELLOW + f"Agora será revivido, voltando para {self.regiao.tipo}.")
+        print(Style.RESET_ALL)  # Restaurar cores 
 
     # MÉTODOS PARA CONFERÊNCIA DO BACKUP
 
     # Método para adicionar o backup das informações do Explorador quando encontrar um checkpoint
     def adicionar_backup(self):
         self.backup = {
-            'pontos_vida': self.pontos_vida,
+            'pontos_vida': 100,
             'pontos_ataque': self.pontos_ataque,
             'tesouro': self.tesouro,
             'regiao': self.regiao,
-            'itens': self.itens,
+            'itens': [],
             'qtd_movimentos': self.qtd_movimentos,
             'backup': self.backup
         }
@@ -177,13 +183,15 @@ class Explorador:
 
             # Verificar resposta do Explorador
             if resposta.upper() != "S":
+                # Gerar dano no Explorador
                 dano = criatura.atacar_explorador(self)
                 print(Fore.RED + f"Você sofreu {dano} de dano!")
-                print(f"Você agora tem {self.pontos_vida} pontos de vida.")
 
-                # Teste para saber se o Explorador morreu com o ataque
+                # Caso o Explorador morra com o ataque
                 if not self.esta_vivo():
-                    print(Fore.YELLOW + f"Você morreu!")
+                    self.reviver_explorador()
+                else:
+                    print(f"Você agora tem {self.pontos_vida} pontos de vida.")
 
                 break
 
@@ -198,21 +206,33 @@ class Explorador:
                     dano = self.atacar_criatura(criatura)
                     print(Fore.GREEN + f"Você atacou! Houve {dano} de dano.")
                     print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
+                    
+                    # Caso o Explorador tenha Arma
+                    if self.itens:
+                        for item in self.itens:
+                            # Caso o Item seja do tipo Arma
+                            if item.tipo == 'arma':
+                                item.remover_qtd_uso()  # Diminuir a quantidade de uso do Item
+                                
+                                # Caso a quantidade de uso seja menor que 1
+                                if item.qtd_uso < 0:
+                                    self.remover_item(item)
+                                
 
                 # Teste para saber se a Criatura morreu com o ataque
                 if not criatura.esta_viva():
-                    print(Fore.YELLOW + f"\n{criatura.nome} morreu!")
+                    print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
                     break
 
                 # Segundo a Criatura ataca o Explorador
                 if criatura.esta_viva() and self.esta_vivo():
                     dano = criatura.atacar_explorador(self)
-                    print(Fore.RED + f"{criatura.nome} atacou! Houve {dano} de dano.")
+                    print(Fore.RED + f"{criatura.nome.upper()} ATACOU! Houve {dano} de dano.")
                     print(f"Você agora tem {self.pontos_vida} pontos de vida.")
 
                 # Teste para saber se o Explorador morreu com o ataque
                 if not self.esta_vivo():
-                    print(Fore.YELLOW + f"Você morreu!")
+                    self.reviver_explorador()
                     break
 
                 print(Style.RESET_ALL)  # Restaurar cores
