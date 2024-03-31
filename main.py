@@ -37,32 +37,13 @@ def iniciar_jogo(ilha, explorador):
                         explorador.lutar_criatura(item)
                     # Caso o Explorador encontre um Perigo
                     elif item.tipo == 'perigo':
-                        print(Fore.RED + f"{item.nome} encontrado(a)! CUIDADO!")
-                        explorador.remover_pontos_vida(item.pontos)  # Remover pontos do Explorador
-                        print(f"Você agora tem {explorador.pontos_vida} pontos de vida!")
-                        print(Style.RESET_ALL)  # Restaurar cores
+                        item.encontrar_perigo(explorador)
                     # Caso o Explorador encontre uma Planta Medicinal
                     elif item.tipo == 'planta_medicinal':
-                        print(Fore.GREEN + f"{item.nome} encontrado(a)!")
-                        print(Style.RESET_ALL)  # Restaurar cores
-
-                        while True:
-                            resposta = input(f"Deseja utilizar ou guardar (S/Outro)? ")
-                            print()
-
-                            # Verificar resposta do Explorador
-                            if resposta.upper() == "S":
-                                explorador.adicionar_item(item)                # Adicionar o elemento a lista
-                                explorador.regiao.remover_item(item)           # Remover o item da Região
-                                explorador.adicionar_pontos_vida(item.pontos)  # Adicionar pontos de ataque da Arma
-                                
-                                print(Fore.GREEN + f"Você guardou {item.nome} na mochila!")
-                                print(Style.RESET_ALL)  # Restaurar cores
-                            
-                            break
+                        item.encontrar_planta_medicinal(explorador)
                     # Caso o Explorador encontre uma Arma
                     elif item.tipo == 'arma':
-                        explorador.encontrar_arma(item)
+                        item.encontrar_arma(explorador)
             # Caso não tenha nenhum item na Região
             else:
                 print("Nada na região. Continue procurando...\n")

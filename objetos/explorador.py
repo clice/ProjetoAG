@@ -75,7 +75,7 @@ class Explorador:
 
         # Calcular o percentual correto para o Explorador carregar o tesouro
         for item in self.itens:
-            tesouro -= item.pontos_ataque
+            tesouro -= item.pontos
 
         self.tesouro = tesouro
 
@@ -115,7 +115,7 @@ class Explorador:
 
         # Remover percentual do tesouro carregado por conta da arma
         if self.tesouro > 0:
-            self.tesouro -= item.pontos_ataque
+            self.tesouro -= item.pontos
 
     # Método para remover Item da lista
     def remover_item(self, item):
@@ -123,31 +123,7 @@ class Explorador:
             self.itens.remove(item)
         else:
             print(f"{item.tipo} não foi encontrado(a).\n")
-            
-    # Método para quando o Explorador encontrar uma Planta Medicinal
-    # def encontrar_planta_medicinal():
-            
-    # Método para quando o Explorador encontrar um Item
-    def encontrar_arma(self, item):
-        print(Fore.GREEN + f"{item.nome} encontrado(a)!")
-        print(Style.RESET_ALL)  # Restaurar cores
 
-        while True:
-            resposta = input(f"Deseja guardar (S/Outro)? ")
-            print()
-
-            # Verificar resposta do Explorador
-            if resposta.upper() == "S":
-                self.adicionar_item(item)                  # Adicionar o elemento a lista
-                self.regiao.remover_item(item)             # Remover o item da Região
-                self.adicionar_pontos_ataque(item.pontos)  # Adicionar pontos de ataque da Arma
-                
-                print(Fore.GREEN + f"Você guardou {item.nome} na mochila!")
-                print(f"Você agora tem {self.pontos_ataque} pontos de ataque!")
-                print(Style.RESET_ALL)  # Restaurar cores
-            
-            break
-            
     # MÉTODOS PARA A QUANTIDADE DE MOVIMENTOS DO EXPLORADOR
     
     # Método para remover a quantidade de movimentos do Explorador
@@ -185,7 +161,7 @@ class Explorador:
         self.itens = self.backup['itens'],
         self.qtd_movimentos = self.backup['qtd_movimentos'],
         self.backup = self.backup['backup']
-                
+
     # MÉTODOS PARA LUTA ENTRE O EXPLORADOR E UMA CRIATURA
 
     # Método para o ataque do Explorador contra a Criatura
