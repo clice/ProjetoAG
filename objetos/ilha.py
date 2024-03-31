@@ -9,7 +9,7 @@ from objetos.regiao import Regiao
 class Ilha:
     # Construtor de inicialização dos atributos da Ilha
     def __init__(self, qtd_regioes):
-        self.ilha = nx.Graph()          # Inicializa um grafo vazio
+        self.mapa = nx.Graph()          # Inicializa um grafo vazio (Mapa da Ilha)
         self.regioes = []               # Lista de Regiões do grafo gerado
         self.qtd_regioes = qtd_regioes  # Número de Regiões na Ilha (vértices no grafo)
         self.qtd_arestas = 0            # Quantidade de arestas para a movimentação total permitida
@@ -26,7 +26,7 @@ class Ilha:
 
     # Método para retornar as regiões adjacentes do grafo Ilha
     def encontrar_regioes_adjacantes(self, regiao):
-        return list(self.ilha.neighbors(regiao))
+        return list(self.mapa.neighbors(regiao))
 
     # MÉTODOS PARA OS CHECKPOINTS
 
@@ -55,19 +55,19 @@ class Ilha:
             if i == 0:
                 # Caso seja o primeito vértice, será sempre a Praia
                 nova_regiao = Regiao(i, 'Praia')  # Criando o objeto Região
-                self.ilha.add_node('Praia')            # Adiciona vértice ao grafo
+                self.mapa.add_node('Praia')            # Adiciona vértice ao grafo
                 self.regioes.append(nova_regiao)       # Adiciona o objeto Região as regiões da Ilha
             elif i == self.qtd_regioes - 1:
                 # Caso seja o último vértice, será sempre o Tesouro
                 nova_regiao = Regiao(i, 'Tesouro')  # Criando o objeto Região
-                self.ilha.add_node('Tesouro')            # Adiciona vértice ao grafo
+                self.mapa.add_node('Tesouro')            # Adiciona vértice ao grafo
                 self.regioes.append(nova_regiao)         # Adiciona o objeto Região as regiões da Ilha
             else:
                 # Outros casos entre 1 e qtd_regioes - 1
                 regiao_aleatoria = sortear_regiao(regioes_usadas)  # Sortear a Região da ILha
                 nova_regiao = Regiao(i, regiao_aleatoria)          # Criando o objeto Região
                 regioes_usadas.append(regiao_aleatoria)            # Adiciona a lista de regiões já utilizadas
-                self.ilha.add_node(regiao_aleatoria)               # Adiciona vértice ao grafo
+                self.mapa.add_node(regiao_aleatoria)               # Adiciona vértice ao grafo
                 self.regioes.append(nova_regiao)                   # Adiciona o objeto Região as regiões da Ilha
 
         # Adicionar os Checkpoints
@@ -83,13 +83,13 @@ class Ilha:
 
             if i == 0:
                 # Primeiro vértice `Praia` conecta com o seguinte
-                self.ilha.add_edge('Praia', regioes_usadas[i + 1])  # Adiciona aresta
+                self.mapa.add_edge('Praia', regioes_usadas[i + 1])  # Adiciona aresta
             elif i == self.qtd_regioes - 2:
                 # Penúltimo vértice conecta com o último `Tesouro`
-                self.ilha.add_edge(regioes_usadas[i], 'Tesouro')  # Adiciona aresta
+                self.mapa.add_edge(regioes_usadas[i], 'Tesouro')  # Adiciona aresta
             else:
                 # Vértices entre `Praia` e o `Tesouro`
-                self.ilha.add_edge(regioes_usadas[i], regioes_usadas[i + 1])  # Adiciona aresta
+                self.mapa.add_edge(regioes_usadas[i], regioes_usadas[i + 1])  # Adiciona aresta
 
         # Adiciona mais arestas aleatórias para tornar o grafo mais conectado
         for regiao in regioes_usadas:
@@ -100,32 +100,32 @@ class Ilha:
             # assim evitando arestas para o mesmo vértice
             if adjacente != regiao:
                 # Conferindo se já existe uma aresta entre os vértices para evitar duplicidade
-                if not self.ilha.has_edge(regiao, adjacente):
+                if not self.mapa.has_edge(regiao, adjacente):
                     self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
 
                     if adjacente == 0:
-                        self.ilha.add_edge(regiao, 'Praia')
+                        self.mapa.add_edge(regiao, 'Praia')
                     elif adjacente == self.qtd_regioes - 1:
-                        self.ilha.add_edge(regiao, 'Tesouro')
+                        self.mapa.add_edge(regiao, 'Tesouro')
                     else:
-                        self.ilha.add_edge(regiao, adjacente)
+                        self.mapa.add_edge(regiao, adjacente)
 
     # Método para desenhar a Ilha e método para plotar a movimentação
     def desenhar_ilha(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
         # plt.ion()                          # Ativar modo interativo
         node_size = 5000                   # Definir tamanho dos vértices para imprimir
-        pos = nx.spring_layout(self.ilha)  # Posição das Regiões (vértices)
+        pos = nx.spring_layout(self.mapa)  # Posição das Regiões (vértices)
 
         # Desenhar o grafo com: Regiões padrão cor "sky blue", arestas em preto e fonte negrito
-        nx.draw(self.ilha, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold',
+        nx.draw(self.mapa, pos, with_labels=True, node_color='skyblue', edge_color='black', font_weight='bold',
                 node_size=node_size)
 
         # Destacar a Região atual que o Explorador está com a cor "red"
-        nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao_atual], node_color='red', node_size=node_size)
+        nx.draw_networkx_nodes(self.mapa, pos, nodelist=[regiao_atual], node_color='red', node_size=node_size)
 
         # Destacar a Região Checkpoint com a cor "yellow"
         for regiao in self.checkpoints:
-            nx.draw_networkx_nodes(self.ilha, pos, nodelist=[regiao], node_color='yellow', node_size=node_size)
+            nx.draw_networkx_nodes(self.mapa, pos, nodelist=[regiao], node_color='yellow', node_size=node_size)
 
         # plt.pause(1)  # Pausa de 1 segundo para permitir plotar a exibição
         # plt.clf()     # Limpar a exibição anterior

@@ -23,21 +23,6 @@ def inicializar_jogo():
         explorador = Explorador()           # Inicializar o Explorador
         explorador.__str__()                # Imprimir informações do Explorador
         mover_explorador(explorador, ilha)  # Realizar a movimentação do Explorador
-
-        # for criatura in ilha.criaturas:
-        #     criatura.__str__()
-        #     explorador.lutar_criatura(criatura)
-
-        # criatura1 = sortear_criatura()
-        # criatura1 = Criatura(criatura1['tipo'], criatura1['pontos_vida'], criatura1['pontos_ataque'],
-        #                     criatura1['descricao'], 0)
-        #
-        # criatura2 = sortear_criatura()
-        # criatura2 = Criatura(criatura2['tipo'], criatura2['pontos_vida'], criatura2['pontos_ataque'],
-        #                     criatura2['descricao'], 0)
-        #
-        # criatura1.lutar_criatura(criatura2)
-
         break
 
 
