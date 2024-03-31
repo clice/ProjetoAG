@@ -71,8 +71,8 @@ class Explorador:
     def adicionar_tesouro(self):
         tesouro = self.pontos_vida
 
+        # Calcular o percentual correto para o Explorador carregar o tesouro
         for item in self.itens:
-            # Calcular o percentual correto para o Explorador carregar o tesouro
             tesouro -= item.pontos_ataque
 
         self.tesouro = tesouro
@@ -102,7 +102,6 @@ class Explorador:
                 break
 
             adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))  # Regiões adjacentes da Região atual
-            print(adjacentes)
             self.regiao = ilha.encontrar_regiao(random.choice(adjacentes))  # Atualizar a região
 
             print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")

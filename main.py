@@ -25,6 +25,10 @@ def iniciar_jogo():
 
         explorador.atualizar_regiao(ilha)  # Realizar a movimentação do Explorador
 
+        checar_regiao(explorador)
+
+        explorador.regiao.encontrar_tesouro(explorador)
+
         explorador.remover_qtd_movimentos()  # Remover um movimento disponível
 
         if explorador.qtd_movimentos == 0:

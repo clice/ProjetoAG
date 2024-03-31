@@ -1,3 +1,6 @@
+from colorama import Fore, Style
+
+
 # Declaração do objeto Região (Partes da Ilha = Vértices)
 class Regiao:
     # Construtor de inicialização dos atributos da Região
@@ -39,3 +42,13 @@ class Regiao:
     def remover_item(self, item):
         self.itens.remove(item)
 
+    # MÉTODOS PARA CHECAR AS INFORMAÇÕES DA REGIÃO
+
+    # Método para quando o Explorador encontrar o tesouro
+    def encontrar_tesouro(self, explorador):
+        print(Fore.CYAN + f"Você chegou ao Tesouro!")
+        print(Style.RESET_ALL)  # Restaurar cores
+
+        explorador.adicionar_tesouro()  # Adicionar o percentual do tesouro ao Explorador
+        self.tesouro = explorador.tesouro  # Atualizar o percentual do tesouro restanda na Região
+        explorador.__str__()
