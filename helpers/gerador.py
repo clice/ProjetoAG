@@ -51,8 +51,6 @@ def gerar_item(regiao, item):
 
 # Função para gerar o Explorador
 def gerar_explorador(qtd_movimentos):
-    print("Informações iniciais:")
     regiao = Regiao(0, 'Praia', 0)
     explorador = Explorador(regiao, qtd_movimentos)  # Inicializar o Explorador
-    explorador.__str__()  # Imprimir informações do Explorador
     return explorador

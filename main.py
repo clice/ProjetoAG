@@ -1,19 +1,49 @@
+import time
+
 from colorama import Fore, Style, init
 from helpers.gerador import *
+from helpers.opcoes import *
 
 
 # Função para inicializar o jogo
-def iniciar_jogo(ilha, explorador):
-    print(Fore.MAGENTA + f"Localização atual: {explorador.regiao.tipo}.")
-    print(Style.RESET_ALL)  # Restaurar cores
-    
+def iniciar_jogo():
+    ilha = gerar_ilha()  # Gerar Ilha
+    explorador = gerar_explorador(ilha.qtd_movimentos)  # Gerar Explorador
+
+    print("Bem-vindo(a) Explorador(a)! Você está chegando a ilha. Lembre-se que lá há muitos perigos.")
+    print(f"Na ilha estão espalhados criaturas, perigos, plantas medicinais e armas. Há {ilha.qtd_itens} de cada.")
+    print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
+    print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
+    print("Boa sorte!\n")
+
+    time.sleep(1)  # Pausa de 1 segundo
+
+    print(Fore.YELLOW + "OBS: Toda vez que você for perguntado se quer mudar para uma região aleatória,")
+    print("você pode optar por uma das seguinte opções fixas:")
+    print("1 - Usar planta medicinal")
+    print("2 - Jogar arma fora\n")
+
+    time.sleep(1)  # Pausa de 1 segundo
+
+    explorador.mostrar_regiao()  # Mostrar localização atual
+
+    iniciar_contador(ilha, explorador)  # Iniciar contador
+
+
+# Função para iniciar o contador do jogo
+def iniciar_contador(ilha, explorador):
+    print("Informações:")
+    explorador.__str__()  # Imprimir informações do Explorador
+
+    time.sleep(1)  # Pausa de 1 segundo
+
     while explorador.qtd_movimentos > 0:
         print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
         print(Style.RESET_ALL)  # Restaurar cores
 
         # ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
-        explorador.atualizar_regiao(ilha)  # Realizar a movimentação do Explorador
+        mover_explorador(explorador, ilha)  # Realizar a movimentação do Explorador
 
         # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':
@@ -32,7 +62,7 @@ def iniciar_jogo(ilha, explorador):
             # Caso haja uma Criatura na Região
             if explorador.regiao.criaturas:
                 for criatura in explorador.regiao.criaturas:
-                    criatura.encontrar_criatura(explorador)
+                    explorador.encontrar_criatura(criatura)
             
             # Caso haja Itens na Região
             if explorador.regiao.itens:                    
@@ -61,23 +91,17 @@ def iniciar_jogo(ilha, explorador):
 
 # Função para iniciar o jogo
 if __name__ == "__main__":
-    init()          # Iniciar colorama
+    init()  # Iniciar colorama
+
+    print(Fore.LIGHTYELLOW_EX + "JUMANJI: A ILHA DO TESOURO")
+    print(Style.RESET_ALL)  # Restaurar cores
+
+    while True:
+        resposta = input("Deseja começar o jogo (S/Outro)? ")
+        print()
+
+        if resposta.upper() != "S":
+            print(Fore.LIGHTYELLOW_EX + "FIM DE JOGO!")
+            break
     
-    # Inicializar a Ilha
-    ilha = gerar_ilha()
-
-    print("Bem-vindo(a) Explorador(a)! Você está chegando a ilha. Lembre-se que lá há muitos perigos.")
-    print(f"Na ilha estão espalhados criaturas, perigos, plantas medicinais e armas. Há {ilha.qtd_itens} de cada.")
-    print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
-    print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
-    print("Boa sorte!\n")
-    print("OBS: Toda vez que você for perguntado se quer mudar para uma região aleatória,")
-    print("você pode optar por uma das seguinte opções fixas:")
-    print("1 - Usar planta medicinal")
-    print("2 - Jogar arma fora")
-
-    print("Você está chegando a ilha!\n")
-
-    explorador = gerar_explorador(ilha.qtd_movimentos)  # Gerar Explorador
-    
-    iniciar_jogo(ilha, explorador)  # Iniciar jogo
+        iniciar_jogo()  # Iniciar jogo

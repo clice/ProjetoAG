@@ -95,22 +95,15 @@ class Explorador:
 
     # MÉTODOS PARA A REGIÃO DO EXPLORADOR
 
+    # Método para mostrar a localização atual
+    def mostrar_regiao(self):
+        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
+        print(Style.RESET_ALL)  # Restaurar cores
+
     # Método para atualizar a Região que o Explorador está
     def atualizar_regiao(self, ilha):
-        while True:
-            resposta = input("Deseja avançar para uma região aleatória (S/Outro)? ")
-            print()
-
-            # Verificar resposta do Explorador
-            if resposta.upper() != "S":
-                break
-
-            adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))  # Regiões adjacentes da Região atual
-            self.regiao = ilha.encontrar_regiao(random.choice(adjacentes))  # Atualizar a região
-
-            print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
-            print(Style.RESET_ALL)  # Restaurar cores
-            break
+        adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))  # Regiões adjacentes da Região atual
+        self.regiao = ilha.encontrar_regiao(random.choice(adjacentes))  # Atualizar a região
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 
@@ -128,6 +121,57 @@ class Explorador:
             self.itens.remove(item)
         else:
             print(f"{item.tipo} não foi encontrado(a).\n")
+
+    # Método para quando o Explorador encontrar uma Criatura
+    def encontrar_criatura(self, criatura):
+        print(Fore.RED + f"{criatura.nome} encontrado(a)! CUIDADO!")
+        print(Style.RESET_ALL)  # Restaurar cores
+        self.lutar_criatura(criatura)
+
+    # Método para quando o Explorador encontrar um Perigo
+    def encontrar_perigo(self, perigo):
+        print(Fore.YELLOW + f"{perigo.nome} encontrado(a)! CUIDADO!")
+        print(Style.RESET_ALL)  # Restaurar cores
+
+        self.remover_pontos_vida(perigo.pontos)  # Remover pontos do Explorador
+
+        print(Fore.RED + f"Você agora tem {self.pontos_vida} pontos de vida!")
+        print(Style.RESET_ALL)  # Restaurar cores
+
+    # Método para quando o Explorador encontrar uma Planta Medicinal
+    def encontrar_planta_medicinal(self, planta_medicinal):
+        print(Fore.YELLOW + f"{planta_medicinal.nome} encontrado(a)!")
+        print(Style.RESET_ALL)  # Restaurar cores
+
+        resposta = input(f"Deseja utilizar ou guardar (S/Outro)? ")
+        print()
+
+        # Verificar resposta do Explorador
+        if resposta.upper() == "S":
+            self.adicionar_item(planta_medicinal)  # Adicionar o elemento a lista
+            self.regiao.remover_item(planta_medicinal)  # Remover o item da Região
+            self.adicionar_pontos_vida(planta_medicinal.pontos)  # Adicionar pontos de ataque da Arma
+
+            print(Fore.GREEN + f"Você guardou {planta_medicinal.nome} na mochila!")
+            print(Style.RESET_ALL)  # Restaurar cores
+
+    # Método para quando o Explorador encontrar uma Arma
+    def encontrar_arma(self, arma):
+        print(Fore.YELLOW + f"{arma.nome} encontrado(a)!")
+        print(Style.RESET_ALL)  # Restaurar cores
+
+        resposta = input(f"Deseja guardar (S/Outro)? ")
+        print()
+
+        # Verificar resposta do Explorador
+        if resposta.upper() == "S":
+            self.adicionar_item(arma)  # Adicionar o elemento a lista
+            self.regiao.remover_item(arma)  # Remover o item da Região
+            self.adicionar_pontos_ataque(arma.pontos)  # Adicionar pontos de ataque da Arma
+
+            print(Fore.GREEN + f"Você guardou {arma.nome} na mochila!")
+            print(f"Você agora tem {self.pontos_ataque} pontos de ataque!")
+            print(Style.RESET_ALL)  # Restaurar cores
 
     # MÉTODOS PARA A QUANTIDADE DE MOVIMENTOS DO EXPLORADOR
     
@@ -217,7 +261,6 @@ class Explorador:
                                 # Caso a quantidade de uso seja menor que 1
                                 if item.qtd_uso < 0:
                                     self.remover_item(item)
-                                
 
                 # Teste para saber se a Criatura morreu com o ataque
                 if not criatura.esta_viva():

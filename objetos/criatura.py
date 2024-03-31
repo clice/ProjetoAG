@@ -64,11 +64,3 @@ class Criatura:
             print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
             print(Style.RESET_ALL)  # Restaurar cores
             return criatura
-        
-    # MÉTODO PARA QUANDO A CRIATURA FOR ENCONTRADA
-    
-    # Método para quando o Explorador encontrar uma Criatura
-    def encontrar_criatura(self, explorador):
-        print(Fore.RED + f"{self.nome} encontrado(a)! CUIDADO!")
-        print(Style.RESET_ALL)  # Restaurar cores
-        explorador.lutar_criatura(self)
