@@ -1,26 +1,26 @@
 import random
 
 from colorama import Fore, Style
-from objetos.regiao import Regiao
 
 
 # Declaração do objeto Explorador
 class Explorador:
     # Construtor de inicialização dos atributos do Explorador
-    def __init__(self):
-        self.pontos_vida = 100                       # Pontos de vida do Explorador
-        self.pontos_ataque = 20                      # Pontos de ataque do Explorador
-        self.tesouro = 0                             # Porcentagem do tesouro carregado pelo Explorador
-        self.regiao = Regiao(0, 'Praia', 0)  # Região que o Explorador se encontra atualmente
-        self.itens = []                              # Lista de Itens carregadas pelo Explorador
-        self.qtd_movimentos = 0                      # Quantidade de movimentos restantes do Explorador
-        self.backup = {}                             # Backup do Explorador quando encontrar um checkpoint
+    def __init__(self, regiao, qtd_movimentos):
+        self.pontos_vida = 100                # Pontos de vida do Explorador
+        self.pontos_ataque = 20               # Pontos de ataque do Explorador
+        self.tesouro = 0                      # Porcentagem do tesouro carregado pelo Explorador
+        self.regiao = regiao                  # Região que o Explorador se encontra atualmente
+        self.itens = []                       # Lista de Itens carregadas pelo Explorador
+        self.qtd_movimentos = qtd_movimentos  # Quantidade de movimentos restantes do Explorador
+        self.backup = {}                      # Backup do Explorador quando encontrar um checkpoint
 
     # String representando as informações sobre o Explorador
     def __str__(self):
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Porcentagem do tesouro: {self.tesouro}")
+        print(f"Movimentos restantes: {self.qtd_movimentos}")
 
         if not self.itens:
             print(f"Itens: Nenhum item coletado\n")
@@ -89,8 +89,8 @@ class Explorador:
     # MÉTODOS PARA A REGIÃO DO EXPLORADOR
 
     # Método para atualizar a Região que o Explorador está
-    def atualizar_regiao(self, nova_regiao):
-        self.regiao = nova_regiao
+    def atualizar_regiao(self, regiao):
+        self.regiao = regiao
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 
@@ -108,11 +108,17 @@ class Explorador:
             self.itens.remove(item)
         else:
             print(f"{item.tipo} não foi encontrado(a).\n")
+            
+    # MÉTODOS PARA A QUANTIDADE DE MOVIMENTOS DO EXPLORADOR
+    
+    # Método para remover a quantidade de movimentos do Explorador
+    def remover_qtd_movimentos(self):
+        self.qtd_movimentos -= 1
 
     # MÉTODOS PARA CONFERÊNCIA DO BACKUP
 
-    # Método para fazer o backup das informações do Explorador quando encontrar um checkpoint
-    def realizar_backup(self):
+    # Método para adicionar o backup das informações do Explorador quando encontrar um checkpoint
+    def adicionar_backup(self):
         self.backup = {
             'pontos_vida': self.pontos_vida,
             'pontos_ataque': self.pontos_ataque,

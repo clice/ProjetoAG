@@ -1,6 +1,3 @@
-from colorama import Fore, Style
-
-
 # Declaração do objeto Região (Partes da Ilha = Vértices)
 class Regiao:
     # Construtor de inicialização dos atributos da Região
@@ -42,53 +39,3 @@ class Regiao:
     def remover_item(self, item):
         self.itens.remove(item)
 
-    # MÉTODOS PARA AS INFORMAÇÕES DA REGIÃO
-
-    # Método para checar qual a Região atual
-    def checar_regiao(self, explorador):
-        if self.tipo == 'Tesouro':
-            print(Fore.CYAN + f"Você chegou ao Tesouro!")
-            print(Style.RESET_ALL)  # Restaurar cores
-        else:
-            if self.itens:
-                for item in self.itens:
-                    if item.tipo == 'criatura':
-                        print(f"{item.nome} encontrado(a)! CUIDADO!")
-                        explorador.lutar_criatura(item)
-
-                    if item.tipo == 'perigo':
-                        print(f"{item.nome} encontrado(a)! CUIDADO!")
-                        explorador.remover_pontos_vida(item.pontos)  # Remover pontos do Explorador
-                        print(f"Você agora tem {explorador.pontos_vida} pontos de vida!")
-
-                    if item.tipo == 'planta_medicinal':
-                        print(f"{item.nome} encontrado(a)!.")
-
-                        while True:
-                            resposta = input(f"Deseja utilizar guardar (S/Outro)? ")
-                            print()
-
-                            # Verificar resposta do Explorador
-                            if resposta.upper() == "S":
-                                break
-
-                        explorador.adicionar_item(item)  # Adicionar o elemento a lista
-                        print(Fore.GREEN + f"Você guardou {item.nome} na mochila!")
-                        print(Style.RESET_ALL)  # Restaurar cores
-
-                    if item.tipo == 'arma':
-                        print(f"{item.nome} encontrado(a)!.")
-
-                        while True:
-                            resposta = input(f"Deseja utilizar guardar (S/Outro)? ")
-                            print()
-
-                            # Verificar resposta do Explorador
-                            if resposta.upper() == "S":
-                                break
-
-                        explorador.adicionar_item(item)  # Adicionar o elemento a lista
-                        print(Fore.GREEN + f"Você guardou {item.nome} na mochila!")
-                        print(Style.RESET_ALL)  # Restaurar cores
-
-            print("Continue procurando...\n")

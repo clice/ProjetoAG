@@ -1,11 +1,6 @@
 import random
 
 
-# Método para gerar a quantidade de elementos
-def sortear_qtd_elementos(qtd_regioes):
-    return round(qtd_regioes * (random.randint(20, 30) / 100))
-
-
 # Métofo para sortear um
 def sortear_regiao(regioes_usadas):
     regioes = [

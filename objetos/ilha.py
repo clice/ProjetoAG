@@ -1,7 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-from helpers.sorteio import *
+from helpers.sorteios import *
 from objetos.regiao import Regiao
 
 
@@ -9,16 +9,17 @@ from objetos.regiao import Regiao
 class Ilha:
     # Construtor de inicialização dos atributos da Ilha
     def __init__(self):
-        self.mapa = nx.Graph()                          # Inicializa um grafo vazio (Mapa da Ilha)
-        self.regioes = []                               # Lista de Regiões do grafo gerado
+        self.mapa = nx.Graph()                    # Inicializa um grafo vazio (Mapa da Ilha)
+        self.regioes = []                         # Lista de Regiões do grafo gerado
         self.qtd_regioes = random.randint(5, 10)  # Número de Regiões na Ilha (vértices no grafo)
-        self.qtd_arestas = 0                            # Quantidade de arestas para a movimentação total permitida
-        self.checkpoints = []                           # Lista de Regiões que são checkpoints
+        self.qtd_itens = round(self.qtd_regioes * (random.randint(20, 30) / 100))  # Quantidade de Itens (cada) na Ilha
+        self.qtd_movimentos = 0                   # Quantidade de arestas para a movimentação total permitida
+        self.checkpoints = []                     # Lista de Regiões que são checkpoints
 
     # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
 
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
-    def gerar_mapa(self):
+    def adicionar_mapa(self):
         regioes_usadas = []  # Lista de Regiões para não repetir no mapa
 
         # Adiciona Regiões a Ilha (vértices ao grafo)
@@ -44,7 +45,7 @@ class Ilha:
 
         # Garante que o grafo gerado é conectado adicionando arestas entre os vértices em sequência (0 -> 1 -> ...)
         for i in range(self.qtd_regioes - 1):
-            self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+            self.qtd_movimentos += 1  # Contador para a quantidade de arestas entre os vértices
 
             if i == 0:
                 # Primeiro vértice `Praia` conecta com o seguinte
@@ -66,7 +67,7 @@ class Ilha:
             if adjacente != regiao:
                 # Conferindo se já existe uma aresta entre os vértices para evitar duplicidade
                 if not self.mapa.has_edge(regiao, adjacente):
-                    self.qtd_arestas += 1  # Contador para a quantidade de arestas entre os vértices
+                    self.qtd_movimentos += 1  # Contador para a quantidade de arestas entre os vértices
 
                     if adjacente == 0:
                         self.mapa.add_edge(regiao, 'Praia')
@@ -74,6 +75,8 @@ class Ilha:
                         self.mapa.add_edge(regiao, 'Tesouro')
                     else:
                         self.mapa.add_edge(regiao, adjacente)
+                        
+        self.qtd_movimentos *= 3  # Quantidade de movimentos é o triplo da quantidade de arestas no mapa
 
     # Método para desenhar a Ilha e método para plotar a movimentação
     def desenhar_mapa(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
@@ -124,11 +127,9 @@ class Ilha:
 
     # Método para adicionar os checkpoints
     def adicionar_checkpoints(self, regioes):
-        qtd_elementos = sortear_qtd_elementos(self.qtd_regioes)
-
-        if qtd_elementos < 3:
+        if self.qtd_itens < 3:
             # Sortear uma quantidade de elementos com base na lista de regiões
-            self.checkpoints = random.sample(regioes, qtd_elementos)
+            self.checkpoints = random.sample(regioes, self.qtd_itens)
         else:
             # Sortear uma quantidade de elementos com base na lista de regiões
             self.checkpoints = random.sample(regioes, 3)
