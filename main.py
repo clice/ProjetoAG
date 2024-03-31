@@ -20,8 +20,10 @@ def inicializar_jogo():
         print("Você está chegando a ilha!\n")
 
         print("Essas são as informações iniciais:")
-        explorador = Explorador()           # Inicializar o Explorador
-        explorador.__str__()                # Imprimir informações do Explorador
+        explorador = Explorador()                   # Inicializar o Explorador
+        explorador.__str__()                        # Imprimir informações do Explorador
+        ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
+
         mover_explorador(explorador, ilha)  # Realizar a movimentação do Explorador
         break
 
@@ -29,9 +31,8 @@ def inicializar_jogo():
 # Método para gerar os elementos da ilha
 def gerar_elementos():
     # Inicializar o grafo da Ilha
-    ilha = Ilha(random.randint(5, 10))
-    ilha.gerar_ilha()
-    ilha.desenhar_ilha('Praia')
+    ilha = Ilha()
+    ilha.gerar_mapa()
 
     regioes = ilha.regioes[1:-1]  # Remover primeiro e último elementos da lista de Regiões
     qtd_elementos = sortear_qtd_elementos(ilha.qtd_regioes)  # Quantidade de elementos para adicionar as Regiões

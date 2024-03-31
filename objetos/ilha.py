@@ -8,67 +8,32 @@ from objetos.regiao import Regiao
 # Declaração do objeto Ilha (Grafo)
 class Ilha:
     # Construtor de inicialização dos atributos da Ilha
-    def __init__(self, qtd_regioes):
-        self.mapa = nx.Graph()          # Inicializa um grafo vazio (Mapa da Ilha)
-        self.regioes = []               # Lista de Regiões do grafo gerado
-        self.qtd_regioes = qtd_regioes  # Número de Regiões na Ilha (vértices no grafo)
-        self.qtd_arestas = 0            # Quantidade de arestas para a movimentação total permitida
-        self.checkpoints = []           # Lista de Regiões que são checkpoints
-
-    # MÉTODOS PARA O GRAFO
-
-    # Método para buscar a região e retornar
-    def encontrar_regiao(self, tipo_regiao):
-        # Laço para percorrer todas as regiões da Ilha
-        for regiao in self.regioes:
-            if regiao.tipo == tipo_regiao:
-                return regiao
-
-    # Método para retornar as regiões adjacentes do grafo Ilha
-    def encontrar_regioes_adjacantes(self, regiao):
-        return list(self.mapa.neighbors(regiao))
-
-    # MÉTODOS PARA OS CHECKPOINTS
-
-    # Método para adicionar os checkpoints
-    def adicionar_checkpoints(self, regioes_usadas):
-        qtd_elementos = sortear_qtd_elementos(self.qtd_regioes)
-
-        if qtd_elementos < 3:
-            self.checkpoints = random.sample(regioes_usadas, qtd_elementos)
-        else:
-            # Definindo o máximo de Checkpoints igual a 3
-            self.checkpoints = random.sample(regioes_usadas, 3)
-
-    # Método para remover um checkpoint depois de usado
-    def remover_checkpoint(self, checkpoint):
-        self.checkpoints.remove(checkpoint)
+    def __init__(self):
+        self.mapa = nx.Graph()                          # Inicializa um grafo vazio (Mapa da Ilha)
+        self.regioes = []                               # Lista de Regiões do grafo gerado
+        self.qtd_regioes = random.randint(5, 10)  # Número de Regiões na Ilha (vértices no grafo)
+        self.qtd_arestas = 0                            # Quantidade de arestas para a movimentação total permitida
+        self.checkpoints = []                           # Lista de Regiões que são checkpoints
 
     # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
 
     # Método para gerar uma Ilha com valores aleatórios de Regiões (vértices)
-    def gerar_ilha(self):
+    def gerar_mapa(self):
         regioes_usadas = []  # Lista de Regiões para não repetir no mapa
 
         # Adiciona Regiões a Ilha (vértices ao grafo)
         for i in range(self.qtd_regioes):
             if i == 0:
                 # Caso seja o primeito vértice, será sempre a Praia
-                nova_regiao = Regiao(i, 'Praia')  # Criando o objeto Região
-                self.mapa.add_node('Praia')            # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)       # Adiciona o objeto Região as regiões da Ilha
+                self.adicionar_regiao(i, 'Praia', 0)  # Adiciona a Região ao grafo Mapa
             elif i == self.qtd_regioes - 1:
                 # Caso seja o último vértice, será sempre o Tesouro
-                nova_regiao = Regiao(i, 'Tesouro')  # Criando o objeto Região
-                self.mapa.add_node('Tesouro')            # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)         # Adiciona o objeto Região as regiões da Ilha
+                self.adicionar_regiao(i, 'Tesouro', 100)  # Adiciona a Região ao grafo Mapa
             else:
                 # Outros casos entre 1 e qtd_regioes - 1
                 regiao_aleatoria = sortear_regiao(regioes_usadas)  # Sortear a Região da ILha
-                nova_regiao = Regiao(i, regiao_aleatoria)          # Criando o objeto Região
                 regioes_usadas.append(regiao_aleatoria)            # Adiciona a lista de regiões já utilizadas
-                self.mapa.add_node(regiao_aleatoria)               # Adiciona vértice ao grafo
-                self.regioes.append(nova_regiao)                   # Adiciona o objeto Região as regiões da Ilha
+                self.adicionar_regiao(i, regiao_aleatoria, 0)      # Adiciona a Região ao grafo Mapa
 
         # Adicionar os Checkpoints
         self.adicionar_checkpoints(regioes_usadas)
@@ -111,7 +76,7 @@ class Ilha:
                         self.mapa.add_edge(regiao, adjacente)
 
     # Método para desenhar a Ilha e método para plotar a movimentação
-    def desenhar_ilha(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
+    def desenhar_mapa(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
         # plt.ion()                          # Ativar modo interativo
         node_size = 5000                   # Definir tamanho dos vértices para imprimir
         pos = nx.spring_layout(self.mapa)  # Posição das Regiões (vértices)
@@ -136,3 +101,38 @@ class Ilha:
 
         # Exibir grafo
         plt.show()
+
+    # MÉTODOS PARA AS REGIÕES DO GRAFO
+
+    # Método para adicionar uma Região ao grafo
+    def adicionar_regiao(self, indice, tipo, perc_tesouro):
+        self.mapa.add_node(tipo)                                 # Adiciona vértice ao grafo
+        self.regioes.append(Regiao(indice, tipo, perc_tesouro))  # Adiciona o objeto Região as regiões da Ilha
+
+    # Método para buscar a região e a retornar
+    def encontrar_regiao(self, tipo_regiao):
+        # Laço para percorrer todas as regiões da Ilha
+        for regiao in self.regioes:
+            if regiao.tipo == tipo_regiao:
+                return regiao
+
+    # Método para retornar as regiões adjacentes do grafo Ilha
+    def encontrar_regioes_adjacantes(self, regiao):
+        return list(self.mapa.neighbors(regiao))
+
+    # MÉTODOS PARA OS CHECKPOINTS
+
+    # Método para adicionar os checkpoints
+    def adicionar_checkpoints(self, regioes):
+        qtd_elementos = sortear_qtd_elementos(self.qtd_regioes)
+
+        if qtd_elementos < 3:
+            # Sortear uma quantidade de elementos com base na lista de regiões
+            self.checkpoints = random.sample(regioes, qtd_elementos)
+        else:
+            # Sortear uma quantidade de elementos com base na lista de regiões
+            self.checkpoints = random.sample(regioes, 3)
+
+    # Método para remover um checkpoint depois de usado
+    def remover_checkpoint(self, checkpoint):
+        self.checkpoints.remove(checkpoint)

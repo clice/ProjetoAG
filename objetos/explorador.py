@@ -13,6 +13,7 @@ class Explorador:
         self.perc_tesouro = 0                        # Porcentagem do tesouro carregado pelo Explorador
         self.regiao = Regiao(0, 'Praia')  # Região que o Explorador se encontra atualmente
         self.itens = []                              # Lista de Itens carregadas pelo Explorador
+        self.qtd_movimentos = 0                      # Quantidade de movimentos restantes do Explorador
         self.backup = {}                             # Backup do Explorador quando encontrar um checkpoint
 
     # String representando as informações sobre o Explorador
