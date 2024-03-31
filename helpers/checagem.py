@@ -1,7 +1,7 @@
 from colorama import Fore, Style, init
 
 
-# Método para checar qual a Região atual
+# Função para checar o que tem na Região
 def checar_regiao(explorador):
     if explorador.regiao.tipo == 'Tesouro':
         print(Fore.CYAN + f"Você chegou ao Tesouro!")
@@ -19,7 +19,7 @@ def checar_regiao(explorador):
                     print(f"Você agora tem {explorador.pontos_vida} pontos de vida!")
 
                 if item.tipo == 'planta_medicinal':
-                    print(f"{item.nome} encontrado(a)!.")
+                    print(f"{item.nome} encontrado(a)!")
 
                     while True:
                         resposta = input(f"Deseja utilizar guardar (S/Outro)? ")

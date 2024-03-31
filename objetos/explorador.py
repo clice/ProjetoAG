@@ -89,8 +89,25 @@ class Explorador:
     # MÉTODOS PARA A REGIÃO DO EXPLORADOR
 
     # Método para atualizar a Região que o Explorador está
-    def atualizar_regiao(self, regiao):
-        self.regiao = regiao
+    def atualizar_regiao(self, ilha):
+        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
+        print(Style.RESET_ALL)  # Restaurar cores
+
+        while True:
+            resposta = input("Deseja avançar para um lugar aleatório (S/Outro)? ")
+            print()
+
+            # Verificar resposta do Explorador
+            if resposta.upper() != "S":
+                break
+
+            adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))  # Regiões adjacentes da Região atual
+            print(adjacentes)
+            self.regiao = ilha.encontrar_regiao(random.choice(adjacentes))  # Atualizar a região
+
+            print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
+            print(Style.RESET_ALL)  # Restaurar cores
+            break
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 
@@ -99,8 +116,8 @@ class Explorador:
         self.itens.append(item)
 
         # Remover percentual do tesouro carregado por conta da arma
-        if self.perc_tesouro > 0:
-            self.perc_tesouro -= item.pontos_ataque
+        if self.tesouro > 0:
+            self.tesouro -= item.pontos_ataque
 
     # Método para remover Item da lista
     def remover_item(self, item):
@@ -150,6 +167,14 @@ class Explorador:
 
             # Verificar resposta do Explorador
             if resposta.upper() != "S":
+                dano = criatura.atacar_explorador(self)
+                print(Fore.RED + f"Você sofreu {dano} de dano!")
+                print(f"Você agora tem {self.pontos_vida} pontos de vida.")
+
+                # Teste para saber se o Explorador morreu com o ataque
+                if not self.esta_vivo():
+                    print(Fore.YELLOW + f"Você morreu!")
+
                 break
 
             rodada = 1  # Rodada inicial

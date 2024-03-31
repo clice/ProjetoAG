@@ -1,29 +1,35 @@
+from colorama import Fore, Style, init
 from helpers.gerador import *
-from helpers.movimento import *
-from objetos.regiao import Regiao
-from objetos.explorador import Explorador
 
 
 # Função para inicializar o jogo
 def iniciar_jogo():
+    # Inicializar a Ilha
+    ilha = gerar_ilha()
+
     print("Bem-vindo(a) Explorador(a)! Você está chegando a ilha. Lembre-se que lá há muitos perigos.")
+    print(f"Na ilha estão espalhados criaturas, perigos, plantas medicinais e armas. Há {ilha.qtd_itens} de cada.")
     print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
     print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
     print("Boa sorte!\n")
 
-    while True:
-        # Inicializar a Ilha
-        ilha = gerar_ilha()
+    print("Você está chegando a ilha!\n")
 
-        print("Você está chegando a ilha!\n")
+    explorador = gerar_explorador(ilha.qtd_movimentos)  # Gerar Explorador
 
-        print("Essas são as informações iniciais:")
-        explorador = Explorador(Regiao(0, 'Praia', 0), ilha.qtd_movimentos)  # Inicializar o Explorador
-        explorador.__str__()  # Imprimir informações do Explorador
-        ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
+    while explorador.qtd_movimentos > 0:
+        print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
+        print(Style.RESET_ALL)  # Restaurar cores
 
-        mover_explorador(explorador, ilha)  # Realizar a movimentação do Explorador
-        break
+        # ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
+
+        explorador.atualizar_regiao(ilha)  # Realizar a movimentação do Explorador
+
+        explorador.remover_qtd_movimentos()  # Remover um movimento disponível
+
+        if explorador.qtd_movimentos == 0:
+            print("FIM DE JOGO! Não há mais movimentos disponíveis.")
+            break
 
 
 # Função para iniciar o jogo

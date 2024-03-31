@@ -1,7 +1,9 @@
 from helpers.sorteios import *
 from objetos.ilha import Ilha
 from objetos.item import Item
-from objetos.criatura import Criatura    
+from objetos.regiao import Regiao
+from objetos.criatura import Criatura
+from objetos.explorador import Explorador
 
 
 # Função para gerar a ilha
@@ -36,6 +38,7 @@ def gerar_ilha():
 
     return ilha
 
+
 # Função para gerar um Item na Região
 def gerar_item(regiao, item):
     regiao.adicionar_item(
@@ -44,3 +47,12 @@ def gerar_item(regiao, item):
             item['qtd_uso'], regiao.tipo
         )
     )  # Adiciona o Item na Região
+
+
+# Função para gerar o Explorador
+def gerar_explorador(qtd_movimentos):
+    print("Informações iniciais:")
+    regiao = Regiao(0, 'Praia', 0)
+    explorador = Explorador(regiao, qtd_movimentos)  # Inicializar o Explorador
+    explorador.__str__()  # Imprimir informações do Explorador
+    return explorador
