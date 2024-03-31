@@ -118,7 +118,7 @@ class Ilha:
 
     # Método para retornar as regiões adjacentes do grafo Ilha
     def encontrar_regioes_adjacentes(self, regiao):
-        return list(self.mapa.neighbors(regiao))
+        return self.mapa.neighbors(regiao)
 
     # MÉTODOS PARA OS CHECKPOINTS
 

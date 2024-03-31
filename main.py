@@ -86,28 +86,26 @@ def mover_explorador(explorador, ilha):
         # Verificar resposta do Explorador
         if resposta.upper() != "S":
             break
-
-        # Buscar regiões adjacentes a região atual
-        regioes_adjacentes = list(ilha.encontrar_regioes_adjacantes(explorador.regiao.tipo))
-
-        # Escolher aleatoriamente uma Região para o Explorador ir
-        tipo_regiao = random.choice(regioes_adjacentes)
-
-        # Encontrar as informações da Região escolhida
-        nova_regiao = ilha.encontrar_regiao(tipo_regiao)
-
-        explorador.atualizar_regiao(nova_regiao)
+        
+        # Mudar a região do Explorador
+        mudar_regiao(explorador, ilha)
 
         print(Fore.MAGENTA + f"Localização atual: {explorador.regiao.tipo}.")
         print(Style.RESET_ALL)  # Restaurar cores
 
-        nova_regiao.checar_regiao(explorador)
+        # Checar o que tem na Região atualizada
+        explorador.regiao.checar_regiao(explorador)
+
+
+# Função para mudar a região da Criatura ou do Explorador
+def mudar_regiao(personagem, ilha):
+    adjacentes = list(ilha.encontrar_regioes_adjacentes(personagem.regiao.tipo))  # Regiões adjacentes da Região atual
+    tipo_regiao = random.choice(adjacentes)           # Escolher aleatoriamente uma Região
+    nova_regiao = ilha.encontrar_regiao(tipo_regiao)  # Informações da Região escolhida
+    personagem.atualizar_regiao(nova_regiao)          # Atualizar a região
 
 
 # Função para iniciar o jogo
 if __name__ == "__main__":
-    # Inicializar colorama
-    init()
-
-    # Inicializar jogo
-    inicializar_jogo()
+    init()              # Inicializar colorama
+    inicializar_jogo()  # Inicializar jogo

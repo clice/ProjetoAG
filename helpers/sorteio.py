@@ -32,7 +32,7 @@ def sortear_criatura():
             "pontos_vida": 50,
             "pontos_ataque": 10,
             "descricao": "Tem 8 metros de comprimento, possui pele dura, "
-                         "bastante força e mordida poderosa"
+                        "bastante força e mordida poderosa"
         },
         {
             "nome": "Formiga Quimera",
@@ -40,7 +40,7 @@ def sortear_criatura():
             "pontos_vida": 50,
             "pontos_ataque": 10,
             "descricao": "Podem desossar um boi em poucos minutos "
-                         "apesar de frágeis individualmente"
+                        "apesar de frágeis individualmente"
         },
         {
             "nome": "Onça Pintada",
@@ -48,8 +48,8 @@ def sortear_criatura():
             "pontos_vida": 50,
             "pontos_ataque": 10,
             "descricao": "Consegue se camuflar quase que perfeitamente, "
-                         "e possui o tamanho de um touro, com garras "
-                         "e dentes poderosos"
+                        "e possui o tamanho de um touro, com garras "
+                        "e dentes poderosos"
         }
     )
 
