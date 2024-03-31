@@ -56,9 +56,3 @@ def gerar_explorador(qtd_movimentos):
     explorador = Explorador(regiao, qtd_movimentos)  # Inicializar o Explorador
     explorador.__str__()  # Imprimir informações do Explorador
     return explorador
-
-
-# Função para checar o que tem na Região
-def checar_regiao(explorador):
-    if explorador.regiao.tipo == 'Tesouro':
-        explorador.regiao.encontrar_tesouro(explorador)

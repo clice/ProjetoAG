@@ -17,6 +17,9 @@ def iniciar_jogo():
 
     explorador = gerar_explorador(ilha.qtd_movimentos)  # Gerar Explorador
 
+    print(Fore.MAGENTA + f"Localização atual: {explorador.regiao.tipo}.")
+    print(Style.RESET_ALL)  # Restaurar cores
+
     while explorador.qtd_movimentos > 0:
         print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
         print(Style.RESET_ALL)  # Restaurar cores
@@ -25,11 +28,19 @@ def iniciar_jogo():
 
         explorador.atualizar_regiao(ilha)  # Realizar a movimentação do Explorador
 
-        checar_regiao(explorador)
-
-        explorador.regiao.encontrar_tesouro(explorador)
+        if explorador.regiao.tipo == 'Praia':
+            # Caso o Explorador consiga voltar a praia com algum percentual do tesouro
+            if explorador.qtd_movimentos < ilha.qtd_movimentos and explorador.tesouro > 0:
+                print(f"VOCÊ CHEGOU A PRAIA! Conseguiu resgatar {explorador.tesouro}% do tesouro.")
+                break
+        elif explorador.regiao.tipo == 'Tesouro':
+            explorador.regiao.encontrar_tesouro(explorador)
+        elif explorador.regiao.tipo in ilha.checkpoints:
+            explorador.adicionar_backup()
+            explorador.__str__()
 
         explorador.remover_qtd_movimentos()  # Remover um movimento disponível
+        explorador.__str__()
 
         if explorador.qtd_movimentos == 0:
             print("FIM DE JOGO! Não há mais movimentos disponíveis.")

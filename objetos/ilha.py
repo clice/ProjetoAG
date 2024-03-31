@@ -133,6 +133,3 @@ class Ilha:
     # Método para remover um checkpoint depois de usado
     def remover_checkpoint(self, checkpoint):
         self.checkpoints.remove(checkpoint)
-
-    # Métoro para quando o Explorador encontrar um Checkpoint
-    # def encontrar_checkpoint(self):

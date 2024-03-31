@@ -90,9 +90,6 @@ class Explorador:
 
     # Método para atualizar a Região que o Explorador está
     def atualizar_regiao(self, ilha):
-        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
-        print(Style.RESET_ALL)  # Restaurar cores
-
         while True:
             resposta = input("Deseja avançar para um lugar aleatório (S/Outro)? ")
             print()
@@ -140,16 +137,20 @@ class Explorador:
             'pontos_ataque': self.pontos_ataque,
             'tesouro': self.tesouro,
             'regiao': self.regiao,
-            'itens': self.itens
+            'itens': self.itens,
+            'qtd_movimentos': self.qtd_movimentos,
+            'backup': self.backup
         }
 
     # Método para atualizar os dados do Explorador com os dados do backup
-    def atualizar_dados(self):
+    def atualizar_explorador(self):
         self.pontos_vida = self.backup['pontos_vida']
         self.pontos_ataque = self.backup['pontos_ataque']
         self.tesouro = self.backup['tesouro']
         self.regiao = self.backup['regiao']
-        self.itens = self.backup['itens']
+        self.itens = self.backup['itens'],
+        self.qtd_movimentos = self.backup['qtd_movimentos'],
+        self.backup = self.backup['backup']
                 
     # MÉTODOS PARA LUTA ENTRE O EXPLORADOR E UMA CRIATURA
 
