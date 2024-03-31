@@ -93,7 +93,7 @@ class Explorador:
     # Método para atualizar a Região que o Explorador está
     def atualizar_regiao(self, ilha):
         while True:
-            resposta = input("Deseja avançar para um lugar aleatório (S/Outro)? ")
+            resposta = input("Deseja avançar para uma região aleatória (S/Outro)? ")
             print()
 
             # Verificar resposta do Explorador

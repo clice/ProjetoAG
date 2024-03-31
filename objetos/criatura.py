@@ -1,6 +1,6 @@
 import random
 
-from colorama import Fore
+from colorama import Fore, Style
 
 
 # Declaração do objeto Criatura
@@ -54,6 +54,7 @@ class Criatura:
         if self.pontos_ataque < criatura.pontos_ataque:
             dano = self.atacar_criatura(criatura)
             print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
+            print(Style.RESET_ALL)  # Restaurar cores
             print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
             return criatura
         # Se a Criatura é mais forte que a outra
@@ -61,4 +62,13 @@ class Criatura:
             dano = self.atacar_criatura(criatura)
             print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
             print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
+            print(Style.RESET_ALL)  # Restaurar cores
             return criatura
+        
+    # MÉTODO PARA QUANDO A CRIATURA FOR ENCONTRADA
+    
+    # Método para quando o Explorador encontrar uma Criatura
+    def encontrar_criatura(self, explorador):
+        print(Fore.RED + f"{self.nome} encontrado(a)! CUIDADO!")
+        print(Style.RESET_ALL)  # Restaurar cores
+        explorador.lutar_criatura(self)

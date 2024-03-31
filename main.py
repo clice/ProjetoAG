@@ -15,28 +15,30 @@ def iniciar_jogo(ilha, explorador):
 
         explorador.atualizar_regiao(ilha)  # Realizar a movimentação do Explorador
 
+        # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':
-            # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
             if explorador.qtd_movimentos < ilha.qtd_movimentos and explorador.tesouro > 0:
                 print(f"VOCÊ CHEGOU A PRAIA! Conseguiu resgatar {explorador.tesouro}% do tesouro.\n")
                 break
+        # Caso o Explorador consiga encontrar o Tesouro
         elif explorador.regiao.tipo == 'Tesouro':
-            # Caso o Explorador consiga encontrar o Tesouro
             explorador.regiao.encontrar_tesouro(explorador)
+        # Quando o Explorador vai para outra Região
         else:
             # Caso o Explorador também chegue a um Checkpoint guardar seus dados
             if explorador.regiao.tipo in ilha.checkpoints:
                 explorador.adicionar_backup()
                 
-            if explorador.regiao.itens:
+            # Caso haja uma Criatura na Região
+            if explorador.regiao.criaturas:
+                for criatura in explorador.regiao.criaturas:
+                    criatura.encontrar_criatura(explorador)
+            
+            # Caso haja Itens na Região
+            if explorador.regiao.itens:                    
                 for item in explorador.regiao.itens:
-                    # Caso o Explorador encontre uma Criatura
-                    if item.tipo == 'criatura':
-                        print(Fore.RED + f"{item.nome} encontrado(a)! CUIDADO!")
-                        print(Style.RESET_ALL)  # Restaurar cores
-                        explorador.lutar_criatura(item)
                     # Caso o Explorador encontre um Perigo
-                    elif item.tipo == 'perigo':
+                    if item.tipo == 'perigo':
                         item.encontrar_perigo(explorador)
                     # Caso o Explorador encontre uma Planta Medicinal
                     elif item.tipo == 'planta_medicinal':
@@ -44,8 +46,9 @@ def iniciar_jogo(ilha, explorador):
                     # Caso o Explorador encontre uma Arma
                     elif item.tipo == 'arma':
                         item.encontrar_arma(explorador)
-            # Caso não tenha nenhum item na Região
-            else:
+                        
+            # Caso não haja nada na Região
+            if not explorador.regiao.criaturas and not explorador.regiao.itens:
                 print("Nada na região. Continue procurando...\n")
             
         explorador.remover_qtd_movimentos()  # Remover um movimento disponível
@@ -68,6 +71,10 @@ if __name__ == "__main__":
     print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
     print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
     print("Boa sorte!\n")
+    print("OBS: Toda vez que você for perguntado se quer mudar para uma região aleatória,")
+    print("você pode optar por uma das seguinte opções fixas:")
+    print("1 - Usar planta medicinal")
+    print("2 - Jogar arma fora")
 
     print("Você está chegando a ilha!\n")
 
