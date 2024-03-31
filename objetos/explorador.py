@@ -127,6 +127,14 @@ class Explorador:
     # Método para remover a quantidade de movimentos do Explorador
     def remover_qtd_movimentos(self):
         self.qtd_movimentos -= 1
+        
+    # Método para reviver o Explorador caso ainda haja movimentos disponíveis
+    def reviver_explorador(self):
+        if self.qtd_movimentos > 0:
+            self.atualizar_explorador()
+            
+            print(f"VOCÊ AINDA ESTÁ VIVO!")
+            self.__str__()
 
     # MÉTODOS PARA CONFERÊNCIA DO BACKUP
 

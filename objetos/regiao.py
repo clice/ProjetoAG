@@ -51,4 +51,3 @@ class Regiao:
 
         explorador.adicionar_tesouro()  # Adicionar o percentual do tesouro ao Explorador
         self.tesouro = explorador.tesouro  # Atualizar o percentual do tesouro restanda na Região
-        explorador.__str__()
