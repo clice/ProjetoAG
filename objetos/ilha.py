@@ -105,9 +105,9 @@ class Ilha:
     # MÉTODOS PARA AS REGIÕES DO GRAFO
 
     # Método para adicionar uma Região ao grafo
-    def adicionar_regiao(self, indice, tipo, perc_tesouro):
-        self.mapa.add_node(tipo)                                 # Adiciona vértice ao grafo
-        self.regioes.append(Regiao(indice, tipo, perc_tesouro))  # Adiciona o objeto Região as regiões da Ilha
+    def adicionar_regiao(self, indice, tipo, tesouro):
+        self.mapa.add_node(tipo)                            # Adiciona vértice ao grafo
+        self.regioes.append(Regiao(indice, tipo, tesouro))  # Adiciona o objeto Região as regiões da Ilha
 
     # Método para buscar a região e a retornar
     def encontrar_regiao(self, tipo_regiao):
@@ -117,7 +117,7 @@ class Ilha:
                 return regiao
 
     # Método para retornar as regiões adjacentes do grafo Ilha
-    def encontrar_regioes_adjacantes(self, regiao):
+    def encontrar_regioes_adjacentes(self, regiao):
         return list(self.mapa.neighbors(regiao))
 
     # MÉTODOS PARA OS CHECKPOINTS

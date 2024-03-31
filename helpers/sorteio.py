@@ -63,27 +63,32 @@ def sortear_perigo():
         {
             "nome": "Fonte de gás venenoso",
             "tipo": "perigo",
-            "pontos": 5
+            "pontos": 5,
+            "qtd_uso": 1
         },
         {
             "nome": "Poço de piche",
             "tipo": "perigo",
-            "pontos": 10
+            "pontos": 10,
+            "qtd_uso": 1
         },
         {
             "nome": "Areia movediça",
             "tipo": "perigo",
-            "pontos": 15
+            "pontos": 15,
+            "qtd_uso": 1
         },
         {
             "nome": "Rochas deslizantes",
             "tipo": "perigo",
-            "pontos": 15
+            "pontos": 15,
+            "qtd_uso": 1
         },
         {
             "nome": "Planta venenosa",
             "tipo": "perigo",
-            "pontos": 15
+            "pontos": 15,
+            "qtd_uso": 1
         }
     )
 
@@ -97,17 +102,20 @@ def sortear_planta_medicinal():
         {
             "nome": "Planta Medicinal 1",
             "tipo": "planta_medicinal",
-            "pontos": 5
+            "pontos": 5,
+            "qtd_uso": 1
         },
         {
             "nome": "Planta Medicinal 2",
             "tipo": "planta_medicinal",
-            "pontos": 10
+            "pontos": 10,
+            "qtd_uso": 1
         },
         {
             "nome": "Planta Medicinal 3",
             "tipo": "planta_medicinal",
-            "pontos": 15
+            "pontos": 15,
+            "qtd_uso": 1
         }
     )
 
@@ -122,17 +130,19 @@ def sortear_arma():
             "nome": "Faca",
             "tipo": "arma",
             "pontos": 5,
-
+            "qtd_uso": 3
         },
         {
             "nome": "Espada",
             "tipo": "arma",
-            "pontos": 10
+            "pontos": 10,
+            "qtd_uso": 3
         },
         {
             "nome": "Pistola",
             "tipo": "arma",
-            "pontos": 15
+            "pontos": 15,
+            "qtd_uso": 3
         }
     )
     

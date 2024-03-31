@@ -10,8 +10,8 @@ class Explorador:
     def __init__(self):
         self.pontos_vida = 100                       # Pontos de vida do Explorador
         self.pontos_ataque = 20                      # Pontos de ataque do Explorador
-        self.perc_tesouro = 0                        # Porcentagem do tesouro carregado pelo Explorador
-        self.regiao = Regiao(0, 'Praia')  # Região que o Explorador se encontra atualmente
+        self.tesouro = 0                             # Porcentagem do tesouro carregado pelo Explorador
+        self.regiao = Regiao(0, 'Praia', 0)  # Região que o Explorador se encontra atualmente
         self.itens = []                              # Lista de Itens carregadas pelo Explorador
         self.qtd_movimentos = 0                      # Quantidade de movimentos restantes do Explorador
         self.backup = {}                             # Backup do Explorador quando encontrar um checkpoint
@@ -20,7 +20,7 @@ class Explorador:
     def __str__(self):
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
-        print(f"Porcentagem do tesouro: {self.perc_tesouro}")
+        print(f"Porcentagem do tesouro: {self.tesouro}")
 
         if not self.itens:
             print(f"Itens: Nenhum item coletado\n")
@@ -65,25 +65,25 @@ class Explorador:
         if self.pontos_ataque < 20:
             self.pontos_ataque = 20
 
-    # MÉTODOS PARA A PORCENTAGEM DO TESOURO CARREGADA PELO EXPLORADOR
+    # MÉTODOS PARA O TESOURO CARREGADA PELO EXPLORADOR
 
-    # Método para adicionar a porcentagem do tesouro
-    def adicionar_perc_tesouro(self):
-        percentual = self.pontos_vida
+    # Método para adicionar tesouro
+    def adicionar_tesouro(self):
+        tesouro = self.pontos_vida
 
         for item in self.itens:
             # Calcular o percentual correto para o Explorador carregar o tesouro
-            percentual -= item.pontos_ataque
+            tesouro -= item.pontos_ataque
 
-        self.perc_tesouro = percentual
+        self.tesouro = tesouro
 
-    # Método para remover a porcentagem do tesouro
-    def remover_perc_tesouro(self, valor):
-        self.perc_tesouro -= valor
+    # Método para remover tesouro
+    def remover_tesouro(self, tesouro):
+        self.tesouro -= tesouro
 
         # Se o percentual do tesouro chegou a menos que 0
-        if self.perc_tesouro <= 0:
-            self.perc_tesouro = 0
+        if self.tesouro <= 0:
+            self.tesouro = 0
             print(f"Você perdeu todo o tesouro que tinha resgatado.\n")
 
     # MÉTODOS PARA A REGIÃO DO EXPLORADOR
@@ -116,7 +116,7 @@ class Explorador:
         self.backup = {
             'pontos_vida': self.pontos_vida,
             'pontos_ataque': self.pontos_ataque,
-            'perc_tesouro': self.perc_tesouro,
+            'tesouro': self.tesouro,
             'regiao': self.regiao,
             'itens': self.itens
         }
@@ -125,7 +125,7 @@ class Explorador:
     def atualizar_dados(self):
         self.pontos_vida = self.backup['pontos_vida']
         self.pontos_ataque = self.backup['pontos_ataque']
-        self.perc_tesouro = self.backup['perc_tesouro']
+        self.tesouro = self.backup['tesouro']
         self.regiao = self.backup['regiao']
         self.itens = self.backup['itens']
                 

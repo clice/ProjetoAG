@@ -8,6 +8,7 @@ from objetos.explorador import Explorador
 
 # Função para inicializar o jogo
 def inicializar_jogo():
+    # Inicializar o jogo
     print("Bem-vindo(a) Explorador(a)! Você está chegando a ilha. Lembre-se que lá há muitos perigos.")
     print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
     print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
@@ -20,8 +21,8 @@ def inicializar_jogo():
         print("Você está chegando a ilha!\n")
 
         print("Essas são as informações iniciais:")
-        explorador = Explorador()                   # Inicializar o Explorador
-        explorador.__str__()                        # Imprimir informações do Explorador
+        explorador = Explorador()  # Inicializar o Explorador
+        explorador.__str__()  # Imprimir informações do Explorador
         ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
         mover_explorador(explorador, ilha)  # Realizar a movimentação do Explorador
@@ -34,51 +35,52 @@ def gerar_elementos():
     ilha = Ilha()
     ilha.gerar_mapa()
 
-    regioes = ilha.regioes[1:-1]  # Remover primeiro e último elementos da lista de Regiões
     qtd_elementos = sortear_qtd_elementos(ilha.qtd_regioes)  # Quantidade de elementos para adicionar as Regiões
 
     # Laço para rodar e gerar a quantidade de elementos na Ilha
+    # Os sorteios ilha.regioes[1:-1] ignoram o primeiro e último itens da lista
     for _ in range(qtd_elementos):
-        # Adicionar a Criatura a Região sorteada
-        regiao = random.choice(regioes)    # Sortear outra Região da Ilha
-        criatura = sortear_criatura()      # Sortear Criatura para adicionar a Região
+        # Gerar Criatura numa Região da Ilha
+        regiao = random.choice(ilha.regioes[1:-1])
+        criatura = sortear_criatura()  # Sortear Criatura para adicionar a Região
         criatura = Criatura(
             criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
             criatura['pontos_ataque'], criatura['descricao'], regiao.tipo
-        )
-        regiao.elementos.append(criatura)  # Adiciona a Criatura a Região
+        )  # Objeto Criatura
+        regiao.adicionar_criatura(criatura)  # Adiciona a Criatura a Região
 
-        # Adicionar o Perigo a Região sorteada
-        regiao = random.choice(regioes)  # Sortear outra Região da Ilha
-        perigo = sortear_perigo()        # Sortear Perigo para adicionar a Região
-        perigo = Item(perigo['nome'], perigo['tipo'], perigo['pontos'], 1, regiao.tipo)
-        regiao.elementos.append(perigo)  # Adiciona o Perigo a Região
+        # Gerar Perigo numa Região da Ilha
+        perigo = sortear_perigo()  # Sortear Perigo para adicionar a Região
+        gerar_item(random.choice(ilha.regioes[1:-1]), perigo)
 
-        # Adicionar a Planta Medicinal a Região sorteada
-        regiao = random.choice(regioes)                # Sortear outra Região da Ilha
+        # Gerar Planta Medicinal numa Região da Ilha
         planta_medicinal = sortear_planta_medicinal()  # Sortear Planta Medicianal para adicionar a Região
-        planta_medicinal = Item(
-            planta_medicinal['nome'], planta_medicinal['tipo'],
-            planta_medicinal['pontos'], 1, regiao.tipo
-        )
-        regiao.elementos.append(planta_medicinal)      # Adiciona a Planta Medicinal a Região
+        gerar_item(random.choice(ilha.regioes[1:-1]), planta_medicinal)
 
-        # Adicionar a Arma a Região sorteada
-        regiao = random.choice(regioes)  # Sortear outra Região da Ilha
-        arma = sortear_arma()            # Sortear Arma para adicionar a Região
-        arma = Item(arma['nome'], arma['tipo'], arma['pontos'], 3, regiao.tipo)
-        regiao.elementos.append(arma)    # Adiciona a Arma a Região
+        # Gerar Arma numa Região da Ilha
+        arma = sortear_arma()  # Sortear Arma para adicionar a Região
+        gerar_item(random.choice(ilha.regioes[1:-1]), arma)
 
     return ilha
 
 
-# Método para realizar a movimentação do Explorador de uma Região a outra da Ilha
+# Função para gerar um Item na Região
+def gerar_item(regiao, item):
+    regiao.adicionar_item(
+        Item(
+            item['nome'], item['tipo'], item['pontos'],
+            item['qtd_uso'], regiao.tipo
+        )
+    )  # Adiciona o Item na Região
+
+
+# Função para realizar a movimentação do Explorador de uma Região a outra da Ilha
 def mover_explorador(explorador, ilha):
     print(Fore.MAGENTA + f"Localização atual: {explorador.regiao.tipo}.")
     print(Style.RESET_ALL)  # Restaurar cores
 
     while True:
-        resposta = input("Deseja avançar para um lugar aleatorio (S/Outro)? ")
+        resposta = input("Deseja avançar para um lugar aleatório (S/Outro)? ")
         print()
 
         # Verificar resposta do Explorador
@@ -102,10 +104,10 @@ def mover_explorador(explorador, ilha):
         nova_regiao.checar_regiao(explorador)
 
 
-# Iniciar o jogo
+# Função para iniciar o jogo
 if __name__ == "__main__":
     # Inicializar colorama
     init()
 
-    # Inicializar o jogo
+    # Inicializar jogo
     inicializar_jogo()
