@@ -63,8 +63,14 @@ class Regiao:
 
     # Método para quando o Explorador encontrar o tesouro
     def encontrar_tesouro(self, explorador):
-        print(Fore.CYAN + f"Você chegou ao Tesouro!")
+        print(Fore.CYAN + f"VOCÊ CHEGOU AO TESOURO!")
         print(Style.RESET_ALL)  # Restaurar cores
 
-        explorador.adicionar_tesouro()  # Adicionar o percentual do tesouro ao Explorador
-        self.tesouro = explorador.tesouro  # Atualizar o percentual do tesouro restanda na Região
+        resposta = input(f"Deseja resgatar o tesouro (S/Outro)? ")
+
+        if resposta.upper() != "S":
+            print("Não quer")
+            # if explorador.ha_armas():
+        else:
+            explorador.adicionar_tesouro()  # Adicionar o percentual do tesouro ao Explorador
+            self.tesouro = explorador.tesouro  # Atualizar o percentual do tesouro restanda na Região

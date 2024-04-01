@@ -40,7 +40,15 @@ def lutar(explorador, criatura):
             # Primeiro o Explorador ataca a Criatura
             if explorador.esta_vivo() and criatura.esta_viva():
                 dano = atacar(explorador, criatura)  # Calcular o dano gerado pelo Explorador
-                explorador.ha_armas()                # Se o Esplorador tem armas para
+                item = explorador.tem_armas()                # Se o Esplorador tem armas para
+
+                if item:
+                    item.remover_qtd_uso()  # Diminuir a quantidade de uso do Item
+
+                    # Caso a quantidade de uso seja menor que 1
+                    if item.qtd_uso < 0:
+                        explorador.remover_item(item)
+
                 print(Fore.GREEN + f"Você atacou! Houve {dano} de dano.")
 
                 # Teste para saber se a Criatura morreu com o ataque

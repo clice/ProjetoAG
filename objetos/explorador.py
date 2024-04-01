@@ -128,16 +128,14 @@ class Explorador:
             print(f"{item.tipo} não foi encontrado(a).\n")
 
     # Método para quando o Explorador possui Arma
-    def ha_armas(self):
+    def tem_armas(self):
         if self.itens:
             for item in self.itens:
                 # Caso o Item seja do tipo Arma
                 if item.tipo == 'arma':
-                    item.remover_qtd_uso()  # Diminuir a quantidade de uso do Item
-
-                    # Caso a quantidade de uso seja menor que 1
-                    if item.qtd_uso < 0:
-                        self.remover_item(item)
+                    return item
+                else:
+                    return False
 
     # Método para quando o Explorador encontrar um Perigo
     def encontrar_perigo(self, perigo):
