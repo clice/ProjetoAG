@@ -1,4 +1,7 @@
+import random
+
 from colorama import Fore, Style
+from objetos.criatura import Criatura
 
 
 # Declaração do objeto Região (Partes da Ilha = Vértices)
@@ -28,6 +31,10 @@ class Regiao:
     def adicionar_criatura(self, criatura):
         self.criaturas.append(criatura)
 
+    # Método para remover Criatura da Região
+    def remover_criatura(self, criatura):
+        self.criaturas.remove(criatura)
+
     # Método para retornar se há Criaturas na Região
     def ha_criaturas(self):
         return bool(self.criaturas)
@@ -40,7 +47,7 @@ class Regiao:
             criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
             criatura['pontos_ataque'], criatura['descricao'], regiao
         )  # Objeto Criatura
-        regiao.adicionar_criatura(criatura)
+        self.adicionar_criatura(criatura)
 
     # MÉTODOS PARA OS ITENS NA REGIÃO
 

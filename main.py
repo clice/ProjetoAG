@@ -2,6 +2,7 @@ import time
 
 from colorama import Fore, Style, init
 from helpers.gerador import *
+from helpers.opcoes import *
 
 
 # Função para inicializar o jogo
@@ -19,8 +20,7 @@ def iniciar_jogo():
 
     print(Fore.YELLOW + "OBS: Toda vez que você for perguntado se quer mudar para uma região aleatória,")
     print("você pode optar por uma das seguinte opções fixas:")
-    print("1 - Usar planta medicinal")
-    print("2 - Jogar arma fora\n")
+    print("1 - Jogar arma fora\n")
 
     time.sleep(1)  # Pausa de 1 segundo
 
@@ -65,7 +65,9 @@ def iniciar_contador(ilha, explorador):
                 # Caso haja uma Criatura na Região
                 if explorador.regiao.criaturas:
                     for criatura in explorador.regiao.criaturas:
-                        explorador.encontrar_criatura(criatura)
+                        print(Fore.RED + f"{criatura.nome} encontrado(a)! CUIDADO!")
+                        print(Style.RESET_ALL)  # Restaurar cores
+                        lutar(explorador, criatura)
 
                 # Caso haja Itens na Região
                 if explorador.regiao.itens:

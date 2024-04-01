@@ -38,36 +38,3 @@ class Criatura:
     def mostrar_regiao(self):
         print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
         print(Style.RESET_ALL)  # Restaurar cores
-
-    # MÉTODO PARA LUTA ENTRE UMA CRIATURA E O EXPLORADOR
-
-    # Método para o ataque da Criatura contra o Explorador
-    def atacar_explorador(self, explorador):
-        dano = random.randint(1, self.pontos_ataque)
-        explorador.pontos_vida -= dano
-        return dano
-
-    # MÉTODOS PARA LUTA ENTRE ENTRE CRIATURAS
-
-    # Método para o ataque de uma Criatura contra outra
-    def atacar_criatura(self, criatura):
-        dano = random.randint(1, self.pontos_ataque)
-        criatura.remover_pontos_vida(self.pontos_ataque)
-        return dano
-
-    # Método para a luta entre as Criaturas
-    def lutar_criatura(self, criatura):
-        # Se a Criatura é mais fraca que a outra
-        if self.pontos_ataque < criatura.pontos_ataque:
-            dano = self.atacar_criatura(criatura)
-            print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
-            print(Style.RESET_ALL)  # Restaurar cores
-            print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
-            return criatura
-        # Se a Criatura é mais forte que a outra
-        elif self.pontos_ataque > criatura.pontos_ataque:
-            dano = self.atacar_criatura(criatura)
-            print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
-            print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
-            print(Style.RESET_ALL)  # Restaurar cores
-            return criatura

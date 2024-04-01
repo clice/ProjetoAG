@@ -139,12 +139,6 @@ class Explorador:
                     if item.qtd_uso < 0:
                         self.remover_item(item)
 
-    # Método para quando o Explorador encontrar uma Criatura
-    def encontrar_criatura(self, criatura):
-        print(Fore.RED + f"{criatura.nome} encontrado(a)! CUIDADO!")
-        print(Style.RESET_ALL)  # Restaurar cores
-        self.lutar_criatura(criatura)
-
     # Método para quando o Explorador encontrar um Perigo
     def encontrar_perigo(self, perigo):
         print(Fore.YELLOW + f"{perigo.nome} encontrado(a)! CUIDADO!")
@@ -224,81 +218,3 @@ class Explorador:
         self.itens = self.backup['itens'],
         self.qtd_movimentos = self.backup['qtd_movimentos'],
         self.backup = self.backup['backup']
-
-    # MÉTODOS PARA LUTA ENTRE O EXPLORADOR E UMA CRIATURA
-
-    # Método para o ataque do Explorador contra a Criatura
-    def atacar_criatura(self, criatura):
-        dano = random.randint(1, self.pontos_ataque)
-        criatura.pontos_vida -= dano
-        return dano
-
-    # Método para a luta entre o Explorador e a Criatura
-    def lutar_criatura(self, criatura):
-        while True:
-            resposta = input(f"Deseja lutar com {criatura.nome} (S/Outro)? ")
-
-            # Verificar resposta do Explorador
-            if resposta.upper() != "S":
-                # Gerar dano no Explorador
-                dano = criatura.atacar_explorador(self)
-                print(Fore.RED + f"Você sofreu {dano} de dano!")
-
-                # Caso o Explorador morra com o ataque
-                if not self.esta_vivo():
-                    self.reviver_explorador()
-                else:
-                    print(f"Você agora tem {self.pontos_vida} pontos de vida.")
-
-                break
-
-            rodada = 1  # Rodada inicial
-
-            # Se o Explorador optar por lutar contra a Criatura
-            while rodada <= 3:
-                print(f"\nROUND {rodada}")
-
-                # Condições para os ataques
-                # Primeiro o Explorador ataca a Criatura
-                if self.esta_vivo() and criatura.esta_viva():
-                    dano = self.atacar_criatura(criatura)  # Calcular o dano gerado pelo Explorador
-                    self.ha_armas()                        # Se o Esplorador tem armas para
-                    print(Fore.GREEN + f"Você atacou! Houve {dano} de dano.")
-
-                    # Teste para saber se a Criatura morreu com o ataque
-                    if not criatura.esta_viva():
-                        print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
-                        # criatura.reviver_criatura()
-                        break
-                    else:
-                        print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
-
-                # Segundo a Criatura ataca o Explorador
-                if criatura.esta_viva() and self.esta_vivo():
-                    dano = criatura.atacar_explorador(self)
-                    print(Fore.RED + f"{criatura.nome.upper()} ATACOU! Houve {dano} de dano.")
-
-                    # Teste para saber se o Explorador morreu com o ataque
-                    if not self.esta_vivo():
-                        self.reviver_explorador()
-                        break
-                    else:
-                        print(f"Você agora tem {self.pontos_vida} pontos de vida.")
-
-                print(Style.RESET_ALL)  # Restaurar cores
-
-                # Se as três rodadas ainda não terminaram nem o Explorador ou Criatura morreram
-                if rodada <= 2:
-                    # Perguntar novamente para continuar a luta
-                    resposta = input(f"Deseja continuar lutando com {criatura.nome}? (S/Outro)? ")
-
-                    # Verificar resposta do Explorador
-                    if resposta.upper() != "S":
-                        break
-
-                rodada += 1  # Acrescentar rodada concluida
-
-            # Se os pontos de vida do Explorador chegarem a zero
-            if not self.esta_vivo() or not criatura.esta_viva():
-                print(Style.RESET_ALL)  # Restaurar cores
-                break
