@@ -44,11 +44,6 @@ def iniciar_contador(ilha, explorador):
 
         explorador.mover(ilha)  # Realizar a movimentação do Explorador
 
-        # Caso não haja nada na Região
-        if not explorador.regiao.criaturas and not explorador.regiao.itens:
-            print("Nada na região. Continue procurando...\n")
-            break
-
         # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':
             if explorador.qtd_movimentos < ilha.qtd_movimentos and explorador.tesouro > 0:
@@ -62,24 +57,28 @@ def iniciar_contador(ilha, explorador):
             # Caso o Explorador também chegue a um Checkpoint guardar seus dados
             if explorador.regiao.tipo in ilha.checkpoints:
                 explorador.adicionar_backup()
-                
-            # Caso haja uma Criatura na Região
-            if explorador.regiao.criaturas:
-                for criatura in explorador.regiao.criaturas:
-                    explorador.encontrar_criatura(criatura)
-            
-            # Caso haja Itens na Região
-            if explorador.regiao.itens:                    
-                for item in explorador.regiao.itens:
-                    # Caso o Explorador encontre um Perigo
-                    if item.tipo == 'perigo':
-                        explorador.encontrar_perigo(item)
-                    # Caso o Explorador encontre uma Planta Medicinal
-                    elif item.tipo == 'planta_medicinal':
-                        explorador.encontrar_planta_medicinal(item)
-                    # Caso o Explorador encontre uma Arma
-                    elif item.tipo == 'arma':
-                        explorador.encontrar_arma(item)
+
+            # Caso não haja nada na Região
+            if not explorador.regiao.criaturas and not explorador.regiao.itens:
+                print("Nada na região. Continue procurando...\n")
+            else:
+                # Caso haja uma Criatura na Região
+                if explorador.regiao.criaturas:
+                    for criatura in explorador.regiao.criaturas:
+                        explorador.encontrar_criatura(criatura)
+
+                # Caso haja Itens na Região
+                if explorador.regiao.itens:
+                    for item in explorador.regiao.itens:
+                        # Caso o Explorador encontre um Perigo
+                        if item.tipo == 'perigo':
+                            explorador.encontrar_perigo(item)
+                        # Caso o Explorador encontre uma Planta Medicinal
+                        elif item.tipo == 'planta_medicinal':
+                            explorador.encontrar_planta_medicinal(item)
+                        # Caso o Explorador encontre uma Arma
+                        elif item.tipo == 'arma':
+                            explorador.encontrar_arma(item)
             
         explorador.remover_qtd_movimentos()  # Remover um movimento disponível
 
