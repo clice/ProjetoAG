@@ -54,7 +54,7 @@ def lutar(explorador, criatura):
                 # Teste para saber se a Criatura morreu com o ataque
                 if not criatura.esta_viva():
                     print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
-                    # criatura.reviver_criatura()
+                    # criatura.reviver()
                     break
                 else:
                     print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
@@ -90,22 +90,36 @@ def lutar(explorador, criatura):
             break
 
 
-# MÉTODOS PARA LUTA ENTRE ENTRE CRIATURAS
+# MÉTODOS PARA A ENTRE ENTRE CRIATURAS
 
 
 # Método para a luta entre as Criaturas
-def lutar_criatura(self, criatura):
-    # Se a Criatura é mais fraca que a outra
-    if self.pontos_ataque < criatura.pontos_ataque:
-        dano = self.atacar_criatura(criatura)
-        print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
-        print(Style.RESET_ALL)  # Restaurar cores
-        print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
-        return criatura
-    # Se a Criatura é mais forte que a outra
-    elif self.pontos_ataque > criatura.pontos_ataque:
-        dano = self.atacar_criatura(criatura)
-        print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
-        print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
-        print(Style.RESET_ALL)  # Restaurar cores
-        return criatura
+def encontrar_criaturas(ilha):
+    regioes_criaturas = {}
+    
+    # Laço para percorrer todas as Criaturas da Ilha
+    for criatura in ilha.criaturas:
+        regiao_criatura = criatura.regiao.tipo  # Pegar o tipo de Região da Criatura
+
+        # Se a Região já está na lista de Regiões
+        if regiao_criatura in regioes_criaturas:
+            regioes_criaturas[regiao_criatura] += 1  # Contador de regiões
+        else:
+            regioes_criaturas[regiao_criatura] = 1  # Contador inicial de regiões
+
+    # Encontrar os casos duplicador de regiões quando tiver mais de 1 caso
+    regioes_duplicadas = [regiao for regiao, qtd_regioes in regioes_criaturas.items() if qtd_regioes > 1]
+
+    if regioes_duplicadas:
+        print(f"Regiões duplicadas: {regioes_duplicadas}")
+    else:
+        print("Nenhuma região duplicada.")
+        
+    criaturas = []
+    
+    for criatura in ilha.criaturas:
+        for regiao_duplicada in regioes_duplicadas:
+            if criatura.regiao.tipo == regiao_duplicada:
+                criaturas.append(criatura)
+                
+    print(criaturas)

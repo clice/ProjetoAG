@@ -42,7 +42,13 @@ def iniciar_contador(ilha, explorador):
     while explorador.qtd_movimentos > 0:
         # ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
+        # explorador.regiao.ha_criaturas()
+        # ilha.lutar_criaturas()
+        encontrar_criaturas(ilha)  # Encontrar as regiões com várias Criaturas 
+
         explorador.mover(ilha)  # Realizar a movimentação do Explorador
+
+        # lutar_criatura()
 
         # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':

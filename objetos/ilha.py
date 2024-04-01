@@ -149,3 +149,39 @@ class Ilha:
             criatura.regiao = self.encontrar_regiao(random.choice(adjacentes))  # Atualiza a Região da Criatura
             regiao_antiga.remover_criatura(criatura)                            # Remover Criatura da Região antiga
             criatura.regiao.adicionar_criatura(criatura)                        # Adicionar Criatura a nova Região
+
+    # Método para a luta entre as Criaturas
+    def lutar_criaturas(self, regioes):
+        regioes_criaturas = {}
+        for criatura in self.criaturas:
+            regiao_criatura = criatura.regiao.tipo
+
+            if regiao_criatura in regioes_criaturas:
+                regioes_criaturas[regiao_criatura] += 1
+            else:
+                regioes_criaturas[regiao_criatura] = 1
+
+        # Find attribute values with more than one occurrence
+        regioes_duplicadas = [regiao for regiao, qtd_regioes in regioes_criaturas.items() if qtd_regioes > 1]
+
+        if regioes_duplicadas:
+            print(f"Regiões duplicadas: {regioes_duplicadas}")
+        else:
+            print("Nenhuma região duplicada.")
+            
+        return regioes_duplicadas
+
+        # # Se a Criatura é mais fraca que a outra
+        # if self.pontos_ataque < criatura.pontos_ataque:
+        #     dano = self.atacar_criatura(criatura)
+        #     print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
+        #     print(Style.RESET_ALL)  # Restaurar cores
+        #     print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
+        #     return criatura
+        # # Se a Criatura é mais forte que a outra
+        # elif self.pontos_ataque > criatura.pontos_ataque:
+        #     dano = self.atacar_criatura(criatura)
+        #     print(Fore.GREEN + f"{self.tipo} atacou! Houve {dano} de dano.")
+        #     print(f"{criatura.tipo} agora tem {criatura.pontos_vida} pontos de vida.")
+        #     print(Style.RESET_ALL)  # Restaurar cores
+        #     return criatura
