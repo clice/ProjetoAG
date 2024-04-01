@@ -1,7 +1,6 @@
 import random
 
 from colorama import Fore, Style
-from objetos.criatura import Criatura
 
 
 # Declaração do objeto Região (Partes da Ilha = Vértices)

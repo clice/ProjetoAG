@@ -1,5 +1,8 @@
 import random
+
+from helpers.gerador import sortear_criatura
 from colorama import Fore, Style
+from objetos.criatura import Criatura
 
 
 # Função para o remover os pontos de vida do atacado com base nos pontos de ataque do atacante
@@ -54,7 +57,17 @@ def lutar(ilha, explorador, criatura):
                 # Teste para saber se a Criatura morreu com o ataque
                 if not criatura.esta_viva():
                     print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
-                    criatura.reviver(ilha)
+                    print(Style.RESET_ALL)  # Restaurar cores
+                    
+                    # Reviver a mesma Criatura em outra região 
+                    regiao = random.choice(ilha.regioes[1:-1])
+                    criatura = sortear_criatura()  # Sortear Criatura para adicionar a Região
+                    criatura = Criatura(
+                        criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
+                        criatura['pontos_ataque'], criatura['descricao'], regiao
+                    )  # Objeto Criatura
+                    regiao.adicionar_criatura(criatura) 
+                    
                     break
                 else:
                     print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
