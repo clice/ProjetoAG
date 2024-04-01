@@ -36,13 +36,18 @@ def iniciar_contador(ilha, explorador):
 
     time.sleep(1)  # Pausa de 1 segundo
 
+    print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
+    print(Style.RESET_ALL)  # Restaurar cores
+
     while explorador.qtd_movimentos > 0:
         # ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
         explorador.mover(ilha)  # Realizar a movimentação do Explorador
-        
-        print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
-        print(Style.RESET_ALL)  # Restaurar cores
+
+        # Caso não haja nada na Região
+        if not explorador.regiao.criaturas and not explorador.regiao.itens:
+            print("Nada na região. Continue procurando...\n")
+            break
 
         # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':
@@ -75,19 +80,19 @@ def iniciar_contador(ilha, explorador):
                     # Caso o Explorador encontre uma Arma
                     elif item.tipo == 'arma':
                         explorador.encontrar_arma(item)
-                        
-            # Caso não haja nada na Região
-            if not explorador.regiao.criaturas and not explorador.regiao.itens:
-                print("Nada na região. Continue procurando...\n")
             
         explorador.remover_qtd_movimentos()  # Remover um movimento disponível
-        explorador.__str__()
-        
-        ilha.mover_criaturas()  # Mover as Criaturas de Região no mapa da Ilha
 
+        # Caso acabe os movimentos disponíveis para o Explorador
         if explorador.qtd_movimentos == 0:
             print("FIM DE JOGO! Não há mais movimentos disponíveis.\n")
             break
+        else:
+            explorador.__str__()    # Imprimir informações do Explorador
+            ilha.mover_criaturas()  # Mover as Criaturas de Região no mapa da Ilha
+
+            print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
+            print(Style.RESET_ALL)  # Restaurar cores
 
 
 # # Função para 
@@ -106,7 +111,7 @@ def iniciar_contador(ilha, explorador):
 if __name__ == "__main__":
     init()  # Iniciar colorama
 
-    print(Fore.LIGHTYELLOW_EX + "JUMANJI: A ILHA DO TESOURO")
+    print(Fore.LIGHTYELLOW_EX + "A ILHA DO TESOURO")
     print(Style.RESET_ALL)  # Restaurar cores
 
     while True:
