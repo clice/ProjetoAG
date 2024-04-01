@@ -20,7 +20,7 @@ def gerar_ilha():
         criatura = sortear_criatura()  # Sortear Criatura para adicionar a Região
         criatura = Criatura(
             criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
-            criatura['pontos_ataque'], criatura['descricao'], regiao.tipo
+            criatura['pontos_ataque'], criatura['descricao'], regiao
         )  # Objeto Criatura
         regiao.adicionar_criatura(criatura)  # Adiciona a Criatura a Região
 
@@ -44,7 +44,7 @@ def gerar_item(regiao, item):
     regiao.adicionar_item(
         Item(
             item['nome'], item['tipo'], item['pontos'],
-            item['qtd_uso'], regiao.tipo
+            item['qtd_uso'], regiao
         )
     )  # Adiciona o Item na Região
 

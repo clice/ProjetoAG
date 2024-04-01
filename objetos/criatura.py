@@ -20,7 +20,7 @@ class Criatura:
         print(f"Pontos de vida: {self.pontos_vida}")
         print(f"Pontos de ataque: {self.pontos_ataque}")
         print(f"Descrição: {self.descricao}")
-        print(f"Região: {self.regiao}\n")
+        print(f"Região: {self.regiao.tipo}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DA CRIATURA
 
@@ -31,6 +31,13 @@ class Criatura:
     # Método para retornar se a Criatura está viva (pontos_vida > 0)
     def esta_viva(self):
         return self.pontos_vida > 0
+    
+    # MÉTODO PARA A REGIÃO DA CRIATURA                                          # Mostrar localização atual
+
+    # Método para mostrar a localização atual
+    def mostrar_regiao(self):
+        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
+        print(Style.RESET_ALL)  # Restaurar cores
 
     # MÉTODO PARA LUTA ENTRE UMA CRIATURA E O EXPLORADOR
 

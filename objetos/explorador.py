@@ -29,7 +29,7 @@ class Explorador:
             for item in self.itens:
                 print("{")
                 item.__str__()
-                print("}")
+                print("}\n")
 
     # MÉTODOS PARA OS PONTOS DE VIDA DO EXPLORADOR
 
@@ -94,16 +94,20 @@ class Explorador:
             print(f"Você perdeu todo o tesouro que tinha resgatado.\n")
 
     # MÉTODOS PARA A REGIÃO DO EXPLORADOR
+    
+    # Função para mover Explorador de Região
+    def mover(self, ilha):
+        while input("Deseja avançar para uma região aleatória (S/Outro)? ").upper() == "S":
+            print()
+            adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))        # Regiões adjacentes da Região atual
+            self.regiao = ilha.encontrar_regiao(random.choice(adjacentes))  # Atualizar a região
+            self.mostrar_regiao()                                           # Mostrar localização atual
+            break
 
     # Método para mostrar a localização atual
     def mostrar_regiao(self):
         print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
         print(Style.RESET_ALL)  # Restaurar cores
-
-    # Método para atualizar a Região que o Explorador está
-    def atualizar_regiao(self, ilha):
-        adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))  # Regiões adjacentes da Região atual
-        self.regiao = ilha.encontrar_regiao(random.choice(adjacentes))  # Atualizar a região
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 

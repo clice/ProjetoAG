@@ -2,7 +2,6 @@ import time
 
 from colorama import Fore, Style, init
 from helpers.gerador import *
-from helpers.opcoes import *
 
 
 # Função para inicializar o jogo
@@ -38,12 +37,12 @@ def iniciar_contador(ilha, explorador):
     time.sleep(1)  # Pausa de 1 segundo
 
     while explorador.qtd_movimentos > 0:
-        print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
-        print(Style.RESET_ALL)  # Restaurar cores
-
         # ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
-        mover_explorador(explorador, ilha)  # Realizar a movimentação do Explorador
+        explorador.mover(ilha)  # Realizar a movimentação do Explorador
+        
+        print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
+        print(Style.RESET_ALL)  # Restaurar cores
 
         # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':
@@ -69,13 +68,13 @@ def iniciar_contador(ilha, explorador):
                 for item in explorador.regiao.itens:
                     # Caso o Explorador encontre um Perigo
                     if item.tipo == 'perigo':
-                        item.encontrar_perigo(explorador)
+                        explorador.encontrar_perigo(item)
                     # Caso o Explorador encontre uma Planta Medicinal
                     elif item.tipo == 'planta_medicinal':
-                        item.encontrar_planta_medicinal(explorador)
+                        explorador.encontrar_planta_medicinal(item)
                     # Caso o Explorador encontre uma Arma
                     elif item.tipo == 'arma':
-                        item.encontrar_arma(explorador)
+                        explorador.encontrar_arma(item)
                         
             # Caso não haja nada na Região
             if not explorador.regiao.criaturas and not explorador.regiao.itens:
@@ -83,10 +82,24 @@ def iniciar_contador(ilha, explorador):
             
         explorador.remover_qtd_movimentos()  # Remover um movimento disponível
         explorador.__str__()
+        
+        ilha.mover_criaturas()  # Mover as Criaturas de Região no mapa da Ilha
 
         if explorador.qtd_movimentos == 0:
             print("FIM DE JOGO! Não há mais movimentos disponíveis.\n")
             break
+
+
+# # Função para 
+# def escolher_opcao(opcao, explorador):
+#     # Caso o Explorador tenha Itens na mochila
+#     if explorador.itens:
+#         for item in explorador.itens:
+#             # Caso escolhar 1 - Usar planta medicinal
+#             if opcao == 1:
+#                 if item.tipo == 'planta_medicinal':
+#                     while input("Deseja usar a planta medicinal {item.nome} (S/Outro)? ") != "S":
+#                         if 
 
 
 # Função para iniciar o jogo

@@ -15,6 +15,7 @@ class Ilha:
         self.qtd_itens = round(self.qtd_regioes * (random.randint(20, 30) / 100))  # Quantidade de Itens (cada) na Ilha
         self.qtd_movimentos = 0                   # Quantidade de arestas para a movimentação total permitida
         self.checkpoints = []                     # Lista de Regiões que são checkpoints
+        self.criaturas = []                       # Lista de Criaturas na Região
 
     # MÉTODOS PARA GERAR E MANIPULAR O GRAFO DA ILHA
 
@@ -133,3 +134,18 @@ class Ilha:
     # Método para remover um checkpoint depois de usado
     def remover_checkpoint(self, checkpoint):
         self.checkpoints.remove(checkpoint)
+        
+    # MÉTODOS PARA AS CRIATURAS DA ILHA
+    
+    # Método para adicionar Criatura na Ilha
+    def adicionar_criatura(self, criatura):
+        self.criaturas.append(criatura)
+        
+    # Método para mover as Criaturas pela ILha 
+    def mover_criaturas(self):
+        for criatura in self.criaturas:           
+            regiao_antiga = criatura.regiao                                     # Armazenas antiga região da Criatura
+            adjacentes = list(self.mapa.neighbors(regiao_antiga.tipo))          # Regiões adjacentes da Região atual
+            criatura.regiao = self.encontrar_regiao(random.choice(adjacentes))  # Atualiza a Região da Criatura
+            regiao_antiga.remover_criatura(criatura)                            # Remover Criatura da Região antiga
+            criatura.regiao.adicionar_criatura(criatura)                        # Adicionar Criatura a nova Região

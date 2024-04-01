@@ -14,6 +14,7 @@ class Item:
         print(f"Tipo: {self.tipo}")
         print(f"Pontos: {self.pontos}")
         print(f"Usos: {self.qtd_uso}")
+        print(f"Região: {self.regiao.tipo}")
         
     # MÉTODO PARA A QUANTIDADE DE USO DO ITEM
 
