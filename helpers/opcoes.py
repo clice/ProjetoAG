@@ -12,7 +12,7 @@ def atacar(atacante, atacado):
 # LUTA ENTRE O EXPLORADOR E UMA CRIATURA
 
 # Função para a luta entre o Explorador e a Criatura
-def lutar(explorador, criatura):
+def lutar(ilha, explorador, criatura):
     while True:
         resposta = input(f"Deseja lutar com {criatura.nome} (S/Outro)? ")
 
@@ -54,7 +54,7 @@ def lutar(explorador, criatura):
                 # Teste para saber se a Criatura morreu com o ataque
                 if not criatura.esta_viva():
                     print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
-                    # criatura.reviver()
+                    criatura.reviver(ilha)
                     break
                 else:
                     print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")

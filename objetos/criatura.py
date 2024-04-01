@@ -1,4 +1,7 @@
+import random
+
 from colorama import Fore, Style
+from helpers.sorteios import sortear_criatura
 
 
 # Declaração do objeto Criatura
@@ -30,7 +33,17 @@ class Criatura:
     def esta_viva(self):
         return self.pontos_vida > 0
     
-    # MÉTODO PARA A REGIÃO DA CRIATURA                                          # Mostrar localização atual
+    # Método para reviver a Criatura depois de morrer durante a luta
+    def reviver(self, ilha):
+        regiao = random.choice(ilha.regioes[1:-1])
+        criatura = sortear_criatura()  # Sortear Criatura para adicionar a Região
+        criatura = Criatura(
+            criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
+            criatura['pontos_ataque'], criatura['descricao'], regiao
+        )  # Objeto Criatura
+        self.adicionar_criatura(criatura)    
+    
+    # MÉTODO PARA A REGIÃO DA CRIATURA
 
     # Método para mostrar a localização atual
     def mostrar_regiao(self):

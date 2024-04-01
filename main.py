@@ -74,7 +74,7 @@ def iniciar_contador(ilha, explorador):
                     for criatura in explorador.regiao.criaturas:
                         print(Fore.RED + f"{criatura.nome} encontrado(a)! CUIDADO!")
                         print(Style.RESET_ALL)  # Restaurar cores
-                        lutar(explorador, criatura)
+                        lutar(ilha, explorador, criatura)
 
                 # Caso haja Itens na Região
                 if explorador.regiao.itens:
