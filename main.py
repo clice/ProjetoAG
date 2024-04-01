@@ -1,6 +1,6 @@
 import time
 
-from colorama import Fore, Style, init
+from colorama import init
 from helpers.gerador import *
 from helpers.opcoes import *
 
@@ -57,6 +57,7 @@ def iniciar_contador(ilha, explorador):
             # Caso o Explorador também chegue a um Checkpoint guardar seus dados
             if explorador.regiao.tipo in ilha.checkpoints:
                 explorador.adicionar_backup()
+                ilha.remover_checkpoint(explorador.regiao.tipo)
 
             # Caso não haja nada na Região
             if not explorador.regiao.criaturas and not explorador.regiao.itens:

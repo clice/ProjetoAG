@@ -11,9 +11,9 @@ class Explorador:
         self.pontos_ataque = 20               # Pontos de ataque do Explorador
         self.tesouro = 0                      # Porcentagem do tesouro carregado pelo Explorador
         self.regiao = regiao                  # Região que o Explorador se encontra atualmente
-        self.itens = []                       # Lista de Itens carregadas pelo Explorador
+        self.item = []                        # Lista de Itens carregadas pelo Explorador
         self.qtd_movimentos = qtd_movimentos  # Quantidade de movimentos restantes do Explorador
-        self.backup = {}                      # Backup do Explorador quando encontrar um checkpoint
+        self.backup = None                    # Backup do Explorador quando encontrar um checkpoint
 
     # String representando as informações sobre o Explorador
     def __str__(self):
@@ -22,11 +22,11 @@ class Explorador:
         print(f"Porcentagem do tesouro: {self.tesouro}")
         print(f"Movimentos restantes: {self.qtd_movimentos}")
 
-        if not self.itens:
-            print(f"Itens: Nenhum item coletado\n")
+        if not self.item:
+            print(f"Item: Nenhum item coletado\n")
         else:
-            print(f"Itens:")
-            for item in self.itens:
+            print(f"Item:")
+            for item in self.item:
                 print("{")
                 item.__str__()
                 print("}\n")
@@ -52,11 +52,23 @@ class Explorador:
         
         # Caso chegue a pontos de vida negativos
         if self.pontos_vida < 0:
-            self.reviver_explorador()
+            self.reviver()
 
     # Método para retornar se o Explorador está vivo (pontos_vida > 0)
     def esta_vivo(self):
         return self.pontos_vida > 0
+
+    # Método para reviver o Explorador caso ainda haja movimentos disponíveis
+    def reviver(self):
+        print(Fore.YELLOW + f"VOCÊ MORREU!")
+
+        # Caso o Explorador tenha encontrado um Checkpoint
+        if self.backup:
+            self.atualizar_explorador()
+            print(Fore.YELLOW + f"Agora será revivido, voltando para {self.regiao.tipo}.")
+            print(Style.RESET_ALL)  # Restaurar cores
+        else:
+            exit(0)
 
     # MÉTODOS PARA OS PONTOS DE ATAQUE DO EXPLORADOR
 
@@ -79,7 +91,7 @@ class Explorador:
         tesouro = self.pontos_vida
 
         # Calcular o percentual correto para o Explorador carregar o tesouro
-        for item in self.itens:
+        for item in self.item:
             tesouro -= item.pontos
 
         self.tesouro = tesouro
@@ -113,7 +125,11 @@ class Explorador:
 
     # Método para adicionar Item a lista
     def adicionar_item(self, item):
-        self.itens.append(item)
+        if not self.item:
+            self.item.insert(0, item)
+        else:
+            print(f"{self.item[0].nome} será descartada!")
+            self.item.insert(0, item)
 
         # Remover percentual do tesouro carregado por conta da arma
         if self.tesouro > 0:
@@ -121,16 +137,16 @@ class Explorador:
 
     # Método para remover Item da lista
     def remover_item(self, item):
-        if item in self.itens:
+        if item in self.item:
             self.remover_pontos_ataque(item.pontos)  # Remover os pontos de ataque do Explorador pelo Item
-            self.itens.remove(item)
+            self.item.remove(item)
         else:
             print(f"{item.tipo} não foi encontrado(a).\n")
 
     # Método para quando o Explorador possui Arma
     def tem_armas(self):
-        if self.itens:
-            for item in self.itens:
+        if self.item:
+            for item in self.item:
                 # Caso o Item seja do tipo Arma
                 if item.tipo == 'arma':
                     return item
@@ -183,15 +199,6 @@ class Explorador:
     # Método para remover a quantidade de movimentos do Explorador
     def remover_qtd_movimentos(self):
         self.qtd_movimentos -= 1
-        
-    # Método para reviver o Explorador caso ainda haja movimentos disponíveis
-    def reviver_explorador(self):
-        print(Fore.YELLOW + f"VOCÊ MORREU!")
-        
-        self.atualizar_explorador()
-            
-        print(Fore.YELLOW + f"Agora será revivido, voltando para {self.regiao.tipo}.")
-        print(Style.RESET_ALL)  # Restaurar cores 
 
     # MÉTODOS PARA CONFERÊNCIA DO BACKUP
 
@@ -202,7 +209,7 @@ class Explorador:
             'pontos_ataque': self.pontos_ataque,
             'tesouro': self.tesouro,
             'regiao': self.regiao,
-            'itens': [],
+            'item': [],
             'qtd_movimentos': self.qtd_movimentos,
             'backup': self.backup
         }
@@ -213,6 +220,6 @@ class Explorador:
         self.pontos_ataque = self.backup['pontos_ataque']
         self.tesouro = self.backup['tesouro']
         self.regiao = self.backup['regiao']
-        self.itens = self.backup['itens'],
+        self.item = self.backup['item'],
         self.qtd_movimentos = self.backup['qtd_movimentos'],
         self.backup = self.backup['backup']
