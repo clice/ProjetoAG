@@ -42,13 +42,9 @@ def iniciar_contador(ilha, explorador):
     while explorador.qtd_movimentos > 0:
         # ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
-        # explorador.regiao.ha_criaturas()
-        # ilha.lutar_criaturas()
-        encontrar_criaturas(ilha)  # Encontrar as regiões com várias Criaturas 
+        lutar_criaturas(ilha)  # Encontrar as regiões com várias Criaturas 
 
         explorador.mover(ilha)  # Realizar a movimentação do Explorador
-
-        # lutar_criatura()
 
         # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':
@@ -101,18 +97,6 @@ def iniciar_contador(ilha, explorador):
 
             print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
             print(Style.RESET_ALL)  # Restaurar cores
-
-
-# # Função para 
-# def escolher_opcao(opcao, explorador):
-#     # Caso o Explorador tenha Itens na mochila
-#     if explorador.itens:
-#         for item in explorador.itens:
-#             # Caso escolhar 1 - Usar planta medicinal
-#             if opcao == 1:
-#                 if item.tipo == 'planta_medicinal':
-#                     while input("Deseja usar a planta medicinal {item.nome} (S/Outro)? ") != "S":
-#                         if 
 
 
 # Função para iniciar o jogo

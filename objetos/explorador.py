@@ -109,7 +109,15 @@ class Explorador:
     
     # Função para mover Explorador de Região
     def mover(self, ilha):
-        while input("Deseja avançar para uma região aleatória (S/Outro)? ").upper() == "S":
+        while True:
+            resposta = input("Deseja avançar para uma região aleatória (S/Outro)? ").upper()
+            
+            if resposta == 1 and self.item:
+                print(Fore.YELLOW + f"{self.item[0].nome} foi descartada!")
+                self.regiao.adicionar_item(self.item[0])  # Adicionar item a Região atual do Explorador
+                self.item = []                            # Remover item da lista do Explorador
+                print(Style.RESET_ALL)  # Restaurar cores
+                
             print()
             adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))        # Regiões adjacentes da Região atual
             self.regiao = ilha.encontrar_regiao(random.choice(adjacentes))  # Atualizar a região
@@ -127,9 +135,13 @@ class Explorador:
     def adicionar_item(self, item):
         if not self.item:
             self.item.insert(0, item)
-        else:
-            print(f"{self.item[0].nome} será descartada!")
+        else:  # Para substituir a arma que tem pela outra
+            print(Fore.YELLOW + f"{self.item[0].nome} foi descartada!")
+            self.regiao.adicionar_item(self.item[0])  # Adicionar item a Região atual do Explorador
+            self.item = []                            # Remover item da lista do Explorador
             self.item.insert(0, item)
+            print(f"{self.item[0].nome} foi adicionado!")
+            print(Style.RESET_ALL)  # Restaurar cores
 
         # Remover percentual do tesouro carregado por conta da arma
         if self.tesouro > 0:
@@ -141,7 +153,7 @@ class Explorador:
             self.remover_pontos_ataque(item.pontos)  # Remover os pontos de ataque do Explorador pelo Item
             self.item.remove(item)
         else:
-            print(f"{item.tipo} não foi encontrado(a).\n")
+            print(f"Arma não foi encontrada.\n")
 
     # Método para quando o Explorador possui Arma
     def tem_armas(self):

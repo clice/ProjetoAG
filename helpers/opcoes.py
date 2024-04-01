@@ -24,6 +24,7 @@ def lutar(ilha, explorador, criatura):
             # Gerar dano no Explorador
             dano = atacar(criatura, explorador)
             print(Fore.RED + f"Você sofreu {dano} de dano!")
+            print(Style.RESET_ALL)  # Restaurar cores
 
             # Caso o Explorador morra com o ataque
             if not explorador.esta_vivo():
@@ -50,6 +51,8 @@ def lutar(ilha, explorador, criatura):
 
                     # Caso a quantidade de uso seja menor que 1
                     if item.qtd_uso == 0:
+                        print(Fore.YELLOW + f"{explorador.item[0].nome} já foi usada ao máximo!")
+                        print(Style.RESET_ALL)  # Restaurar cores
                         explorador.remover_item(item)
 
                 print(Fore.GREEN + f"Você atacou! Houve {dano} de dano.")
@@ -103,12 +106,12 @@ def lutar(ilha, explorador, criatura):
             break
 
 
-# MÉTODOS PARA A ENTRE ENTRE CRIATURAS
+# MÉTODOS PARA A LUTA ENTRE CRIATURAS
 
 
 # Método para a luta entre as Criaturas
 def encontrar_criaturas(ilha):
-    regioes_criaturas = {}
+    regioes_criaturas = {}  # Lista das regiões das Criaturas na Ilha
     
     # Laço para percorrer todas as Criaturas da Ilha
     for criatura in ilha.criaturas:
@@ -122,17 +125,44 @@ def encontrar_criaturas(ilha):
 
     # Encontrar os casos duplicador de regiões quando tiver mais de 1 caso
     regioes_duplicadas = [regiao for regiao, qtd_regioes in regioes_criaturas.items() if qtd_regioes > 1]
-
-    if regioes_duplicadas:
-        print(f"Regiões duplicadas: {regioes_duplicadas}")
-    else:
-        print("Nenhuma região duplicada.")
-        
-    criaturas = []
     
-    for criatura in ilha.criaturas:
-        for regiao_duplicada in regioes_duplicadas:
-            if criatura.regiao.tipo == regiao_duplicada:
-                criaturas.append(criatura)
-                
-    print(criaturas)
+    criaturas = []  # Lista das Criaturas nas regiões duplicadas
+
+    # Caso haja regiões duplicadas
+    if regioes_duplicadas:
+        # Laço para percorrer as Criaturas da Ilha e buscar as que estão na mesma Região
+        for criatura in ilha.criaturas:
+            for regiao_duplicada in regioes_duplicadas:
+                if criatura.regiao.tipo == regiao_duplicada:
+                    criaturas.append(criatura)
+                        
+    return criaturas
+
+
+# Método para a luta encontre as Criaturas
+def lutar_criaturas(ilha):
+    criaturas = encontrar_criaturas(ilha)
+    
+    if criaturas:
+        # Encontrar a Criatura com o maior pontos de ataque da lista
+        criatura_mais_forte = max(criaturas, key=lambda criatura: criatura.pontos_ataque)
+
+        # Encontrar a Criatura com o menor pontos de ataque da lista
+        criatura_mais_fraca = min(criaturas, key=lambda criatura: criatura.pontos_ataque)
+    
+        # Caso essas Criaturas estejam na mesma Região
+        if criatura_mais_forte.regiao.tipo == criatura_mais_fraca.regiao.tipo:
+            dano = atacar(criatura_mais_fraca, criatura_mais_forte)
+            print(Fore.GREEN + f"{criatura_mais_forte.nome} agora tem {criatura_mais_forte.pontos_vida} pontos de vida.")
+            print(f"Sofreu {dano} de dano.")
+            print(Style.RESET_ALL)  # Restaurar cores
+            
+            # Reviver a mesma Criatura em outra região 
+            regiao = random.choice(ilha.regioes[1:-1])
+            criatura = sortear_criatura()  # Sortear Criatura para adicionar a Região
+            criatura = Criatura(
+                criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
+                criatura['pontos_ataque'], criatura['descricao'], regiao
+            )  # Objeto Criatura
+            regiao.adicionar_criatura(criatura)
+    
