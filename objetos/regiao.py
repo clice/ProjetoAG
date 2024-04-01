@@ -32,6 +32,16 @@ class Regiao:
     def ha_criaturas(self):
         return bool(self.criaturas)
 
+    # Método para reviver a Criatura depois de morrer durante a luta
+    def reviver_criatura(self):
+        regiao = random.choice(ilha.regioes[1:-1])
+        criatura = sortear_criatura()  # Sortear Criatura para adicionar a Região
+        criatura = Criatura(
+            criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
+            criatura['pontos_ataque'], criatura['descricao'], regiao
+        )  # Objeto Criatura
+        regiao.adicionar_criatura(criatura)
+
     # MÉTODOS PARA OS ITENS NA REGIÃO
 
     # Método para adicionar Item na Região

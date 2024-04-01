@@ -23,6 +23,7 @@ def gerar_ilha():
             criatura['pontos_ataque'], criatura['descricao'], regiao
         )  # Objeto Criatura
         regiao.adicionar_criatura(criatura)  # Adiciona a Criatura a Região
+        ilha.adicionar_criatura(criatura)    # Adicionar a Criatura a lista da Ilha
 
         # Gerar Perigo numa Região da Ilha
         perigo = sortear_perigo()  # Sortear Perigo para adicionar a Região

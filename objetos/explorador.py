@@ -122,9 +122,22 @@ class Explorador:
     # Método para remover Item da lista
     def remover_item(self, item):
         if item in self.itens:
+            self.remover_pontos_ataque(item.pontos)  # Remover os pontos de ataque do Explorador pelo Item
             self.itens.remove(item)
         else:
             print(f"{item.tipo} não foi encontrado(a).\n")
+
+    # Método para quando o Explorador possui Arma
+    def ha_armas(self):
+        if self.itens:
+            for item in self.itens:
+                # Caso o Item seja do tipo Arma
+                if item.tipo == 'arma':
+                    item.remover_qtd_uso()  # Diminuir a quantidade de uso do Item
+
+                    # Caso a quantidade de uso seja menor que 1
+                    if item.qtd_uso < 0:
+                        self.remover_item(item)
 
     # Método para quando o Explorador encontrar uma Criatura
     def encontrar_criatura(self, criatura):
@@ -147,17 +160,13 @@ class Explorador:
         print(Fore.YELLOW + f"{planta_medicinal.nome} encontrado(a)!")
         print(Style.RESET_ALL)  # Restaurar cores
 
-        resposta = input(f"Deseja utilizar ou guardar (S/Outro)? ")
+        resposta = input(f"Deseja utilizar (S/Outro)? ")
         print()
 
         # Verificar resposta do Explorador
         if resposta.upper() == "S":
-            self.adicionar_item(planta_medicinal)  # Adicionar o elemento a lista
             self.regiao.remover_item(planta_medicinal)  # Remover o item da Região
             self.adicionar_pontos_vida(planta_medicinal.pontos)  # Adicionar pontos de ataque da Arma
-
-            print(Fore.GREEN + f"Você guardou {planta_medicinal.nome} na mochila!")
-            print(Style.RESET_ALL)  # Restaurar cores
 
     # Método para quando o Explorador encontrar uma Arma
     def encontrar_arma(self, arma):
@@ -245,51 +254,41 @@ class Explorador:
 
             rodada = 1  # Rodada inicial
 
+            # Se o Explorador optar por lutar contra a Criatura
             while rodada <= 3:
                 print(f"\nROUND {rodada}")
 
                 # Condições para os ataques
                 # Primeiro o Explorador ataca a Criatura
                 if self.esta_vivo() and criatura.esta_viva():
-                    dano = self.atacar_criatura(criatura)
+                    dano = self.atacar_criatura(criatura)  # Calcular o dano gerado pelo Explorador
+                    self.ha_armas()                        # Se o Esplorador tem armas para
                     print(Fore.GREEN + f"Você atacou! Houve {dano} de dano.")
-                    print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
-                    
-                    # Caso o Explorador tenha Arma
-                    if self.itens:
-                        for item in self.itens:
-                            # Caso o Item seja do tipo Arma
-                            if item.tipo == 'arma':
-                                item.remover_qtd_uso()  # Diminuir a quantidade de uso do Item
-                                
-                                # Caso a quantidade de uso seja menor que 1
-                                if item.qtd_uso < 0:
-                                    self.remover_item(item)
 
-                # Teste para saber se a Criatura morreu com o ataque
-                if not criatura.esta_viva():
-                    print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
-                    break
+                    # Teste para saber se a Criatura morreu com o ataque
+                    if not criatura.esta_viva():
+                        print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
+                        # criatura.reviver_criatura()
+                        break
+                    else:
+                        print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
 
                 # Segundo a Criatura ataca o Explorador
                 if criatura.esta_viva() and self.esta_vivo():
                     dano = criatura.atacar_explorador(self)
                     print(Fore.RED + f"{criatura.nome.upper()} ATACOU! Houve {dano} de dano.")
-                    print(f"Você agora tem {self.pontos_vida} pontos de vida.")
 
-                # Teste para saber se o Explorador morreu com o ataque
-                if not self.esta_vivo():
-                    self.reviver_explorador()
-                    break
+                    # Teste para saber se o Explorador morreu com o ataque
+                    if not self.esta_vivo():
+                        self.reviver_explorador()
+                        break
+                    else:
+                        print(f"Você agora tem {self.pontos_vida} pontos de vida.")
 
                 print(Style.RESET_ALL)  # Restaurar cores
 
-                # Se os pontos de vida do Explorador chegarem a zero
-                if not self.esta_vivo() or not criatura.esta_viva():
-                    resposta = False
-                    break
                 # Se as três rodadas ainda não terminaram nem o Explorador ou Criatura morreram
-                elif rodada <= 2:
+                if rodada <= 2:
                     # Perguntar novamente para continuar a luta
                     resposta = input(f"Deseja continuar lutando com {criatura.nome}? (S/Outro)? ")
 
@@ -297,8 +296,7 @@ class Explorador:
                     if resposta.upper() != "S":
                         break
 
-                # Acrescentar rodada concluida
-                rodada += 1
+                rodada += 1  # Acrescentar rodada concluida
 
             # Se os pontos de vida do Explorador chegarem a zero
             if not self.esta_vivo() or not criatura.esta_viva():

@@ -95,19 +95,19 @@ def sortear_planta_medicinal():
     # Lista das Plantas Medicinais
     plantas_medicinais = (
         {
-            "nome": "Planta Medicinal 1",
+            "nome": "Erva cidreira",
             "tipo": "planta_medicinal",
             "pontos": 5,
             "qtd_uso": 1
         },
         {
-            "nome": "Planta Medicinal 2",
+            "nome": "Capim santo",
             "tipo": "planta_medicinal",
             "pontos": 10,
             "qtd_uso": 1
         },
         {
-            "nome": "Planta Medicinal 3",
+            "nome": "Mastruz",
             "tipo": "planta_medicinal",
             "pontos": 15,
             "qtd_uso": 1
