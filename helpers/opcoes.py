@@ -18,17 +18,17 @@ def atacar(atacante, atacado):
 def lutar(ilha, explorador, criatura):
     while True:
         resposta = input(f"Deseja lutar com {criatura.nome} (S/Outro)? ")
-        print()
 
         # Verificar resposta do Explorador
         if resposta.upper() != "S":
             # Gerar dano no Explorador
             dano = atacar(criatura, explorador)
-            print(Fore.RED + f"Você sofreu {dano} de dano!")
+            print("\n" + Fore.RED + f"Você sofreu {dano} de dano!")
 
             # Caso o Explorador morra com o ataque
             if not explorador.esta_vivo():
                 explorador.reviver()
+                break
             else:
                 explorador.remover_tesouro(dano)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
                 print(Fore.RED + f"Você agora tem {explorador.pontos_vida} pontos de vida.\n")
@@ -39,44 +39,28 @@ def lutar(ilha, explorador, criatura):
 
         # Se o Explorador optar por lutar contra a Criatura
         while rodada <= 3:
-            print(f"ROUND {rodada}")
+            print(f"\nROUND {rodada}")
 
             # Condições para os ataques
             # Primeiro o Explorador ataca a Criatura
             if explorador.esta_vivo() and criatura.esta_viva():
                 dano = atacar(explorador, criatura)  # Calcular o dano gerado pelo Explorador
-                print(Fore.GREEN + f"Você atacou! Houve {dano} de dano.")
+                print(Fore.GREEN + f"VOCÊ ATACOU! Houve {dano} de dano.")
 
                 if explorador.tem_armas():
                     explorador.item[0].remover_qtd_uso()  # Diminuir a quantidade de uso do Item
 
                     # Caso a quantidade de uso seja menor que 1
                     if explorador.item[0].qtd_uso <= 0:
-                        print(Fore.YELLOW + f"{explorador.item[0].nome} já foi usada ao máximo!\n")
-                        explorador.remover_item(explorador.item)
+                        print(Fore.YELLOW + f"{explorador.item[0].nome} já foi usada ao máximo!")
+                        explorador.remover_item(explorador.item[0])  # Remover Item do Explorador
 
-                # Teste para saber se a Criatura morreu com o ataque
+                # Caso a Criatura morreu com o ataque
                 if not criatura.esta_viva():
-                    criatura.regiao.remover_criatura(criatura)  # Remover Criatura da Região atual
-                    print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!\n")
-                    
-                    # Buscar a Criatura desejada para reviver em outra Região
-                    for aux_criatura in lista_criaturas():
-                        if aux_criatura["nome"] == criatura.nome:
-                            # Reviver a mesma Criatura em outra região 
-                            regiao = random.choice(ilha.regioes[1:-1])
-                            nova_criatura = Criatura(
-                                aux_criatura['nome'], aux_criatura['tipo'], aux_criatura['pontos_vida'],
-                                aux_criatura['pontos_ataque'], aux_criatura['descricao'], regiao
-                            )  # Objeto Criatura
-                            regiao.adicionar_criatura(nova_criatura)  # Adicionar Criatura
-                            
-                            print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!\n")
-                            break
-                    
+                    criatura.reviver(ilha)  # Reviver Criatura morta
                     break
                 else:
-                    print(f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
+                    print(Fore.GREEN + f"{criatura.nome} agora tem {criatura.pontos_vida} pontos de vida.")
 
             # Segundo a Criatura ataca o Explorador
             if criatura.esta_viva() and explorador.esta_vivo():
@@ -88,7 +72,7 @@ def lutar(ilha, explorador, criatura):
                     explorador.reviver()
                     break
                 else:
-                    print(Fore.RED + f"Você agora tem {explorador.pontos_vida} pontos de vida.")
+                    print(Fore.RED + f"Você agora tem {explorador.pontos_vida} pontos de vida.\n")
                     explorador.remover_tesouro(dano)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
 
             # Se as três rodadas ainda não terminaram nem o Explorador ou Criatura morreram
@@ -98,6 +82,19 @@ def lutar(ilha, explorador, criatura):
 
                 # Verificar resposta do Explorador
                 if resposta.upper() != "S":
+                    # Gerar dano no Explorador
+                    dano = atacar(criatura, explorador)
+                    print("\n" + Fore.RED + f"Você sofreu {dano} de dano!")
+
+                    # Caso o Explorador morra com o ataque
+                    if not explorador.esta_vivo():
+                        explorador.reviver()
+                        break
+                    else:
+                        explorador.remover_tesouro(
+                            dano)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
+                        print(Fore.RED + f"Você agora tem {explorador.pontos_vida} pontos de vida.\n")
+
                     break
 
             rodada += 1  # Acrescentar rodada concluida
@@ -105,6 +102,10 @@ def lutar(ilha, explorador, criatura):
         # Verificar resposta do Explorador
         if resposta.upper() != "S":
             print()
+            break
+
+        # Caso o Explorador ou a Criatura tenham morrido
+        if not explorador.esta_vivo() or not criatura.esta_viva():
             break
 
 
@@ -154,8 +155,8 @@ def lutar_criaturas(ilha):
     
         # Caso essas Criaturas estejam na mesma Região
         if criatura_mais_forte.regiao.tipo == criatura_mais_fraca.regiao.tipo:
-            dano = atacar(criatura_mais_fraca, criatura_mais_forte)           # Criatura mais fraca ataca
-            criatura_mais_fraca.regiao.remover_criatura(criatura_mais_fraca)  # Criatura mais fraca morre
+            dano = atacar(criatura_mais_fraca, criatura_mais_forte)  # Criatura mais fraca ataca
+            criatura_mais_fraca.reviver(ilha)  # Reviver Criatura mais fraca
             
             # Para a Criatura mais forte
             if criatura_mais_forte.pontos_vida > 0:
@@ -163,33 +164,5 @@ def lutar_criaturas(ilha):
                                    f"pontos de vida.")
                 print(Fore.GREEN + f"Sofreu {dano} de dano.\n")
             else:
-                criatura_mais_forte.regiao.remover_criatura(criatura_mais_forte)  # Criatura mais forte morre
-                
-                # Buscar a Criatura mais forte desejada para reviver em outra Região
-                for criatura in lista_criaturas():
-                    if criatura["nome"] == criatura_mais_forte.nome:
-                        # Reviver a mesma Criatura em outra região 
-                        regiao = random.choice(ilha.regioes[1:-1])
-                        criatura = Criatura(
-                            criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
-                            criatura['pontos_ataque'], criatura['descricao'], regiao
-                        )  # Objeto Criatura
-                        regiao.adicionar_criatura(criatura)  # Adicionar Criatura
-                        
-                        print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!\n")
-                        break
-            
-            # Buscar a Criatura mais fraca desejada para reviver em outra Região
-            for criatura in lista_criaturas():
-                if criatura["nome"] == criatura_mais_fraca.nome:
-                    # Reviver a mesma Criatura em outra região 
-                    regiao = random.choice(ilha.regioes[1:-1])
-                    criatura = Criatura(
-                        criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
-                        criatura['pontos_ataque'], criatura['descricao'], regiao
-                    )  # Objeto Criatura
-                    regiao.adicionar_criatura(criatura)  # Adicionar Criatura
-                    
-                    print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!\n")
-                    break
+                criatura_mais_forte.reviver(ilha)  # Reviver Criatura mais forte
             

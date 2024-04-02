@@ -1,5 +1,3 @@
-import random
-
 from colorama import Fore
 
 
@@ -28,14 +26,10 @@ class Regiao:
 
     # Métoro para adicionar Criatura na Região
     def adicionar_criatura(self, criatura):
-        print("Região Adicionar")
-        criatura.__str__()
         self.criaturas.append(criatura)
 
     # Método para remover Criatura da Região
     def remover_criatura(self, criatura):
-        print("Região Remover")
-        criatura.__str__()
         self.criaturas.remove(criatura)
 
     # Método para retornar se há Criaturas na Região
@@ -59,9 +53,10 @@ class Regiao:
         print(Fore.CYAN + f"VOCÊ CHEGOU AO TESOURO!\n")
 
         resposta = input(f"Deseja resgatar o tesouro (S/Outro)? ")
+        print()
 
         if resposta.upper() != "S":
-            print("Não quer")
+            print("Não quer.")
             # if explorador.ha_armas():
         else:
             explorador.adicionar_tesouro()  # Adicionar o percentual do tesouro ao Explorador

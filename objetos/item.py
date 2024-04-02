@@ -1,3 +1,6 @@
+from colorama import Fore, Back, Style
+
+
 # Declaração do objeto Arma
 class Item:
     # Construtor de inicialização dos atributos da Arma
@@ -10,11 +13,9 @@ class Item:
 
     # String representando as informações sobre a Arma
     def __str__(self):
-        print(f"Nome: {self.nome}")
-        print(f"Tipo: {self.tipo}")
-        print(f"Pontos: {self.pontos}")
-        print(f"Usos: {self.qtd_uso}")
-        print(f"Região: {self.regiao.tipo}")
+        print(Back.YELLOW + Fore.BLACK + f"     Nome: {self.nome} " + Style.RESET_ALL)
+        print(Back.YELLOW + Fore.BLACK + f"     Pontos: {self.pontos} " + Style.RESET_ALL)
+        print(Back.YELLOW + Fore.BLACK + f"     Usos: {self.qtd_uso} " + Style.RESET_ALL)
         
     # MÉTODO PARA A QUANTIDADE DE USO DO ITEM
 

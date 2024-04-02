@@ -1,6 +1,6 @@
 import random
 
-from colorama import Fore, Back
+from colorama import Fore, Back, Style
 
 
 # Declaração do objeto Explorador
@@ -17,19 +17,20 @@ class Explorador:
 
     # String representando as informações sobre o Explorador
     def __str__(self):
-        print(Back.YELLOW + Fore.BLACK + f"Pontos de vida: {self.pontos_vida}")
-        print(Back.YELLOW + Fore.BLACK + f"Pontos de ataque: {self.pontos_ataque}")
-        print(Back.YELLOW + Fore.BLACK + f"Porcentagem do tesouro: {self.tesouro}")
-        print(Back.YELLOW + Fore.BLACK + f"Movimentos restantes: {self.qtd_movimentos}")
+        print(Back.YELLOW + Fore.BLACK + f" Explorador(a) " + Style.RESET_ALL)
+        print(Back.YELLOW + Fore.BLACK + f" Pontos de vida: {self.pontos_vida} " + Style.RESET_ALL)
+        print(Back.YELLOW + Fore.BLACK + f" Pontos de ataque: {self.pontos_ataque} " + Style.RESET_ALL)
+        print(Back.YELLOW + Fore.BLACK + f" Porcentagem do tesouro: {self.tesouro} " + Style.RESET_ALL)
 
         if not self.item:
-            print(Back.YELLOW + Fore.BLACK + f"Item: Nenhum item coletado\n")
+            print(Back.YELLOW + Fore.BLACK + f" Item: Nenhum item coletado " + Style.RESET_ALL)
         else:
-            print(Back.YELLOW + Fore.BLACK + f"Item:")
+            print(Back.YELLOW + Fore.BLACK + f" Item: " + Style.RESET_ALL)
             for item in self.item:
-                print("{")
+                print(Back.YELLOW + Fore.BLACK + " { " + Style.RESET_ALL)
                 item.__str__()
-                print("}\n")
+                print(Back.YELLOW + Fore.BLACK + " } " + Style.RESET_ALL)
+        print()
 
     # MÉTODOS PARA OS PONTOS DE VIDA DO EXPLORADOR
 
@@ -60,12 +61,12 @@ class Explorador:
 
     # Método para reviver o Explorador caso ainda haja movimentos disponíveis
     def reviver(self):
-        print(Fore.YELLOW + f"VOCÊ MORREU!")
+        print(Fore.RED + f"VOCÊ MORREU!\n")
 
         # Caso o Explorador tenha encontrado um Checkpoint
         if self.backup:
             self.atualizar_explorador()
-            print(Fore.YELLOW + f"Agora será revivido, voltando para {self.regiao.tipo}.")
+            print(Fore.YELLOW + f"Agora será revivido, voltando para {self.regiao.tipo}.\n")
         else:
             exit(0)
 
@@ -137,11 +138,12 @@ class Explorador:
         if not self.item:
             self.item.insert(0, item)
         else:  # Para substituir a arma que tem pela outra
+            self.remover_pontos_ataque(self.item[0].pontos)  # Remover pontos de ataque do Item
             print(Fore.YELLOW + f"{self.item[0].nome} foi descartada!")
-            self.regiao.adicionar_item(self.item[0])  # Adicionar item a Região atual do Explorador
-            self.item = []                            # Remover item da lista do Explorador
-            self.item.insert(0, item)
-            print(f"{self.item[0].nome} foi adicionado!\n")
+            self.regiao.adicionar_item(self.item[0])  # Adicionar Item a Região atual do Explorador
+            self.item = []                            # Remover Item da lista do Explorador
+            self.item.insert(0, item)          # Inserir Item a lista do Explorador
+            print(Fore.GREEN + f"{self.item[0].nome} foi adicionado!" + Style.RESET_ALL + "\n")
 
         # Remover percentual do tesouro carregado por conta da arma
         if self.tesouro > 0:
@@ -153,7 +155,7 @@ class Explorador:
             self.remover_pontos_ataque(item.pontos)  # Remover os pontos de ataque do Explorador pelo Item
             self.item.remove(item)
         else:
-            print(f"Arma não foi encontrada.\n")
+            print(Fore.YELLOW + f"Arma não foi encontrada!" + Style.RESET_ALL + "\n")
 
     # Método para quando o Explorador possui Arma
     def tem_armas(self):
@@ -197,7 +199,7 @@ class Explorador:
             self.adicionar_pontos_ataque(arma.pontos)  # Adicionar pontos de ataque da Arma
 
             print(Fore.GREEN + f"Você guardou {arma.nome} na mochila!")
-            print(f"Você agora tem {self.pontos_ataque} pontos de ataque!\n")
+            print(Fore.GREEN + f"Você agora tem {self.pontos_ataque} pontos de ataque!" + Style.RESET_ALL + "\n")
 
     # MÉTODOS PARA A QUANTIDADE DE MOVIMENTOS DO EXPLORADOR
     
@@ -213,9 +215,7 @@ class Explorador:
             'pontos_vida': 100,
             'pontos_ataque': self.pontos_ataque,
             'tesouro': self.tesouro,
-            'regiao': self.regiao,
-            'item': [],
-            'backup': self.backup
+            'regiao': self.regiao
         }
 
     # Método para atualizar os dados do Explorador com os dados do backup
@@ -224,5 +224,4 @@ class Explorador:
         self.pontos_ataque = self.backup['pontos_ataque']
         self.tesouro = self.backup['tesouro']
         self.regiao = self.backup['regiao']
-        self.item = self.backup['item'],
-        self.backup = self.backup['backup']
+        self.item = []

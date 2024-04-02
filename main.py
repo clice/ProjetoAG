@@ -31,8 +31,7 @@ def iniciar_jogo():
     time.sleep(1)  # Pausa de 1 segundo
 
     explorador.mostrar_regiao()  # Mostrar localização atual
-    
-    print("Informações:")
+
     explorador.__str__()  # Imprimir informações do Explorador
 
     time.sleep(1)  # Pausa de 1 segundo
@@ -51,7 +50,7 @@ def iniciar_jogo():
         if explorador.regiao.tipo == 'Praia':
             if explorador.qtd_movimentos < ilha.qtd_movimentos and explorador.tesouro > 0:
                 print(Fore.CYAN + f"VOCÊ CHEGOU A PRAIA COM PARTE DO TESOURO!")
-                print(f"Você conseguiu resgatar {explorador.tesouro}% do tesouro.\n")
+                print(Fore.CYAN + f"Você conseguiu resgatar {explorador.tesouro}% do tesouro.\n")
                 break
         # Caso o Explorador consiga encontrar o Tesouro
         elif explorador.regiao.tipo == 'Tesouro':
@@ -71,6 +70,7 @@ def iniciar_jogo():
                 if explorador.regiao.criaturas:
                     for criatura in explorador.regiao.criaturas:
                         print(Fore.RED + f"{criatura.nome} encontrado(a)! CUIDADO!\n")
+                        criatura.__str__()
                         lutar(ilha, explorador, criatura)
 
                 # Caso haja Itens na Região
