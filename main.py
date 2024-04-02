@@ -1,6 +1,6 @@
 import time
 
-from colorama import init
+from colorama import Style, Back, init
 from helpers.gerador import *
 from helpers.opcoes import *
 
@@ -37,8 +37,7 @@ def iniciar_jogo():
 
     time.sleep(1)  # Pausa de 1 segundo
 
-    print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
-    print(Style.RESET_ALL)  # Restaurar cores
+    print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.\n")
 
     # Laço para iniciar o contador do jogo
     while explorador.qtd_movimentos > 0:
@@ -52,8 +51,7 @@ def iniciar_jogo():
         if explorador.regiao.tipo == 'Praia':
             if explorador.qtd_movimentos < ilha.qtd_movimentos and explorador.tesouro > 0:
                 print(Fore.CYAN + f"VOCÊ CHEGOU A PRAIA COM PARTE DO TESOURO!")
-                print(f"Você conseguiu resgatar {explorador.tesouro}% do tesouro.")
-                print(Style.RESET_ALL)
+                print(f"Você conseguiu resgatar {explorador.tesouro}% do tesouro.\n")
                 break
         # Caso o Explorador consiga encontrar o Tesouro
         elif explorador.regiao.tipo == 'Tesouro':
@@ -72,8 +70,7 @@ def iniciar_jogo():
                 # Caso haja uma Criatura na Região
                 if explorador.regiao.criaturas:
                     for criatura in explorador.regiao.criaturas:
-                        print(Fore.RED + f"{criatura.nome} encontrado(a)! CUIDADO!")
-                        print(Style.RESET_ALL)  # Restaurar cores
+                        print(Fore.RED + f"{criatura.nome} encontrado(a)! CUIDADO!\n")
                         lutar(ilha, explorador, criatura)
 
                 # Caso haja Itens na Região
@@ -99,16 +96,15 @@ def iniciar_jogo():
             explorador.__str__()    # Imprimir informações do Explorador
             ilha.mover_criaturas()  # Mover as Criaturas de Região no mapa da Ilha
 
-            print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
-            print(Style.RESET_ALL)  # Restaurar cores
+            print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.\n")
 
 
 # Função para iniciar o jogo
 if __name__ == "__main__":
-    init()  # Iniciar colorama
+    init(autoreset=True)  # Iniciar colorama com autoreset para restaurar padrão
 
-    print(Fore.LIGHTYELLOW_EX + " ☠️    ☠️    ☠️    ☠️  A ILHA DO TESOURO PERDIDO ☠️    ☠️    ☠️    ☠️ (THE GAME)")
-    print(Style.RESET_ALL)  # Restaurar cores
+    print(Fore.LIGHTYELLOW_EX + " ☠️    ☠️    ☠️    ☠️ " + Back.YELLOW + Fore.BLACK +
+          " A ILHA DO TESOURO PERDIDO (THE GAME) " + Style.RESET_ALL + " ☠️    ☠️    ☠️    ☠️ ")
 
     while True:
         resposta = input("Deseja começar o jogo (S/Outro)? ")

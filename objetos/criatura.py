@@ -1,6 +1,6 @@
 import random
 
-from colorama import Fore, Style
+from colorama import Fore
 
 
 # Declaração do objeto Criatura
@@ -36,5 +36,4 @@ class Criatura:
 
     # Método para mostrar a localização atual
     def mostrar_regiao(self):
-        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
-        print(Style.RESET_ALL)  # Restaurar cores
+        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.\n")

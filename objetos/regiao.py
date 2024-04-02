@@ -1,6 +1,6 @@
 import random
 
-from colorama import Fore, Style
+from colorama import Fore
 
 
 # Declaração do objeto Região (Partes da Ilha = Vértices)
@@ -28,10 +28,14 @@ class Regiao:
 
     # Métoro para adicionar Criatura na Região
     def adicionar_criatura(self, criatura):
+        print("Região Adicionar")
+        criatura.__str__()
         self.criaturas.append(criatura)
 
     # Método para remover Criatura da Região
     def remover_criatura(self, criatura):
+        print("Região Remover")
+        criatura.__str__()
         self.criaturas.remove(criatura)
 
     # Método para retornar se há Criaturas na Região
@@ -52,8 +56,7 @@ class Regiao:
 
     # Método para quando o Explorador encontrar o tesouro
     def encontrar_tesouro(self, explorador):
-        print(Fore.CYAN + f"VOCÊ CHEGOU AO TESOURO!")
-        print(Style.RESET_ALL)  # Restaurar cores
+        print(Fore.CYAN + f"VOCÊ CHEGOU AO TESOURO!\n")
 
         resposta = input(f"Deseja resgatar o tesouro (S/Outro)? ")
 

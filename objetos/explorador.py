@@ -1,6 +1,6 @@
 import random
 
-from colorama import Fore, Style
+from colorama import Fore
 
 
 # Declaração do objeto Explorador
@@ -116,10 +116,9 @@ class Explorador:
             resposta = input("Deseja avançar para uma região aleatória (S/Outro)? ").upper()
             
             if resposta == 1 and self.item:
-                print(Fore.YELLOW + f"{self.item[0].nome} foi descartada!")
+                print(Fore.YELLOW + f"{self.item[0].nome} foi descartada!\n")
                 self.regiao.adicionar_item(self.item[0])  # Adicionar item a Região atual do Explorador
                 self.item = []                            # Remover item da lista do Explorador
-                print(Style.RESET_ALL)  # Restaurar cores
                 
             print()
             adjacentes = list(ilha.mapa.neighbors(self.regiao.tipo))        # Regiões adjacentes da Região atual
@@ -129,8 +128,7 @@ class Explorador:
 
     # Método para mostrar a localização atual
     def mostrar_regiao(self):
-        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.")
-        print(Style.RESET_ALL)  # Restaurar cores
+        print(Fore.MAGENTA + f"Localização atual: {self.regiao.tipo}.\n")
 
     # MÉTODOS PARA OS ITENS CARREGADOS PELO EXPLORADOR
 
@@ -143,8 +141,7 @@ class Explorador:
             self.regiao.adicionar_item(self.item[0])  # Adicionar item a Região atual do Explorador
             self.item = []                            # Remover item da lista do Explorador
             self.item.insert(0, item)
-            print(f"{self.item[0].nome} foi adicionado!")
-            print(Style.RESET_ALL)  # Restaurar cores
+            print(f"{self.item[0].nome} foi adicionado!\n")
 
         # Remover percentual do tesouro carregado por conta da arma
         if self.tesouro > 0:
@@ -167,19 +164,16 @@ class Explorador:
 
     # Método para quando o Explorador encontrar um Perigo
     def encontrar_perigo(self, perigo):
-        print(Fore.YELLOW + f"{perigo.nome} encontrado(a)! CUIDADO!")
-        print(Style.RESET_ALL)  # Restaurar cores
+        print(Fore.YELLOW + f"{perigo.nome} encontrado(a)! CUIDADO!\n")
 
         self.remover_pontos_vida(perigo.pontos)  # Remover pontos do Explorador
         self.remover_tesouro(perigo.pontos)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
 
-        print(Fore.RED + f"Você agora tem {self.pontos_vida} pontos de vida!")
-        print(Style.RESET_ALL)  # Restaurar cores
+        print(Fore.RED + f"Você agora tem {self.pontos_vida} pontos de vida!\n")
 
     # Método para quando o Explorador encontrar uma Planta Medicinal
     def encontrar_planta_medicinal(self, planta_medicinal):
-        print(Fore.YELLOW + f"{planta_medicinal.nome} encontrado(a)!")
-        print(Style.RESET_ALL)  # Restaurar cores
+        print(Fore.YELLOW + f"{planta_medicinal.nome} encontrado(a)!\n")
 
         resposta = input(f"Deseja utilizar (S/Outro)? ")
         print()
@@ -191,8 +185,7 @@ class Explorador:
 
     # Método para quando o Explorador encontrar uma Arma
     def encontrar_arma(self, arma):
-        print(Fore.YELLOW + f"{arma.nome} encontrado(a)!")
-        print(Style.RESET_ALL)  # Restaurar cores
+        print(Fore.YELLOW + f"{arma.nome} encontrado(a)!\n")
 
         resposta = input(f"Deseja guardar (S/Outro)? ")
         print()
@@ -204,8 +197,7 @@ class Explorador:
             self.adicionar_pontos_ataque(arma.pontos)  # Adicionar pontos de ataque da Arma
 
             print(Fore.GREEN + f"Você guardou {arma.nome} na mochila!")
-            print(f"Você agora tem {self.pontos_ataque} pontos de ataque!")
-            print(Style.RESET_ALL)  # Restaurar cores
+            print(f"Você agora tem {self.pontos_ataque} pontos de ataque!\n")
 
     # MÉTODOS PARA A QUANTIDADE DE MOVIMENTOS DO EXPLORADOR
     

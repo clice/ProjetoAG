@@ -1,7 +1,7 @@
 import random
 
 from helpers.gerador import lista_criaturas
-from colorama import Fore, Style
+from colorama import Fore
 from objetos.criatura import Criatura
 
 
@@ -31,8 +31,7 @@ def lutar(ilha, explorador, criatura):
                 explorador.reviver()
             else:
                 explorador.remover_tesouro(dano)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
-                print(f"Você agora tem {explorador.pontos_vida} pontos de vida.")
-                print(Style.RESET_ALL)  # Restaurar cores
+                print(f"Você agora tem {explorador.pontos_vida} pontos de vida.\n")
 
             break
 
@@ -53,15 +52,13 @@ def lutar(ilha, explorador, criatura):
 
                     # Caso a quantidade de uso seja menor que 1
                     if explorador.item[0].qtd_uso <= 0:
-                        print(Fore.YELLOW + f"{explorador.item[0].nome} já foi usada ao máximo!")
-                        print(Style.RESET_ALL)  # Restaurar cores
+                        print(Fore.YELLOW + f"{explorador.item[0].nome} já foi usada ao máximo!\n")
                         explorador.remover_item(explorador.item)
 
                 # Teste para saber se a Criatura morreu com o ataque
                 if not criatura.esta_viva():
                     criatura.regiao.remover_criatura(criatura)  # Remover Criatura da Região atual
-                    print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!")
-                    print(Style.RESET_ALL)  # Restaurar cores
+                    print(Fore.YELLOW + f"\n{criatura.nome.upper()} MORREU!\n")
                     
                     # Buscar a Criatura desejada para reviver em outra Região
                     for aux_criatura in lista_criaturas():
@@ -74,8 +71,7 @@ def lutar(ilha, explorador, criatura):
                             )  # Objeto Criatura
                             regiao.adicionar_criatura(nova_criatura)  # Adicionar Criatura
                             
-                            print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!")
-                            print(Style.RESET_ALL)  # Restaurar cores                
+                            print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!\n")
                             break
                     
                     break
@@ -95,8 +91,6 @@ def lutar(ilha, explorador, criatura):
                     print(f"Você agora tem {explorador.pontos_vida} pontos de vida.")
                     explorador.remover_tesouro(dano)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
 
-            print(Style.RESET_ALL)  # Restaurar cores
-
             # Se as três rodadas ainda não terminaram nem o Explorador ou Criatura morreram
             if rodada <= 2:
                 # Perguntar novamente para continuar a luta
@@ -107,11 +101,6 @@ def lutar(ilha, explorador, criatura):
                     break
 
             rodada += 1  # Acrescentar rodada concluida
-
-        # Se os pontos de vida do Explorador chegarem a zero
-        if not explorador.esta_vivo() or not criatura.esta_viva():
-            print(Style.RESET_ALL)  # Restaurar cores
-            break
         
         # Verificar resposta do Explorador
         if resposta.upper() != "S":
@@ -171,8 +160,7 @@ def lutar_criaturas(ilha):
             # Para a Criatura mais forte
             if criatura_mais_forte.pontos_vida > 0:
                 print(Fore.GREEN + f"{criatura_mais_forte.nome} agora tem {criatura_mais_forte.pontos_vida} pontos de vida.")
-                print(f"Sofreu {dano} de dano.")
-                print(Style.RESET_ALL)  # Restaurar cores
+                print(f"Sofreu {dano} de dano.\n")
             else:
                 criatura_mais_forte.regiao.remover_criatura(criatura_mais_forte)  # Criatura mais forte morre
                 
@@ -187,8 +175,7 @@ def lutar_criaturas(ilha):
                         )  # Objeto Criatura
                         regiao.adicionar_criatura(criatura)  # Adicionar Criatura
                         
-                        print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!")
-                        print(Style.RESET_ALL)  # Restaurar cores                
+                        print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!\n")
                         break
             
             # Buscar a Criatura mais fraca desejada para reviver em outra Região
@@ -202,8 +189,6 @@ def lutar_criaturas(ilha):
                     )  # Objeto Criatura
                     regiao.adicionar_criatura(criatura)  # Adicionar Criatura
                     
-                    print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!")
-                    print(Style.RESET_ALL)  # Restaurar cores
+                    print(Fore.RED + f"{criatura.nome.upper()} FOI REVIVIDO(A)!\n")
                     break
             
-    
