@@ -35,3 +35,7 @@ No VS Code é necessário instalar a extensão Python Extension Pack para execut
 ```bash 
 pip3 install networkx matplotlib colorama
 ```
+
+## 3. Vídeo Explicativo
+
+É possível acessar o vídeo explicativo do projeto através do link: [Projeto de Algoritmos em Grafos: Jogo A Ilha do Tesouro Perdido (The Game)](URL)
