@@ -1,6 +1,6 @@
 import random
 
-from colorama import Fore
+from colorama import Fore, Back
 
 
 # Declaração do objeto Explorador
@@ -17,15 +17,15 @@ class Explorador:
 
     # String representando as informações sobre o Explorador
     def __str__(self):
-        print(f"Pontos de vida: {self.pontos_vida}")
-        print(f"Pontos de ataque: {self.pontos_ataque}")
-        print(f"Porcentagem do tesouro: {self.tesouro}")
-        print(f"Movimentos restantes: {self.qtd_movimentos}")
+        print(Back.YELLOW + Fore.BLACK + f"Pontos de vida: {self.pontos_vida}")
+        print(Back.YELLOW + Fore.BLACK + f"Pontos de ataque: {self.pontos_ataque}")
+        print(Back.YELLOW + Fore.BLACK + f"Porcentagem do tesouro: {self.tesouro}")
+        print(Back.YELLOW + Fore.BLACK + f"Movimentos restantes: {self.qtd_movimentos}")
 
         if not self.item:
-            print(f"Item: Nenhum item coletado\n")
+            print(Back.YELLOW + Fore.BLACK + f"Item: Nenhum item coletado\n")
         else:
-            print(f"Item:")
+            print(Back.YELLOW + Fore.BLACK + f"Item:")
             for item in self.item:
                 print("{")
                 item.__str__()

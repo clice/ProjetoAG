@@ -24,9 +24,9 @@ def iniciar_jogo():
 
     time.sleep(1)  # Pausa de 1 segundo
 
-    print(Fore.YELLOW + "OBS: Toda vez que você for perguntado se quer mudar para uma região aleatória,")
-    print("você pode optar por uma das seguinte opções fixas:")
-    print("1 - Jogar arma fora\n")
+    print(Fore.YELLOW + "OBS: Toda vez que você for perguntado se quer mudar para uma região aleatória, \n"
+                        "você pode optar por uma das seguinte opções fixas:\n"
+                        "1 - Jogar arma fora\n")
 
     time.sleep(1)  # Pausa de 1 segundo
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     init(autoreset=True)  # Iniciar colorama com autoreset para restaurar padrão
 
     print(Fore.LIGHTYELLOW_EX + " ☠️    ☠️    ☠️    ☠️ " + Back.YELLOW + Fore.BLACK +
-          " A ILHA DO TESOURO PERDIDO (THE GAME) " + Style.RESET_ALL + " ☠️    ☠️    ☠️    ☠️ ")
+          " A ILHA DO TESOURO PERDIDO (THE GAME) " + Style.RESET_ALL + " ☠️    ☠️    ☠️    ☠️ \n")
 
     while True:
         resposta = input("Deseja começar o jogo (S/Outro)? ")

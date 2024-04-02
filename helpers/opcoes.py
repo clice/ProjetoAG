@@ -31,7 +31,7 @@ def lutar(ilha, explorador, criatura):
                 explorador.reviver()
             else:
                 explorador.remover_tesouro(dano)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
-                print(f"Você agora tem {explorador.pontos_vida} pontos de vida.\n")
+                print(Fore.RED + f"Você agora tem {explorador.pontos_vida} pontos de vida.\n")
 
             break
 
@@ -88,7 +88,7 @@ def lutar(ilha, explorador, criatura):
                     explorador.reviver()
                     break
                 else:
-                    print(f"Você agora tem {explorador.pontos_vida} pontos de vida.")
+                    print(Fore.RED + f"Você agora tem {explorador.pontos_vida} pontos de vida.")
                     explorador.remover_tesouro(dano)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
 
             # Se as três rodadas ainda não terminaram nem o Explorador ou Criatura morreram
@@ -159,8 +159,9 @@ def lutar_criaturas(ilha):
             
             # Para a Criatura mais forte
             if criatura_mais_forte.pontos_vida > 0:
-                print(Fore.GREEN + f"{criatura_mais_forte.nome} agora tem {criatura_mais_forte.pontos_vida} pontos de vida.")
-                print(f"Sofreu {dano} de dano.\n")
+                print(Fore.GREEN + f"{criatura_mais_forte.nome} agora tem {criatura_mais_forte.pontos_vida} "
+                                   f"pontos de vida.")
+                print(Fore.GREEN + f"Sofreu {dano} de dano.\n")
             else:
                 criatura_mais_forte.regiao.remover_criatura(criatura_mais_forte)  # Criatura mais forte morre
                 
