@@ -158,12 +158,9 @@ class Explorador:
     # Método para quando o Explorador possui Arma
     def tem_armas(self):
         if self.item:
-            for item in self.item:
-                # Caso o Item seja do tipo Arma
-                if item.tipo == 'arma':
-                    return item
-                else:
-                    return False
+            return self.item
+        else:
+            return False
 
     # Método para quando o Explorador encontrar um Perigo
     def encontrar_perigo(self, perigo):

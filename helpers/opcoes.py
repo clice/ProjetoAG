@@ -47,7 +47,7 @@ def lutar(ilha, explorador, criatura):
                 item = explorador.tem_armas()        # Se o Esplorador tem armas para
 
                 if item:
-                    item.remover_qtd_uso()  # Diminuir a quantidade de uso do Item
+                    explorador.item[0].remover_qtd_uso()  # Diminuir a quantidade de uso do Item
 
                     # Caso a quantidade de uso seja menor que 1
                     if item.qtd_uso == 0:

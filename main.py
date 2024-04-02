@@ -5,7 +5,7 @@ from helpers.gerador import *
 from helpers.opcoes import *
 
 
-# Função para inicializar o jogo
+# Função para inicializar o jogoss
 def iniciar_jogo():
     ilha = gerar_ilha()  # Gerar Ilha
     explorador = gerar_explorador(ilha.qtd_movimentos)  # Gerar Explorador
@@ -40,7 +40,7 @@ def iniciar_contador(ilha, explorador):
     print(Style.RESET_ALL)  # Restaurar cores
 
     while explorador.qtd_movimentos > 0:
-        # ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
+        ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
         lutar_criaturas(ilha)  # Encontrar as regiões com várias Criaturas 
 
@@ -103,7 +103,7 @@ def iniciar_contador(ilha, explorador):
 if __name__ == "__main__":
     init()  # Iniciar colorama
 
-    print(Fore.LIGHTYELLOW_EX + "A ILHA DO TESOURO")
+    print(Fore.LIGHTYELLOW_EX + " ☠️    ☠️    ☠️    ☠️  A ILHA DO TESOURO PERDIDO ☠️    ☠️    ☠️    ☠️ (THE GAME)")
     print(Style.RESET_ALL)  # Restaurar cores
 
     while True:
