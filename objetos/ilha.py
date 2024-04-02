@@ -81,7 +81,6 @@ class Ilha:
 
     # Método para desenhar a Ilha e método para plotar a movimentação
     def desenhar_mapa(self, regiao_atual):  # Alterar nome para ficar mais facil de entender
-        # plt.ion()                          # Ativar modo interativo
         node_size = 5000                   # Definir tamanho dos vértices para imprimir
         pos = nx.spring_layout(self.mapa)  # Posição das Regiões (vértices)
 
@@ -95,13 +94,6 @@ class Ilha:
         # Destacar a Região Checkpoint com a cor "yellow"
         for regiao in self.checkpoints:
             nx.draw_networkx_nodes(self.mapa, pos, nodelist=[regiao], node_color='yellow', node_size=node_size)
-
-        # plt.pause(1)  # Pausa de 1 segundo para permitir plotar a exibição
-        # plt.clf()     # Limpar a exibição anterior
-        # plt.ioff()    # Desativar o modo interativo
-
-        # Salvar imagem do mapa
-        # plt.savefig('mapa.png')
 
         # Exibir grafo
         plt.show()
