@@ -50,7 +50,7 @@ def lutar(ilha, explorador, criatura):
                     explorador.item[0].remover_qtd_uso()  # Diminuir a quantidade de uso do Item
 
                     # Caso a quantidade de uso seja menor que 1
-                    if item.qtd_uso == 0:
+                    if item[0].qtd_uso == 0:
                         print(Fore.YELLOW + f"{explorador.item[0].nome} já foi usada ao máximo!")
                         print(Style.RESET_ALL)  # Restaurar cores
                         explorador.remover_item(item)
