@@ -17,7 +17,7 @@ def gerar_ilha():
     for _ in range(ilha.qtd_itens):
         # Gerar Criatura numa Região da Ilha
         regiao = random.choice(ilha.regioes[1:-1])
-        criatura = sortear_criatura()  # Sortear Criatura para adicionar a Região
+        criatura = random.choice(lista_criaturas())  # Sortear Criatura para adicionar a Região
         criatura = Criatura(
             criatura['nome'], criatura['tipo'], criatura['pontos_vida'],
             criatura['pontos_ataque'], criatura['descricao'], regiao

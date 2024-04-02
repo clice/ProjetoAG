@@ -66,7 +66,6 @@ class Explorador:
         if self.backup:
             self.atualizar_explorador()
             print(Fore.YELLOW + f"Agora será revivido, voltando para {self.regiao.tipo}.")
-            print(Style.RESET_ALL)  # Restaurar cores
         else:
             exit(0)
 
@@ -87,23 +86,27 @@ class Explorador:
     # MÉTODOS PARA O TESOURO CARREGADA PELO EXPLORADOR
 
     # Método para adicionar tesouro
-    def adicionar_tesouro(self):
-        tesouro = self.pontos_vida
-
-        # Calcular o percentual correto para o Explorador carregar o tesouro
-        for item in self.item:
-            tesouro -= item.pontos
-
-        self.tesouro = tesouro
+    def adicionar_tesouro(self):        
+        if self.regiao.tesouro > 0:
+            qtd_max_tesouro = self.pontos_vida  # Quantidade máxima do tesouro que o Explorador pode pegar
+            
+            # Calcular o percentual correto para o Explorador carregar o tesouro
+            for item in self.item:
+                qtd_max_tesouro -= item.pontos
+                
+            tesouro = qtd_max_tesouro - self.tesouro  # Quantidade do tesouro que o Explorador pode pegar
+            self.tesouro += tesouro  # Adicionar tesouro ao Explorador
+            self.regiao.tesouro -= tesouro  # Reduzir a quatnidade do tesouro na Região
 
     # Método para remover tesouro
     def remover_tesouro(self, tesouro):
-        self.tesouro -= tesouro
+        if self.tesouro > 0:  # Caso o Explorador já tenha buscado parte do tesouro
+            self.tesouro -= tesouro
 
-        # Se o percentual do tesouro chegou a menos que 0
-        if self.tesouro <= 0:
-            self.tesouro = 0
-            print(f"Você perdeu todo o tesouro que tinha resgatado.\n")
+            # Se o percentual do tesouro chegou a menos que 0
+            if self.tesouro <= 0:
+                self.tesouro = 0
+                print(f"Você perdeu todo o tesouro que tinha resgatado.\n")
 
     # MÉTODOS PARA A REGIÃO DO EXPLORADOR
     
@@ -168,6 +171,7 @@ class Explorador:
         print(Style.RESET_ALL)  # Restaurar cores
 
         self.remover_pontos_vida(perigo.pontos)  # Remover pontos do Explorador
+        self.remover_tesouro(perigo.pontos)  # Remover a quantidade do tesouro que ele tem com base no dano sofrido
 
         print(Fore.RED + f"Você agora tem {self.pontos_vida} pontos de vida!")
         print(Style.RESET_ALL)  # Restaurar cores
@@ -219,7 +223,6 @@ class Explorador:
             'tesouro': self.tesouro,
             'regiao': self.regiao,
             'item': [],
-            'qtd_movimentos': self.qtd_movimentos,
             'backup': self.backup
         }
 
@@ -230,5 +233,4 @@ class Explorador:
         self.tesouro = self.backup['tesouro']
         self.regiao = self.backup['regiao']
         self.item = self.backup['item'],
-        self.qtd_movimentos = self.backup['qtd_movimentos'],
         self.backup = self.backup['backup']

@@ -18,7 +18,7 @@ def sortear_regiao(regioes_usadas):
 
 
 # Método para sortear uma Criatura
-def sortear_criatura():
+def lista_criaturas():
     # Lista das Criaturas na Ilha
     criaturas = (
         {
@@ -48,7 +48,7 @@ def sortear_criatura():
         }
     )
 
-    return random.choice(criaturas)
+    return criaturas
 
 
 # Método para sortear um Perigo

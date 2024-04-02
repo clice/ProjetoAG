@@ -143,9 +143,9 @@ class Ilha:
         
     # Método para mover as Criaturas pela ILha 
     def mover_criaturas(self):
-        for criatura in self.criaturas:           
+        for criatura in self.criaturas:          
             regiao_antiga = criatura.regiao                                     # Armazenas antiga região da Criatura
             adjacentes = list(self.mapa.neighbors(regiao_antiga.tipo))          # Regiões adjacentes da Região atual
-            criatura.regiao = self.encontrar_regiao(random.choice(adjacentes))  # Atualiza a Região da Criatura
-            regiao_antiga.remover_criatura(criatura)                            # Remover Criatura da Região antiga
+            criatura.regiao = self.encontrar_regiao(random.choice(adjacentes))  # Atualiza a Região da Criatura 
             criatura.regiao.adicionar_criatura(criatura)                        # Adicionar Criatura a nova Região
+            regiao_antiga.remover_criatura(criatura)                            # Remover Criatura da Região antiga

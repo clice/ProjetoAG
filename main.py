@@ -12,6 +12,12 @@ def iniciar_jogo():
 
     print("Bem-vindo(a) Explorador(a)! Você está chegando a ilha. Lembre-se que lá há muitos perigos.")
     print(f"Na ilha estão espalhados criaturas, perigos, plantas medicinais e armas. Há {ilha.qtd_itens} de cada.")
+    
+    print(f"Você pode encontrar as seguintes criaturas espalhadas na ilha: ")
+    for criatura in ilha.criaturas:
+        print(f"{criatura.nome}", end=", ")
+    print("e ter que enfrentá-las")
+    
     print("O tesouro pirata que foi escondido na ilha já atraiu muitos, porém nenhum retornou.")
     print("Espero que você consiga retornar ao menos com alguma parte do tesouro.")
     print("Boa sorte!\n")
@@ -25,12 +31,7 @@ def iniciar_jogo():
     time.sleep(1)  # Pausa de 1 segundo
 
     explorador.mostrar_regiao()  # Mostrar localização atual
-
-    iniciar_contador(ilha, explorador)  # Iniciar contador
-
-
-# Função para iniciar o contador do jogo
-def iniciar_contador(ilha, explorador):
+    
     print("Informações:")
     explorador.__str__()  # Imprimir informações do Explorador
 
@@ -39,6 +40,7 @@ def iniciar_contador(ilha, explorador):
     print(Fore.BLUE + f"Movimentos disponíveis: {explorador.qtd_movimentos}/{ilha.qtd_movimentos}.")
     print(Style.RESET_ALL)  # Restaurar cores
 
+    # Laço para iniciar o contador do jogo
     while explorador.qtd_movimentos > 0:
         ilha.desenhar_mapa(explorador.regiao.tipo)  # Mostrar mapa da Ilha
 
@@ -49,7 +51,9 @@ def iniciar_contador(ilha, explorador):
         # Caso o Explorador consiga voltar a Praia com algum percentual do tesouro
         if explorador.regiao.tipo == 'Praia':
             if explorador.qtd_movimentos < ilha.qtd_movimentos and explorador.tesouro > 0:
-                print(f"VOCÊ CHEGOU A PRAIA! Conseguiu resgatar {explorador.tesouro}% do tesouro.\n")
+                print(Fore.CYAN + f"VOCÊ CHEGOU A PRAIA COM PARTE DO TESOURO!")
+                print(f"Você conseguiu resgatar {explorador.tesouro}% do tesouro.")
+                print(Style.RESET_ALL)
                 break
         # Caso o Explorador consiga encontrar o Tesouro
         elif explorador.regiao.tipo == 'Tesouro':
