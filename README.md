@@ -11,10 +11,9 @@ Com o Python já instalado assim como o pip é necessário instalar algumas bibl
 
 **OBS:** Foi utilizada a versão 3 do Python para o desenvolvimento desse projeto.
 
-## 2. INSTRUÇÕES PARA EXECUÇÃO DO PROJETO
+## 2. Instruções para Execução do Projeto
 
 É possível utilizar uma das seguintes opções para executar o projeto.
-
 
 ### 2.1. PyCharm Community
 
