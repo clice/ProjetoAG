@@ -38,4 +38,4 @@ pip3 install networkx matplotlib colorama
 
 ## 3. Vídeo Explicativo
 
-É possível acessar o vídeo explicativo do projeto através do link: [Projeto de Algoritmos em Grafos: Jogo A Ilha do Tesouro Perdido (The Game)](URL)
+É possível acessar o vídeo explicativo do projeto através do link: [https://drive.google.com/file/d/1cyOt5iZdzsswfrmOyjR43DGxIQVatVcG/view?usp=sharing](URL)
